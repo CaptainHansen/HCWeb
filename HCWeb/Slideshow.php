@@ -1,7 +1,7 @@
 <?
 namespace HCWeb;
 
-class Slideshow {
+class Slideshow implements HTMLElement {
 	private $containerID;
 	private $photoUri;
 	private static $first = true;

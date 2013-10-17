@@ -1,7 +1,7 @@
 <?
 namespace HCWeb;
 
-class Linkbar {
+class Linkbar implements HTMLElement {
 	public $links;
 	public $nav;
 	public $navc;
