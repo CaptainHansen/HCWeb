@@ -1,0 +1,54 @@
+table.invdata {
+	margin-left: 0px;
+	margin-right: auto;
+}
+td.subtable { width: 110px; vertical-align: top; }
+.fieldid {
+	font-weight: bold;
+	font-size: 12pt;
+	color: blue;
+	font-family: Geneva;
+}
+td.fieldid { text-align: right; width: 200px; vertical-align: top; }
+td.center { text-align: center; }
+.clientname {
+	font-weight: bold;
+}
+.datentime {
+	font-size: 10pt;
+	font-family: Capitals,Verdana;
+}
+head {
+	font-family: Capitals;
+	text-align: center;
+}
+body {
+	font-size: 12pt;
+	margin: 0px 0px;
+}
+.redalert {
+	color: red;
+	font-family: Geneva;
+	font-weight: bold;
+}
+.alert {
+	color: orange;
+	font-family: Geneva;
+	font-weight: bold;
+}
+.payok {
+	color: green;
+	font-family: Geneva;
+	font-size: 13pt;
+}
+.notsatisfied {
+	color: red;
+	font-family: Geneva;
+	font-size: 13pt;
+	font-weight: bold;
+}
+form.edit {text-align: right;}
+
+a {color: #0000CE;}
+a:hover {font-weight: bold;}
+a:active {color: #000000;}
