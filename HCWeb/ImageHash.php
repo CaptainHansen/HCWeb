@@ -1,4 +1,6 @@
 <?
+namespace HCWeb;
+
 class ImageHash {
 	public $sqsize;
 	private $photo;

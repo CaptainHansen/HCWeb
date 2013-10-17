@@ -10,13 +10,13 @@ function autoload_API($class){
 	*/
 
 	$paths = array();
-	$paths[] = __DIR__."/EasyJax/".$class_file;
+	$paths[] = __DIR__;
 
 	//adding all include paths (makes things... easier).
-	$inc_paths = explode(":",get_include_path());
-	foreach($inc_paths as $path){
-		$paths[] = $path."/".$class_file;
-	}
+#	$inc_paths = explode(":",get_include_path());
+#	foreach($inc_paths as $path){
+#		$paths[] = $path."/".$class_file;
+#	}
 
 	foreach($paths as $path_try){
 		if(file_exists($path_try)){

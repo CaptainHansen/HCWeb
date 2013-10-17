@@ -1,4 +1,5 @@
 <?
+namespace HCWeb;
 
 class UID {
     
