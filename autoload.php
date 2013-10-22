@@ -10,7 +10,7 @@ function autoload_API($class){
 	*/
 
 	$paths = array();
-	$paths[] = __DIR__;
+	$paths[] = __DIR__.DIRECTORY_SEPARATOR.$class_file;
 
 	//adding all include paths (makes things... easier).
 #	$inc_paths = explode(":",get_include_path());
