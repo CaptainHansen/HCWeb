@@ -1,22 +1,13 @@
 <?
 namespace HCWeb;
 
-define('UID_STRING',1);
-define('UID_BINARY',2);
-
 class UID {
     
-	private $type;
     protected $urand;
     
     public function __construct() {
         $this->urand = @fopen ( '/dev/urandom', 'rb' );
-	$this -> type = UID_STRING;
     }
-
-	public function return_t($t){
-		$this -> type = $t;
-	}
 
     /**
      * @brief Generates a Universally Unique IDentifier, version 4.
@@ -72,12 +63,8 @@ class UID {
         $clock_seq_hi_and_reserved = hexdec ( $clock_seq_hi_and_reserved );
         $clock_seq_hi_and_reserved = $clock_seq_hi_and_reserved >> 2;
         $clock_seq_hi_and_reserved = $clock_seq_hi_and_reserved | 0x8000;
-
-	if($this -> type == UID_BINARY){
-		return $time_low.$time_mid.$time_hi_and_version.$clock_seq_hi_and_reserved.$node;
-	} else {
-		return sprintf ( '%08s-%04s-%04x-%04x-%012s', $time_low, $time_mid, $time_hi_and_version, $clock_seq_hi_and_reserved, $node );
-	}
+        
+        return sprintf ( '%08s-%04s-%04x-%04x-%012s', $time_low, $time_mid, $time_hi_and_version, $clock_seq_hi_and_reserved, $node );
     }
 
 }
