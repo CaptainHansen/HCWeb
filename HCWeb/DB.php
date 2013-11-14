@@ -88,11 +88,19 @@ class DB {
 		return (self::getError() == "");
 	}
 	
-	public static function sequence($table,$toid,$fromid,$seq='seq'){
-		$r = DB::query("select {$seq} from {$table} where ID = {$fromid}");
-		list($from) = $r -> fetch_row();
-		$r = DB::query("select {$seq} from {$table} where ID = {$toid}");
-		list($to) = $r -> fetch_row();
+	public static function sequence($table,$toid,$fromid,$seq='seq',$pID=false){
+		if($pID) {
+			$r = DB::query("select {$seq},{$pID} from {$table} where ID = {$fromid}");
+			list($from,$from_pid) = $r -> fetch_row();
+			$r = DB::query("select {$seq},{$pID} from {$table} where ID = {$toid}");
+			list($to,$to_pid) = $r -> fetch_row();
+			if($from_pid != $to_pid) return false;
+		} else {
+			$r = DB::query("select {$seq} from {$table} where ID = {$fromid}");
+			list($from) = $r -> fetch_row();
+			$r = DB::query("select {$seq} from {$table} where ID = {$toid}");
+			list($to) = $r -> fetch_row();
+		}
 		
 		DB::update($table,$fromid,array($seq => $to));
 		
@@ -101,13 +109,19 @@ class DB {
 			return false;
 		} elseif($from > $to){
 			while($from > $to){  //moving UP, all others must move DOWN
-				$ret = $ret ? DB::query("update {$table} set $seq = $from where id != {$fromid} and $seq = ".($from-1)) : false;
+				if($pID){
+					$ret = $ret ? DB::query("update {$table} set $seq = $from where id != {$fromid} and {$pID} = {$from_pid} and $seq = ".($from-1)) : false;
+				} else {
+					$ret = $ret ? DB::query("update {$table} set $seq = $from where id != {$fromid} and $seq = ".($from-1)) : false;
 				$from--;
 			}
 //			return 'insertBefore';
 		} else {
 			while($from < $to){  //moving DOWN, all others must move UP
-				$ret = $ret ? DB::query("update {$table} set $seq = $from where id != {$fromid} and $seq = ".($from+1)) : false;
+				if($pID){
+					$ret = $ret ? DB::query("update {$table} set $seq = $from where id != {$fromid} and {$pID} = {$from_pid} and $seq = ".($from+1)) : false;
+				} else {
+					$ret = $ret ? DB::query("update {$table} set $seq = $from where id != {$fromid} and $seq = ".($from+1)) : false;
 				$from++;
 			}
 //			return 'insertAfter';
