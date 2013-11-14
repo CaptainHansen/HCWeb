@@ -32,19 +32,17 @@ namespace HCWeb;
 
 class EasyJax {
 	private $return_data;
-	protected $mysqli_inst;
 	protected $json_data;
 	public $path = false;
 	public $req_method;
 	
-	public function __construct(\mysqli $mysqli_inst=NULL){
+	public function __construct(){
 		if(isset($_SERVER['PATH_INFO'])){
 			$this -> path = $_SERVER['PATH_INFO'];
 		}
 		$this -> req_method = strtoupper($_SERVER['REQUEST_METHOD']);
 		$this -> return_data = array();
 		$this -> return_data['error'] = "";
-		$this -> mysqli_inst = $mysqli_inst;
 		$this -> json_data = json_decode(file_get_contents("php://input"),1);
 	}
 	
@@ -75,60 +73,59 @@ class EasyJax {
 			$this -> add_error_msg($error);
 		}
 		header("Content-type: application/json; charset=UTF-8");
+		header("Pragma: no-cache");
+		header("Expires: Thu, 01 Dec 1997 16:00:00 GMT");
 		echo json_encode($this->return_data);
 		die;
 	}
 
-/*
-	public function GPPD(){
-		if($this -> path){
-			$id = basename($this -> path);
+	public function db_execute($table,$auth_methods = array("GET","PUT","POST","DELETE")){
+		if(!in_array($this -> req_method,$auth_methods)){
+			$this -> add_error_msg("You are not authorized to do the requested action.");
+			return false;
 		}
+		
+		if($this -> path) $id = basename($this -> path);
 		
 		switch($this -> req_method){
 		case "GET":
-			$r = DB::query("select * from store_items where ID = {$id}");
-			$easyj -> set_ret_data('data',$r -> fetch_assoc());
+			if($r = DB::query("select * from {$table} where ID = {$id}")) {
+				$this -> set_ret_data('data',$r -> fetch_assoc());
+			} else {
+				$this -> add_error_msg("Could not load the requested data.");
+			}
 			break;
 
 		case "PUT":
-			if(!DB::update('store_items',$id,$easyj -> getData('save'))){
-				$easyj -> add_error_msg("Save could not be completed");
+			if(!DB::update($table,$id,$this -> getData())){
+				$this -> add_error_msg("Save could not be completed");
 			}
 			break;
 
 		case "POST":
-			if(!$id = DB::insert("store_items",$easyj -> getData('save'))){
-				$easyj -> add_error_msg("A new record could not be created.");
+			if($id = DB::insert($table,$this -> getData())){
+				$this -> set_ret_data('id',$id);
+			} else {
+				$this -> add_error_msg("A new record could not be created.");
 			}
-			$easyj -> set_ret_data('insert_id',$id);
 			break;
 	
 		case "DELETE":
-			if(!DB::delete("store_items",$id)){
-				$easyj -> add_error_msg("Record $id could not be deleted");
+			if(!DB::delete($table,$id)){
+				$this -> add_error_msg("Record {$id} could not be deleted");
 			}
 			break;
 		
 		default:
-			$easyj -> add_error_msg("Request method not recognized.");
+			$this -> add_error_msg("Request method not recognized.");
 
 		}
 	}
-*/
 	
 	
 	public function send_if_error(){
 		if($return_data['error'] != ""){
 			$this->send_resp();
-		}
-	}
-
-	public function SQL_sub($sql){
-		$mysqli = $this -> mysqli_inst;
-		$mysqli->query($sql);
-		if($mysqli->error != ""){
-			$this -> add_error_msg($mysqli -> error);
 		}
 	}
 }
