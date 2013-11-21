@@ -67,6 +67,14 @@ class Auth {
 			return false;
 		}
 	}
+
+	public static function Logout(){
+		if(!isset($_SESSION)) session_start();
+		unset($_SESSION['user']);
+		unset($_SESSION['pass']);
+		unset($_SESSION['lastact']);
+		return true;
+	}
 	
 	public static function getData($key){
 		if(isset(self::$user_d[$key])){
