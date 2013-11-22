@@ -13,7 +13,7 @@ $(el).HCSlider(function(){
 			var v = $(this).val();
 			var id = $(this).attr('id');
 			var cls = $(this).attr('class');
-			$(this).before('<div class="HCSlider '+cls+'"><div class="track"><div class="slider" style="margin-left: '+v+'%;"><input type="hidden" id="'+id+'" value="'+v+'"></div></div></div>');
+			$(this).before('<div class="HCSlider '+cls+'"><div class="track"><div class="slider" style="margin-left: '+v+'%;"><input class="HCSlider" type="hidden" id="'+id+'" value="'+v+'"></div></div></div>');
 			var obj = $(this).prev();
 			$(this).remove();
 
@@ -76,6 +76,25 @@ $(el).HCSlider(function(){
 		});
 	};
 }(jQuery));
+
+// jQuery default val function needs to be overridden in order to properly set the slider position when its value is changed.
+(function ($) {
+	var originalVal = $.fn.val;
+	$.fn.val = function(value) {
+		if(value == undefined){
+			return originalVal.call(this);
+		}
+		var ret = originalVal.call(this,value);
+		if (typeof value != undefined) {
+			if($(this).hasClass('HCSlider')){
+				var obj = $(this).parent().parent().parent();
+				obj.find('.slider').css({'margin-left': $(this).val()+'%'});
+			}
+		}
+		return ret
+	};
+})(jQuery);
+
 
 $(document).ready(function(){
 	$('input[type=HCSlider]').HCSlider();
