@@ -16,8 +16,8 @@ $(el).HCSlider(function(){
 			$(this).before('<div class="HCSlider '+cls+'"><div class="track"><div class="slider" style="margin-left: '+v+'%;"><input type="hidden" id="'+id+'" value="'+v+'"></div></div></div>');
 			var obj = $(this).prev();
 			$(this).remove();
-		
-			$(obj).find('.slider').mousedown(function(e) {
+
+			$(obj).find('.slider,.track').bind('mousedown touchstart',function(e) {
 				e = e || window.event;
 		
 				//EVALUATING APPARENT ORIGIN:
@@ -32,7 +32,14 @@ $(el).HCSlider(function(){
 				//EVALUATING MAX LEFT MARGIN
 				var max = $(obj).find('.track').width();
 
-				$('body,html').mousemove(function(e) {
+				if($(e.target).hasClass('track')){
+					origin = trackoffset;
+					var nv = ((ptr - origin) / max) * 100;
+					$(obj).find('.slider').css({'margin-left': nv+'%'}).find('input').val(nv);
+					$(obj).find('input').change();
+				}
+
+				$('body,html').bind('mousemove touchmove',function(e) {
 					e = e || window.event;
 					var ptr = 0;
 					if(e.pageX) ptr = e.pageX;
@@ -47,7 +54,7 @@ $(el).HCSlider(function(){
 						$(obj).find('.slider').css({'margin-left': new_val+"%"}).find('input').val(new_val);
 						$(obj).find('input').change();
 					}
-				}).mouseup(function(e) {
+				}).bind('mouseup touchend',function(e) {
 					$('body,html').off('mousemove').css({
 						'-webkit-touch-callout': 'auto',
 						'-webkit-user-select': 'auto',
