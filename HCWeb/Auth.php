@@ -3,12 +3,17 @@ namespace HCWeb;
 
 class Auth {
 	private static $user_d=false;
+	private static $login_page="/login.php";
+	
+	public static function setLoginPage($uri){
+		self::$login_page = $uri;
+	}
 
 	public static function Init($redir = true){
 		if(!isset($_SESSION)) session_start();
 		if(!isset($_SESSION['user']) || !isset($_SESSION['pass'])){
 			if($redir){
-				self::Redirect("You are not logged in.  Log back in and try again.");
+				self::Redirect("You are not logged in.  Log back in and try again.",self::$login_page);
 			} else {
 				return false;
 			}
@@ -35,7 +40,7 @@ class Auth {
 			unset($_SESSION['lastact']);
 			session_unset();
 			if($redir){
-				self::Redirect("Your session has timed out.  You must log in again.","/login.php");
+				self::Redirect("Your session has timed out.  You must log in again.",self::$login_page);
 			} else {
 				return false;
 			}
