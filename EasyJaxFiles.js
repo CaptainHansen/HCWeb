@@ -49,8 +49,11 @@ XMLHttpRequest.prototype.mySendAsBinary = function(text){
 
 function EasyJaxFiles (Url,req_type,files){
 	this.Url = Url;
-	
+
 	this.start = function() {};
+
+	this.nextfile = function() {};
+	
 	this.progress = function(e) {};
 	/*** like this: 
 	function(e) {
@@ -68,6 +71,8 @@ function EasyJaxFiles (Url,req_type,files){
 	this.success = function(data) {};
 	this.error = function(data) { alert(data.error); return false; };
 	
+	this.finish = function() { return true; };
+	
 	this.files = files;
 	this.files_index = 0;
 	
@@ -82,9 +87,15 @@ function EasyJaxFiles (Url,req_type,files){
 		case "start":
 			this.start = f;
 			break;
+		
+		case "nextfile":
+			this.nextfile = f;
+			break;
+		
 		case "progress":
 			this.progress = f;
 			break;
+		
 		case "badjson":
 			this.badjson = f;
 			break;
@@ -94,15 +105,21 @@ function EasyJaxFiles (Url,req_type,files){
 		case "error":
 			this.error = f;
 			break;
+		
+		case "finish":
+			this.finish = f;
+			break;
 		default:
+			throw "No handler for type \""+type+"\"";
 			break;
 		}
 		return this;
 	}
 	
 	this.upload = function (){
-		if(this.files_index >= files.length) return true;
-		this.start();
+		if(this.files_index == 0) this.start();
+		if(this.files_index >= files.length) return this.finish();
+		this.nextfile();
 		
 		this.runUpload();
 		this.files_index += 1;
@@ -129,14 +146,19 @@ function EasyJaxFiles (Url,req_type,files){
 
 			// let's track upload progress
 			var eventSource = x.upload || x;
-			eventSource.addEventListener("progress", function(e){
-				var s = {
-					'position' : e.position || e.loaded,
-					'total' : e.totalSize || e.total
-				};
-				s.percent = Math.round((s.position/s.total)*100);
-				ejf.progress(s,file,e);
-			});
+			eventSource.addEventListener("progress", (function(ejf) {
+				return function(e){
+					var s = {
+						'position' : e.position || e.loaded,
+						'total' : e.totalSize || e.total,
+						'num_files' : ejf.files.length,
+						'current_file' : ejf.files_index,
+					};
+					s.percent = Math.round((s.position/s.total)*100);
+					s.overallPercent = Math.round(((s.position/s.total)/ejf.files.length + (ejf.files_index-1)/ejf.files.length)*100);
+					ejf.progress(s,file,e);
+				};})(ejf));
+//			});
 
 			// state change observer - we need to know when and if the file was successfully uploaded
 			x.onreadystatechange = xhrCallback;
@@ -164,7 +186,7 @@ function EasyJaxFiles (Url,req_type,files){
 					}
 					ejf.upload();
 				} else {
-					console.log("Status code "+x.status+" not continuing...");
+					alert("Status code "+x.status+" not continuing...");
 				}
 			}
 		};
