@@ -90,7 +90,7 @@ class Auth {
 
 	public static function Redirect($msg,$redir="/"){
 		if(defined('AJAX')){
-			$easyj = new \EasyJax();
+			$easyj = new EasyJax();
 			$easyj -> send_resp("You are not logged in.  Log back in and try again.");
 		} else {
 			header("Location: $redir");
