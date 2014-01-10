@@ -81,7 +81,10 @@ class Auth {
 		return true;
 	}
 	
-	public static function getData($key){
+	public static function getData($key=false){
+		if(!$key){
+			return self::$user_d;
+		}
 		if(isset(self::$user_d[$key])){
 			return self::$user_d[$key];
 		}

@@ -2,11 +2,17 @@
 namespace WMark;
 
 class Photo extends Crypter {
-	private $photosdir;
+	private static $photosdir;
+	private static $wmarkdir;
 	public $cacheDays;
 	
-	public function __construct($photosdir,$cacheDays=1){
-		$this -> photosdir = $photosdir;
+	public static function Init($pass,$error_file,$photosdir,$wmarkdir){
+		parent::Init($pass,$error_file);
+		self::$photosdir = $photosdir;
+		self::$wmarkdir = $wmarkdir;
+	}
+	
+	public function __construct($cacheDays=1){
 		$this -> cacheDays = $cacheDays;
 	}
 	
@@ -40,15 +46,15 @@ class Photo extends Crypter {
 	
 	private function findFile($file){
 		$ret = false;
-		if(is_array($this -> photosdir)){
-			foreach($this -> photosdir as $dir){
+		if(is_array(self::$photosdir)){
+			foreach(self::$photosdir as $dir){
 				if(file_exists($dir."/".$file)){
 					$ret = $dir."/".$file;
 					break;
 				}
 			}
 		} else {
-			if(file_exists($this -> photosdir."/".$file)) $ret = $this -> photosdir."/".$file;
+			if(file_exists(self::$photosdir."/".$file)) $ret = self::$photosdir."/".$file;
 		}
 		return $ret;
 	}
@@ -100,7 +106,7 @@ class Photo extends Crypter {
 			}
 			$wdat = $res -> fetch_assoc();
 			
-			$wmark = new \imagick($this->filesroot."/wmarks/{$wdat['wmark']}");
+			$wmark = new \imagick(self::$wmarkdir."/{$wdat['wmark']}");
 			$wmark -> setImageFormat('png');
 			
 			if($opts['wmloc'] == "m"){

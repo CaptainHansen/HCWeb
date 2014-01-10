@@ -39,8 +39,8 @@ class Crypter {
 	public function encrypt(){
 		$data = $this -> getRawData();
 		$start=microtime(true);
-		exec("echo -n \"$data\" | openssl enc -bf -e -pass pass:{self::$pass} -out /tmp/wm5-enc-$start.bin");
-		$cdata=file_get_contents("/tmp/gdj-enc-$start.bin");
+		exec("echo -n \"$data\" | openssl enc -bf -e -pass pass:".self::$pass." -out /tmp/wm5-enc-$start.bin");
+		$cdata=file_get_contents("/tmp/wm5-enc-$start.bin");
 		unlink("/tmp/wm5-enc-$start.bin");
 		
 		$pd = unpack("H*",substr($cdata,8));
@@ -60,8 +60,8 @@ class Crypter {
 		$crypt="Salted__";
 		$crypt.=pack("H*",$this->gstring);
 //		$crypt.=base64_decode($this->gstring);
-		file_put_contents("/tmp/gdj-crypt-$start.bin",$crypt);
-		exec("openssl enc -d -bf -pass pass:{self::$pass} -in /tmp/wm5-crypt-$start.bin",$data,$retvar);
+		file_put_contents("/tmp/wm5-crypt-$start.bin",$crypt);
+		exec("openssl enc -d -bf -pass pass:".self::$pass." -in /tmp/wm5-crypt-$start.bin",$data,$retvar);
 		unlink("/tmp/wm5-crypt-$start.bin");
 		if($retvar != 0) {
 			$this -> error("Decryption Failure",$data);
