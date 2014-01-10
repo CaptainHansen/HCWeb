@@ -24,11 +24,11 @@ class Fetcher extends Filters {
 	}
 	
 	private function get_SQL(){
-		if(isset($_SESSION['filter'])){
-			if($_SESSION['filter'] == 'nocat'){
+		if(isset($_SESSION['HCPhotos-filter'])){
+			if($_SESSION['HCPhotos-filter'] == 'nocat'){
 				return "select ID,cats from photos where (cats = '[]' OR cats = '') and hide = 0 order by time desc ";
 			} else {
-				return "select ID,cats from photos where cats LIKE '%\"{$_SESSION['filter']}\"%' and hide = 0 order by time desc ";
+				return "select ID,cats from photos where cats LIKE '%\"{$_SESSION['HCPhotos-filter']}\"%' and hide = 0 order by time desc ";
 			}
 		} else {
 			return "select ID,cats from photos where hide = 0 order by time desc ";

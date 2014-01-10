@@ -10,8 +10,8 @@ class Filters extends Categories {
 
 		////constructing filters array
 		$filters = array("none" => "--No Filter--", "nocat" => "Uncategorized Photos");
-		foreach($this -> categories as $id => $name){
-			$filters[$id]=$name;
+		foreach($this -> getCats() as $cat){
+			$filters[$cat['ID']]=$cat['name'];
 		}
 		
 		$this -> filters = $filters;
@@ -35,7 +35,7 @@ class Filters extends Categories {
 			if($_SESSION['HCPhotos-filter'] == 'nocat'){
 				$res = DB::query("select count(*) from photos where (cats = '[]' OR cats = '') and hide = 0");
 			} else {
-				$res = DB::query("select count(*) from photos where cats LIKE '%\"{$_SESSION['HCWeb-photos-filter']}\"%' and hide = 0");
+				$res = DB::query("select count(*) from photos where cats LIKE '%\"{$_SESSION['HCPhotos-filter']}\"%' and hide = 0");
 			}
 		} else {
 			$res = DB::query("select count(*) from photos where hide = 0");
