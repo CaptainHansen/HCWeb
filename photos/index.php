@@ -20,8 +20,9 @@ echo "<div class=\"surround\">";
 echo "<div class=\"HCPhotos-buttons\">";
 
 echo "<button onClick=\"HCPhotos.Delete();\" style=\"width: 180px;\">Delete Selected Photos</button>";
-echo  "<button style=\"position: relative;\"><input type=\"file\" id=\"HCPhotos-upload\" multiple=\"multiple\">Upload Photos</button>";
+echo "<button style=\"position: relative;\"><input type=\"file\" id=\"HCPhotos-upload\" multiple=\"multiple\">Upload Photos</button>";
 echo "<button onClick=\"HCPhotos.Duplicates.Show();\">Show Duplicates</button>";
+echo "<button onclick=\"HCPhotos.ClearSel('HCPhotos-main');\">Clear Selection</button>";
 
 
 echo "<div class=\"center\" style=\"font-size: 14pt;\">Filter by Category <select id=\"filter\" onchange=\"HCPhotos.Filter()\">";
@@ -43,7 +44,7 @@ echo "<div class=\"HCPhotos-ref\"></div>";
 echo "<div id=\"HCPhotos-dups\">
 <div class=\"title\">Duplicates</div>
 <div id=\"HCPhotos-dups-imgs\"></div>";
-echo '<div class="HCPhotos-buttons"><button onClick="HCPhotos.Duplicates.Close();">Close</button><button onClick="HCPhotos.Duplicates.Merge();">Merge Selected</button></div>';
+echo '<div class="HCPhotos-dups-buttons"><button onClick="HCPhotos.Duplicates.Close();">Close</button><button onClick="HCPhotos.Duplicates.Merge();">Merge Selected</button></div>';
 echo "</div>";
 echo "</div>";
 

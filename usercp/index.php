@@ -6,6 +6,7 @@ $title = "User Accounts";
 $head = "<script type=\"text/javascript\" src=\"HCUser.js\"></script>
 <link rel=\"stylesheet\" href=\"style.css\" />";
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
+echo "<div class=\"surround\">";
 
 $r = DB::query("select * from auth");
 
@@ -38,4 +39,5 @@ $r = DB::query("select * from auth");
 </table>
 
 <?
+echo "</div>";
 require("{$_SERVER['DOCUMENT_ROOT']}/footer.php");

@@ -9,9 +9,12 @@ div.HCPhotos-buttons.HCPhotos-buttons-scroll {
 	right: 0;
 	background-color: rgba(255,255,255,0.7);
 	z-index: 1;
+	color: black;
 }
 div.HCPhotos-buttons-place { display: none; }
 div.HCPhotos-buttons-place.HCPhotos-buttons-scroll { display: block; }
+
+div.HCPhotos-dups-buttons { text-align: center; }
 
 input#HCPhotos-upload {
 	position: absolute;
