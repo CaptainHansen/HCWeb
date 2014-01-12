@@ -58,6 +58,14 @@ class EasyJax {
 		}
 	}
 	
+	public function setData($key,$val){
+		if(!isset($this -> json_data[$key])){
+			$this -> json_data[$key] = $val;
+			return true;
+		}
+		return false;
+	}
+	
 	public function set_ret_data($key,$data){
 		$this -> return_data[$key] = $data;
 	}
