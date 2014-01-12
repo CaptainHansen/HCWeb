@@ -6,7 +6,7 @@ class Photo extends Crypter {
 	private static $wmarkdir;
 	public $cacheDays;
 	
-	public static function Init($pass,$error_file,$photosdir,$wmarkdir){
+	public static function Init($photosdir,$wmarkdir=false,$pass=false,$error_file=false){
 		parent::Init($pass,$error_file);
 		self::$photosdir = $photosdir;
 		self::$wmarkdir = $wmarkdir;
