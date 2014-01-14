@@ -1,0 +1,121 @@
+div.HCPhotos-buttons {
+	text-align: center;
+	padding: 10px 0;
+}
+div.HCPhotos-buttons.HCPhotos-buttons-scroll {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(255,255,255,0.7);
+	z-index: 1;
+	color: black;
+}
+div.HCPhotos-buttons-place { display: none; }
+div.HCPhotos-buttons-place.HCPhotos-buttons-scroll { display: block; }
+
+div.HCPhotos-dups-buttons { text-align: center; }
+
+input#HCPhotos-upload {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	
+	opacity: 0;
+	-moz-opacity: 0;
+	filter:alpha(opacity: 0);
+}
+input#HCPhotos-upload:hover {
+	cursor: pointer;
+}
+
+#HCPhotos-dups {
+	z-index: 2;
+	display: inline-block;
+	vertical-align: middle;
+	background-color: rgba(255,255,255,0.95);
+	text-shadow: #aaa 0.1em 0.1em 0.2em;
+	padding: 10px;
+	border-radius: 25px;
+	-moz-box-shadow: 0 0 7px #555;
+	-webkit-box-shadow: 0 0 7px #555;
+	box-shadow: 0 0 7px #555;
+	color: #000;
+	width: 960px;
+}
+
+#HCPhotos-main,#HCPhotos-dup {
+	text-align: center;
+	margin: 0 auto;
+}
+
+
+div.HCPhoto {
+	display: inline-block;
+	margin: 2px 4px;
+}
+.HCPhoto img {
+	display: block;
+	padding: 4px;
+	background-color: rgba(0,0,0,.3);
+	width: auto;
+	height: 100px;
+	position: relative;
+}
+.HCPhoto-sel img { background-color: rgba(255,0,0,.9); }
+div.HCPhoto-catmenu {
+	display: none;
+	position: absolute;
+	background-color: rgba(0,0,0,0.8);
+	color: #fff;
+	min-width: 150px;
+	font-size: 12pt;
+	padding: 2px;
+	z-index: 1;
+	text-align: left;
+}
+
+
+div.HCPhotos-blackout {
+	display: none;
+	z-index: 1;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+div.HCPhotos-ref {
+	width: 0;
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div#HCPhotos-upload-status {
+	width: 900px;
+	margin: 20px auto;
+	color: white;
+}
+
+div.HCPhotos-progress-main.HCProgress-wrap {
+	width: 500px;
+	background-color: #ccc;
+}
+.HCPhotos-progress-main div.HCProgress-progress {
+	background-color: #aaa;
+}
+
+div.HCPhotos-upload-success {
+	text-align: left;
+	font-size: 20px;
+}
+div.HCPhotos-upload-error {
+	text-align: left;
+	color: red;
+	font-size: 20px;
+}
