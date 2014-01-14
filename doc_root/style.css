@@ -1,0 +1,156 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, button, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+html {
+	background-color: #333;
+}
+
+body {
+	color: #fff;
+	font-family: Geneva, Times;
+	font-size: 11pt;
+	margin: 0px;
+	padding: 0px;
+	background-color: #fff;
+}
+
+
+/*TOPIMG STUFF*/
+
+div.topimg-wrapper {
+	background: #444;
+}
+
+div.topimg {
+	width: 960px;
+	margin: 0 auto;
+	padding: 0px;
+	height: 150px;
+}
+img.topimg {
+	margin: auto;
+	text-align: center;
+}
+
+
+/*** NAV LINKS AT TOP OF PAGE ***/
+
+div.linkbar-wrapper {
+	background: #eee url("/css-images/lnk_sprite.png");
+	-moz-box-shadow: 0px 4px 5px #777;
+	-webkit-box-shadow: 0px 4px 5px #777;
+	box-shadow: 0px 4px 5px #777;
+}
+
+ul.linkbar {
+	list-style-type: none;
+	position: relative;
+	width: 960px;
+	height: 40px;
+	margin: 0px auto;
+	padding: 0px;
+	background-image: url("/css-images/lnk_sprite.png");
+}
+
+.linkbar li {
+	float: left;
+	height: 40px;
+	margin: 0px 5px;
+	background-image: url("/css-images/lnk_sprite.png");
+}
+
+.linkbar a {
+	display: block;
+	line-height: 40px;
+	font-size: 12pt;
+	padding: 0px 10px;
+	color: #000;
+	text-decoration: none;
+}
+.linkbar a:hover { color: #000; }
+
+li.nav { background-position: 0px 0px; }
+li.nav:hover { background-position: 0 -40px; }
+
+li.navc { background-position: 0px -80px; }
+li.navc:hover { color: white; }
+
+div.ddmenu {
+	position: absolute;
+	display: none;
+	min-width: 150px;
+	top: 40px;
+	color: white;
+}
+.ddmenu a {
+	display: block;
+	float: none;
+	line-height: 25px;
+	height: 25px;
+	font-size: 10pt;
+	color: white;
+	text-decoration: none;
+	padding: 0px 10px;
+	margin: 0px;
+	background-image: url("/css-images/lnk_sprite.png");
+	background-repeat: repeat;
+	background-position: 0 -120px;
+}
+.ddmenu a:hover {
+	color: black;
+	background-position: 0 -145px;
+}
+
+/*** END NAV LINKS ***/
+
+
+/* THIS SURROUNDS THE MAIN CONTENT OF THE SITE!!! */
+
+div.main {
+	width: 960px;
+	margin: 20px auto 0px auto;
+	background-color: #aaa;
+}
+
+div.surround {
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 0px;
+	min-height: 450px;
+}
+
+
+/*FOOTER*/
+
+div.foot-wrapper {
+	background: #333;
+	-moz-box-shadow: inset 0px 4px 5px black;
+	-webkit-box-shadow: inset 0px 4px 5px black;
+	box-shadow: inset 0px 4px 5px black;
+}
+
+div.foot {
+	width: 960px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 10px;
+	margin-top: 10px;
+	padding-top: 5px;
+}
+
+
+/*OTHERS*/
+
+a { color: #fff; }
+a:hover { color: #ba0d0d; }
+h1 { font-size: 18pt; text-align: center; margin: 5px; }
+h2 { font-size: 16pt; text-align: center; margin: 4px; }
+a.nostyle { text-decoration: none }
+.center { text-align: center; }
+div.clear { clear: both; }
