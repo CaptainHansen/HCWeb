@@ -35,8 +35,6 @@ class EasyJaxFiles {
 	public $path = false;
 	public $req_method;
 
-	public $filename;	
-	private $destination_folder;
 	public $exts = array();
 	
 	private $read;
@@ -44,30 +42,34 @@ class EasyJaxFiles {
 	private $overw;
 	
 	public function __construct(){
-		if(isset($_SERVER['PATH_INFO'])){
-			$this -> path = $_SERVER['PATH_INFO'];
-		}
+		$this -> path = $_SERVER['PATH_INFO'];
 		$this -> req_method = strtoupper($_SERVER['REQUEST_METHOD']);
 		$this -> return_data = array();
 		$this -> return_data['error'] = "";
 	}
 	
-	public function downloadTo($folder = "/tmp/"){
-		$headers = apache_request_headers();
-		//$this -> type = $headers['Content-type'];
-		$this -> filename = $headers['Filename'];
+	public function downloadTo($folder = "/tmp"){
+		$dloc = $folder.$this -> path;
+		$dest = dirname($dloc);
+
 		$this -> read = fopen('php://input', "r");
-		$this -> return_data['file'] = $this -> filename;
+		$this -> set_ret_data('name',basename($this -> path));
 		
-				
-		$this -> destination_folder = $folder;
-		if(file_exists($this -> destination_folder.DIRECTORY_SEPARATOR.$this -> filename)){
+		if(!is_dir($dest)){
+			$this -> add_error_msg("Destination folder does not exist.");
+			return false;
+		}
+		
+		if(file_exists($dloc)){
 			$this -> set_ret_data('overw',true);
 		} else {
 			$this -> set_ret_data('overw',false);
 		}
-		$this -> write = fopen($this -> destination_folder.DIRECTORY_SEPARATOR.$this -> filename, "w");
-		if(!$this -> write) return false;
+		$this -> write = fopen($dloc,'w');
+		if(!$this -> write) {
+			$this -> add_error_msg("Cannot open a write handle.");
+			return false;
+		}
 		
 		while(true) {
 			$buffer = fgets($this -> read, 4096);
@@ -78,7 +80,7 @@ class EasyJaxFiles {
 			}
 			fwrite($this -> write, $buffer);
 		}
-		return $this -> destination_folder.DIRECTORY_SEPARATOR.$this -> filename;
+		return $dloc;
 	}
 	
 	public function set_ret_data($key,$data){
