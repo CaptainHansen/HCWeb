@@ -87,7 +87,8 @@ class EasyJax {
 		die;
 	}
 
-	public function db_execute($table,$auth_methods = array("GET","PUT","POST","DELETE")){
+	public function db_execute($table,$auth_methods = array("GET","PUT","POST","DELETE","SEQ"),$seq=false,$pid=false){
+		//seq and pid are for needed for sequencing information
 		if(!in_array($this -> req_method,$auth_methods)){
 			$this -> add_error_msg("You are not authorized to do the requested action.");
 			return false;
@@ -96,6 +97,15 @@ class EasyJax {
 		if($this -> path) $id = basename($this -> path);
 		
 		switch($this -> req_method){
+		case "SEQ":
+			if(!$seq){
+				$this -> add_error_msg("Sequence change operation requested but no sequence column name set on the server side.");
+				break;
+			}
+			if(!DB::sequence($table,$this -> getData('toid'),$id,$seq,$pid)){
+				$this -> add_error_msg("Sequence change failed.");
+			}
+			break;
 		case "GET":
 			if($r = DB::query("select * from {$table} where ID = {$id}")) {
 				$this -> set_ret_data('data',$r -> fetch_assoc());
@@ -111,7 +121,7 @@ class EasyJax {
 			break;
 
 		case "POST":
-			if($id = DB::insert($table,$this -> getData())){
+			if($id = DB::insert($table,$this -> getData(),$seq,$pid)){
 				$this -> set_ret_data('id',$id);
 			} else {
 				$this -> add_error_msg("A new record could not be created.");
@@ -119,7 +129,7 @@ class EasyJax {
 			break;
 	
 		case "DELETE":
-			if(!DB::delete($table,$id)){
+			if(!DB::delete($table,$id,$seq,$pid)){
 				$this -> add_error_msg("Record {$id} could not be deleted");
 			}
 			break;

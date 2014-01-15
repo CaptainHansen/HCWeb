@@ -1,10 +1,12 @@
 <?
+define("REQUIRE_ADMIN",true);
 require('../auth.php');
 use \HCWeb\DB;
 
 $title = "User Accounts";
 $head = "<script type=\"text/javascript\" src=\"HCUser.js\"></script>
 <link rel=\"stylesheet\" href=\"style.css\" />";
+$currentpage = "User Accounts";
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div class=\"surround\">";
 

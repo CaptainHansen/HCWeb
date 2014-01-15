@@ -48,6 +48,7 @@ XMLHttpRequest.prototype.mySendAsBinary = function(text){
 }
 
 function EasyJaxFiles (Url,req_type,files){
+	if(Url.slice(-1) != '/') Url += '/';
 	this.Url = Url;
 
 	this.start = function() {};
@@ -117,6 +118,10 @@ function EasyJaxFiles (Url,req_type,files){
 	}
 	
 	this.upload = function (){
+		if(this.files.length == 0) {
+			alert("You must first select files to upload!");
+			return false;
+		}
 		if(this.files_index == 0) this.start();
 		if(this.files_index >= files.length) return this.finish();
 		this.nextfile();
@@ -141,8 +146,7 @@ function EasyJaxFiles (Url,req_type,files){
 
 		var x = this.xmlHttp;
 		return function(evt) {
-			x.open(ejf.req_type, ejf.Url, true);
-			x.setRequestHeader("Filename",file.name);
+			x.open(ejf.req_type, ejf.Url+file.name, true);
 
 			// let's track upload progress
 			var eventSource = x.upload || x;
@@ -154,8 +158,8 @@ function EasyJaxFiles (Url,req_type,files){
 						'num_files' : ejf.files.length,
 						'current_file' : ejf.files_index,
 					};
-					s.percent = Math.round((s.position/s.total)*100);
-					s.overallPercent = Math.round(((s.position/s.total)/ejf.files.length + (ejf.files_index-1)/ejf.files.length)*100);
+					s.percent = (s.position/s.total)*100;
+					s.overallPercent = ((s.position/s.total)/ejf.files.length + (ejf.files_index-1)/ejf.files.length)*100;
 					ejf.progress(s,file,e);
 				};})(ejf));
 //			});

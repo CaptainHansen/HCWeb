@@ -8,6 +8,11 @@ more = 50;
 $(document).ready(function(){
 	HCPhotos.FetchMore(0,more);
 	offsetTop = $('.HCPhotos-buttons').offset().top;
+	$('#HCPhotos-size').change(function(){
+		var val = parseInt($(this).val()) + 100;
+		$('.HCPhoto img').css({'height': val+'px'});
+		console.log(val);
+	});
 });
 
 $(window).scroll(function(){

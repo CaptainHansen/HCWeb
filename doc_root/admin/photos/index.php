@@ -4,16 +4,17 @@ use \HCWeb\DB;
 
 $title="Photo Management";
 $head="<link rel=\"stylesheet\" href=\"style.css\" />
+<script type=\"text/javascript\" src=\"/js/HC.Progress.js\"></script>
+<script type=\"text/javascript\" src=\"/js/HC.Slider.js\"></script>
 <script type=\"text/javascript\" src=\"HCPhotos.js\"></script>
 <script type=\"text/javascript\" src=\"HCPhotos.Cats.js\"></script>
 <script type=\"text/javascript\" src=\"HCPhotos.Duplicates.js\"></script>
 <script type=\"text/javascript\" src=\"HCPhotos.Upload.js\"></script>
 <script type=\"text/javascript\" src=\"/js/EasyJaxFiles.js\"></script>
 <script type=\"text/javascript\" src=\"/js/jquery.waitforimages.js\"></script>
-<script type=\"text/javascript\" src=\"/js/HC.Progress.js\"></script>
 <link rel=\"stylesheet\" href=\"/js/HCUI-defaults.css\" />";
 //$beforelinks="";
-$currentpage="More Tools...";
+$currentpage="Photo Manager";
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div class=\"surround\">";
 
@@ -29,6 +30,8 @@ echo "<div class=\"center\" style=\"font-size: 14pt;\">Filter by Category <selec
 $filters = new Photos\Filters();
 $filters -> GetOptions();
 echo "</select></div>";
+
+echo "<input type=\"HCSlider\" id=\"HCPhotos-size\" value=\"0\">";
 
 echo "</div>";
 echo "<div class=\"HCPhotos-buttons-place\"></div>";

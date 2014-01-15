@@ -1,5 +1,6 @@
 <?
 namespace HCWeb;
+use \HCWeb\EasyJax;
 
 class Auth {
 	private static $user_d=false;

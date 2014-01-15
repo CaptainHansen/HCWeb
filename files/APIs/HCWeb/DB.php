@@ -57,7 +57,15 @@ class DB {
 		return (self::getError() == "");
 	}
 	
-	public static function insert($table,$data){
+	public static function insert($table,$data,$seq=false,$pid=false){
+		if($seq){
+			$sql = "select max({$seq}) from {$table}";
+			if($pid) $sql .= " where {$pid} = {$data[$pid]}";
+			$r = self::query($sql);
+			list($mseq) = $r -> fetch_row();
+			$data[$seq] = $mseq+1;
+		}
+	
 		$sql = "insert into $table set ";
 		$first = true;
 		foreach($data as $col => $val){
@@ -78,10 +86,22 @@ class DB {
 		}
 	}
 	
-	public static function delete($table,$id=false){
+	public static function delete($table,$id=false,$seq=false,$pid=false){
 		if($id === false){
 			$sql = "delete from $table";
 		} else {
+			if($seq){
+				if($pid){
+					$r = self::query("select {$pid} from {$table} where ID = {$id}");
+					list($pidval) = $r -> fetch_row();
+					$sql = "select ID from {$table} where {$pid} = {$pidval} and {$seq} = (select max({$seq}) from {$table} where {$pid} = {$pidval})";
+				} else {
+					$sql = "select ID from {$table} where {$seq} = (select max({$seq}) from {$table})";
+				}
+				$r = self::query($sql);
+				list($toid) = $r -> fetch_row();
+				self::sequence($table,$toid,$id,$seq,$pid);
+			}
 			$sql = "delete from $table where ID = $id";
 		}
 		self::query($sql);

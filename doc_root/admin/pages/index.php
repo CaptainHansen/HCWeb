@@ -3,6 +3,7 @@ require("../auth.php");
 $head = "<script src=\"/ckeditor/ckeditor.js\"></script>
 <script src=\"/ckeditor/adapters/jquery.js\"></script>
 <script type=\"text/javascript\" src=\"HCPage.js\"></script>";
+$currentpage = "Edit Pages";
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div id=\"main-text\">";
 
