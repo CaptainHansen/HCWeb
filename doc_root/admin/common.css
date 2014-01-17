@@ -1,0 +1,44 @@
+div.column {
+	width: 200px;
+	padding: 10px;
+	font-size: 11pt;
+	display: inline-block;
+	float: none;
+	position: absolute;
+}
+div.column.right { right: 0; }
+div.column.left { left: 0; }
+
+div#right-column-color, div#left-column-color {
+	position: fixed;
+	width: 220px;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	background-color: #eee;
+}
+div#right-column-color { right: 0; }
+div#left-column-color { left: 0; }
+
+@media (max-width: 1200px) {
+	div.column {
+		width: 150px;
+		font-size: 9pt;
+	}
+	div#right-column-color, div#left-column-color {
+		width: 170px;
+	}
+	div.main {
+		margin-left: 170px;
+	}
+}
+
+div.main {
+	margin-left: 220px;
+	width: auto;
+}
+
+div#main-text {
+	padding: 10px;
+	position: relative;
+}

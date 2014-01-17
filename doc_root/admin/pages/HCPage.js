@@ -1,3 +1,8 @@
+$(document).ready(function(){
+	$('#file_contents').ckeditor();
+});
+	
+
 function HCPage() {
 }
 
@@ -5,15 +10,23 @@ CKEDITOR.config.contentsCss = ['/style.css','http://fonts.googleapis.com/css?fam
 
 HCPage.Load = function(){
 	var file = $('#page').val();
+	if(file == '--') {
+		$('#thestuff').css({'display':'none'});
+		return false;
+	}
 	easyj = new EasyJax('do.php/'+file,'GET',function(data){
-		$('#thestuff').html('<textarea id="file_contents">'+data.data+'</textarea><div class="center"><button onclick="HCPage.Save()">Save Changes</button></div>');
-		$('#file_contents').ckeditor();
+		$('#file_contents').val(data.data);
+		$('#thestuff').css({'display':'block'});
 	});
 	easyj.submit_data();
 }
 
 HCPage.Save = function(){
 	var file = $('#page').val();
+	if(file == '--'){
+		alert("You have not selected a valid file and therefore cannot perform a save right now.");
+		return false;
+	}
 	easyj = new EasyJax('do.php/'+file,'PUT',function(){
 		alert("Page Contents Saved Successfully!");
 	},{'data' : $('#file_contents').val()});

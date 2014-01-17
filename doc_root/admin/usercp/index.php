@@ -5,10 +5,14 @@ use \HCWeb\DB;
 
 $title = "User Accounts";
 $head = "<script type=\"text/javascript\" src=\"HCUser.js\"></script>
+<link rel=\"stylesheet\" href=\"/admin/common.css\" />
 <link rel=\"stylesheet\" href=\"style.css\" />";
 $currentpage = "User Accounts";
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
-echo "<div class=\"surround\">";
+echo "<div id=\"left-column-color\"></div>";
+echo "<div class=\"column left\"><h1>Edit Users</h1><p>This page allows control over all user accounts associated with this site.  Rest assurred, you cannot de-authorize yourself if you are listed as an admin.</p></div>";
+
+echo "<div id=\"main-text\">";
 
 $r = DB::query("select * from auth");
 

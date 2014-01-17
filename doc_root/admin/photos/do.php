@@ -77,6 +77,7 @@ case "DELETE":
 			}
 		}
 		DB::query("delete from photos where photo = \"$file\"");	//with duplicate detection enabled, we need to delete all rows that reference the same file, since more than one ID may point to the same file.
+		DB::delete("property_photos",$id);
 	}
 	
 	$pfetch = new Photos\Fetcher($start,count($ids)+1);
@@ -201,8 +202,8 @@ case "PHOTO_CH":
 	}
 
 	$id = $easyj -> getData('id');
-	$sql = eval($photo_ch['SQL']);	//SQL in photo_ch MUST have a \$id where the new photo ID will reside.
-	if(!DB::query($sql)){
+	$photo_ch['DBA'] -> setVal($id);
+	if(!$photo_ch['DBA'] -> runQuery()){
 		$easyj -> add_error_msg("Cannot use the selected photo.");
 		break;
 	}

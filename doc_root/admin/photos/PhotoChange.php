@@ -5,18 +5,23 @@ if(!isset($_SESSION['HCPhotoChange'])) {
 	header("Location: /");
 	die;
 } else {
-//	$photo_ch = $_SESSION['HCPhotoChange'];
+	$photo_ch = $_SESSION['HCPhotoChange'];
 }
 
-$title="Admin - Photo Management - {$_SESSION['HCPhotoChange']['title']}";
+$title="Admin - Photo Management - {$photo_ch['title']}";
 $head="<link rel=\"stylesheet\" href=\"style.css\" />
+<link rel=\"stylesheet\" href=\"/admin/common.css\" />
+<link rel=\"stylesheet\" href=\"/js/HCUI-defaults.css\" />
+<script type=\"text/javascript\" src=\"/js/HC.Slider.js\"></script>
 <script type=\"text/javascript\" src=\"HCPhotos.js\"></script>
-<script type=\"text/javascript\" src=\"HCPhotos.Change.js\"></script>
-<script type=\"text/javascript\" src=\"/js/EasyJax.js\"></script>";
-$currentpage=$_SESSION['HCPhotoChange']['currentpage'];
+<script type=\"text/javascript\" src=\"HCPhotos.Change.js\"></script>";
+$currentpage = $photo_ch['currentpage'];
 
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
-echo "<div class=\"surround\">";
+echo "<div id=\"left-column-color\"></div>";
+echo "<div class=\"column left\"><h1>{$photo_ch['title']}</h1><p>{$photo_ch['descrip']}</p></div>";
+
+echo "<div id=\"main-text\">";
 
 echo "<div class=\"HCPhotos-buttons\">";
 
@@ -27,6 +32,8 @@ echo "<div class=\"center\" style=\"font-size: 14pt;\">Filter by Category <selec
 $filters = new Photos\Filters();
 $filters -> GetOptions();
 echo "</select></div>";
+
+echo "<input type=\"HCSlider\" id=\"HCPhotos-size\" value=\"0\">";
 
 echo "</div>";
 echo "<div class=\"HCPhotos-buttons-place\"></div>";
