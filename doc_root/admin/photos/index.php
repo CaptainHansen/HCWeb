@@ -3,7 +3,8 @@ require("{$_SERVER['DOCUMENT_ROOT']}/admin/auth.php");
 use \HCWeb\DB;
 
 $title="Photo Management";
-$head="<link rel=\"stylesheet\" href=\"style.css\" />
+$head="<link rel=\"stylesheet\" href=\"/admin/common.css\" />
+<link rel=\"stylesheet\" href=\"style.css\" />
 <script type=\"text/javascript\" src=\"/js/HC.Progress.js\"></script>
 <script type=\"text/javascript\" src=\"/js/HC.Slider.js\"></script>
 <script type=\"text/javascript\" src=\"HCPhotos.js\"></script>
@@ -16,7 +17,11 @@ $head="<link rel=\"stylesheet\" href=\"style.css\" />
 //$beforelinks="";
 $currentpage="Photo Manager";
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
-echo "<div class=\"surround\">";
+
+echo "<div id=\"left-column-color\"></div>";
+echo "<div class=\"column left\"><h1>Photo Manager</h1><p>This page shows all photos uploaded to this site and allows control over what photos show up on the Home page of the site.  Duplicates can be easily resolved, photos can be removed (deleting a photo here also deletes it from the portfolio section of the website), and multiple photos can be uploaded at the same time.</p></div>";
+
+echo "<div id=\"main-text\">";
 
 echo "<div class=\"HCPhotos-buttons\">";
 

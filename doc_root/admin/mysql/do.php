@@ -15,8 +15,6 @@ if(!DB::Init($d['host'],$d['username'],$d['password'],$d['db'])){
 }*/
 
 switch($_SERVER['REQUEST_METHOD']){
-case "LOGIN":
-	break;
 case "QUERY":
 	$r = DB::query($sql);
 	if(DB::getError() != "") {

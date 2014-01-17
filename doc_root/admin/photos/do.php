@@ -77,6 +77,7 @@ case "DELETE":
 			}
 		}
 		DB::query("delete from photos where photo = \"$file\"");	//with duplicate detection enabled, we need to delete all rows that reference the same file, since more than one ID may point to the same file.
+		DB::delete("property_photos",$id);
 	}
 	
 	$pfetch = new Photos\Fetcher($start,count($ids)+1);
@@ -200,11 +201,19 @@ case "PHOTO_CH":
 		$photo_ch = $_SESSION['HCPhotoChange'];
 	}
 
-	$id = $easyj -> getData('id');
-	$sql = eval($photo_ch['SQL']);	//SQL in photo_ch MUST have a \$id where the new photo ID will reside.
-	if(!DB::query($sql)){
-		$easyj -> add_error_msg("Cannot use the selected photo.");
-		break;
+	$ids = $easyj -> getData('ids');
+	if($photo_ch['DBA'] instanceof \HCWeb\DBUpdate) {
+		if(count($ids) > 1){
+			$easyj -> add_error_msg("Multiple photos selected on an update.  This is not supported.");
+			break;
+		}
+	}
+	foreach($ids as $id){
+		$photo_ch['DBA'] -> setVal($id);
+		if(!$photo_ch['DBA'] -> runQuery()){
+			$easyj -> add_error_msg("Cannot use photo ID {$id} - database error occurred.");
+			break 2;
+		}
 	}
 	
 	unset($_SESSION['HCPhotoChange']);  //doing this here, so I don't have to remember to put it in later.

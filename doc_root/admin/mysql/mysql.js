@@ -24,33 +24,12 @@
  */
 
 $(document).ready(function(){
-	$('.credentials').each(function(){
-		$(this).keydown(function(event){
-			if(event.keyCode == 13){
-				try_login();
-			}
-		});
-	});
 	$('#query').keydown(function(event){
 		if(event.keyCode == 13){
 			run_query();
 		}
 	});
 });
-
-function try_login(){
-	easyj = new EasyJax('do.php','LOGIN',function(data){
-		$('.credentials').css({'display':'none'});
-		$('.query-results').css({'display':'block'});
-	});
-	
-	easyj.set_send_data('host',$('#host').val());
-	easyj.set_send_data('username',$('#username').val());
-	easyj.set_send_data('password',$('#password').val());
-	easyj.set_send_data('db',$('#db').val());
-	
-	easyj.submit_data();
-}
 
 function run_query(){
 	easyj = new EasyJax('do.php','QUERY',function(data,pdat){
@@ -79,10 +58,6 @@ function run_query(){
 			$('#results').prepend(html);
 		}
 	});
-//	easyj.set_send_data('host',$('#host').val());
-//	easyj.set_send_data('username',$('#username').val());
-//	easyj.set_send_data('password',$('#password').val());
-//	easyj.set_send_data('db',$('#db').val());
 	easyj.set_send_data('query',$('#query').val());
 	
 	easyj.submit_data();
