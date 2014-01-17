@@ -201,11 +201,19 @@ case "PHOTO_CH":
 		$photo_ch = $_SESSION['HCPhotoChange'];
 	}
 
-	$id = $easyj -> getData('id');
-	$photo_ch['DBA'] -> setVal($id);
-	if(!$photo_ch['DBA'] -> runQuery()){
-		$easyj -> add_error_msg("Cannot use the selected photo.");
-		break;
+	$ids = $easyj -> getData('ids');
+	if($photo_ch['DBA'] instanceof \HCWeb\DBUpdate) {
+		if(count($ids) > 1){
+			$easyj -> add_error_msg("Multiple photos selected on an update.  This is not supported.");
+			break;
+		}
+	}
+	foreach($ids as $id){
+		$photo_ch['DBA'] -> setVal($id);
+		if(!$photo_ch['DBA'] -> runQuery()){
+			$easyj -> add_error_msg("Cannot use photo ID {$id} - database error occurred.");
+			break 2;
+		}
 	}
 	
 	unset($_SESSION['HCPhotoChange']);  //doing this here, so I don't have to remember to put it in later.

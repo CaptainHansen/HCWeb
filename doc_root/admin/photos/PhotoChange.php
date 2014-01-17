@@ -21,6 +21,13 @@ include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div id=\"left-column-color\"></div>";
 echo "<div class=\"column left\"><h1>{$photo_ch['title']}</h1><p>{$photo_ch['descrip']}</p></div>";
 
+if($photo_ch['DBA'] instanceof \HCWeb\DBInsert){
+	$val = 1;
+} else {
+	$val = 0;
+}
+echo "<input type=\"hidden\" id=\"HCPhotos-change-select-multi\" value=\"{$val}\">";
+
 echo "<div id=\"main-text\">";
 
 echo "<div class=\"HCPhotos-buttons\">";

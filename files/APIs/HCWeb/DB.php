@@ -42,6 +42,7 @@ class DB {
 	}
 	
 	public static function update($table,$id,$data){
+		$id = intval($id);
 		$sql = "update $table set ";
 		$first = true;
 		foreach($data as $col => $val){
@@ -90,6 +91,7 @@ class DB {
 		if($id === false){
 			$sql = "delete from $table";
 		} else {
+			$id = intval($id);
 			if($seq){
 				if($pid){
 					$r = self::query("select {$pid} from {$table} where ID = {$id}");
@@ -109,6 +111,8 @@ class DB {
 	}
 	
 	public static function sequence($table,$toid,$fromid,$seq='seq',$pID=false){
+		$toid = intval($toid);
+		$fromid = intval($fromid);
 		if($pID) {
 			$r = DB::query("select {$seq},{$pID} from {$table} where ID = {$fromid}");
 			list($from,$from_pid) = $r -> fetch_row();

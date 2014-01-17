@@ -94,7 +94,7 @@ class EasyJax {
 			return false;
 		}
 		
-		if($this -> path) $id = basename($this -> path);
+		if($this -> path) $id = intval(basename($this -> path));
 		
 		switch($this -> req_method){
 		case "SEQ":
@@ -102,7 +102,7 @@ class EasyJax {
 				$this -> add_error_msg("Sequence change operation requested but no sequence column name set on the server side.");
 				break;
 			}
-			if(!DB::sequence($table,$this -> getData('toid'),$id,$seq,$pid)){
+			if(!DB::sequence($table,intval($this -> getData('toid')),$id,$seq,$pid)){
 				$this -> add_error_msg("Sequence change failed.");
 			}
 			break;
