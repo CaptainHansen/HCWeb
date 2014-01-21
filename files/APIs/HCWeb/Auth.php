@@ -5,6 +5,7 @@ use \HCWeb\EasyJax;
 class Auth {
 	private static $user_d=false;
 	private static $login_page="/login.php";
+	private static $loggedin = false;
 	
 	public static function setLoginPage($uri){
 		self::$login_page = $uri;
@@ -55,7 +56,12 @@ class Auth {
 				}
 			}
 		}
+		self::$loggedin = true;
 		return true;
+	}
+	
+	public static function isLoggedIn(){
+		return self::$loggedin;
 	}
 
 	public static function Login($user,$pass){
@@ -68,6 +74,7 @@ class Auth {
 			$_SESSION['pass'] = $d['pass'];
 			$_SESSION['lastact'] = date('U');
 			self::$user_d = $d;
+			self::$loggedin = true;
 			return true;
 		} else {
 			return false;
@@ -79,6 +86,7 @@ class Auth {
 		unset($_SESSION['user']);
 		unset($_SESSION['pass']);
 		unset($_SESSION['lastact']);
+		self::$loggedin = false;
 		return true;
 	}
 	
