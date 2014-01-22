@@ -11,6 +11,9 @@ require("bootstrap.php");
 if(!isset($title)) $title="New Website";	//your sites title (default)
 echo "<title>$title</title>";
 
+use \HCWeb\Auth;
+
+if(Auth::isLoggedIn()) echo "<link rel=\"stylesheet\" href=\"/admin.css\" />";
 echo "<link rel=\"stylesheet\" href=\"/style.css\" />";
 echo "<script type=\"text/javascript\" src=\"/js/combine_js.php/jquery-1.8.3.js/EasyJax.js\"></script>";
 
@@ -18,6 +21,6 @@ if(isset($head)) echo $head;
 echo "</head>";
 echo "<body>";
 
-echo "<div class=\"topimg-wrapper\"><div class=\"topimg\"><img class=\"topimg\" src=\"/css-images/header.jpg\" alt=\"Header Image\" /></div></div>";
+echo "<div class=\"header-wrapper\"><div class=\"header\"><h1>Herro!!</h1></div></div>";
 include("{$_SERVER['DOCUMENT_ROOT']}/links.php");
 echo "<div class=\"main\">";

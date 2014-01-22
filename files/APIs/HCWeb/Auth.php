@@ -5,7 +5,7 @@ use \HCWeb\EasyJax;
 class Auth {
 	private static $user_d=false;
 	private static $login_page="/login.php";
-	private static $loggedin = false;
+	private static $loggedin = null;
 	
 	public static function setLoginPage($uri){
 		self::$login_page = $uri;
@@ -17,6 +17,7 @@ class Auth {
 			if($redir){
 				self::Redirect("You are not logged in.  Log back in and try again.",self::$login_page);
 			} else {
+				self::$loggedin = false;
 				return false;
 			}
 		}
@@ -32,6 +33,7 @@ class Auth {
 			if($redir){
 				self::Redirect("Your session username and password are invalid.");
 			} else {
+				self::$loggedin = false;
 				return false;
 			}
 		}
@@ -44,6 +46,7 @@ class Auth {
 			if($redir){
 				self::Redirect("Your session has timed out.  You must log in again.",self::$login_page);
 			} else {
+				self::$loggedin = false;
 				return false;
 			}
 		} else {
@@ -52,6 +55,7 @@ class Auth {
 				if($redir){
 					self::Redirect("ACCESS DENIED - Admin priveleges required.");
 				} else {
+					self::$loggedin = false;
 					return false;
 				}
 			}
@@ -61,6 +65,9 @@ class Auth {
 	}
 	
 	public static function isLoggedIn(){
+		if(self::$loggedin === null){
+			self::Init(false);
+		}
 		return self::$loggedin;
 	}
 
@@ -77,6 +84,7 @@ class Auth {
 			self::$loggedin = true;
 			return true;
 		} else {
+			self::$loggedin = false;
 			return false;
 		}
 	}

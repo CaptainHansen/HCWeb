@@ -2,6 +2,8 @@
 require(dirname(__DIR__)."/doc_root/bootstrap.php");
 use \HCWeb\DB;
 
+mkdir("newphotos");
+
 $r = DB::query("show tables");
 if($r -> num_rows == 0){
 	DB::query("CREATE TABLE `auth` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `user` varchar(255) NOT NULL, `pass` varchar(34) NOT NULL, `admin` tinyint(1) NOT NULL, PRIMARY KEY (`ID`), UNIQUE KEY `user` (`user`) ) ");

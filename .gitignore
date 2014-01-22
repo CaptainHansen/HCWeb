@@ -1,3 +1,4 @@
 .svn
 /logs/*
 .DS_Store
+db.json

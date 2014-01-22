@@ -18,17 +18,8 @@ div.HCPhotos-dups-buttons { text-align: center; }
 
 input#HCPhotos-upload {
 	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	
-	opacity: 0;
-	-moz-opacity: 0;
-	filter:alpha(opacity: 0);
-}
-input#HCPhotos-upload:hover {
-	cursor: pointer;
+	height: 0;
+	width: 0;
 }
 
 #HCPhotos-dups {
