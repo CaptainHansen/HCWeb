@@ -1,8 +1,9 @@
 <?
 define("REQUIRE_ADMIN",true);
 require("../auth.php");
-$head = "<script type=\"text/javascript\" src=\"mysql.js\"></script>";
-$currentpage = "MySQL";
+use \HCWeb\Header;
+Header::addCssJs("mysql.js");
+Header::$currentpage = "MySQL";
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 ?>
 <style type="text/css">

@@ -11,9 +11,9 @@ class Link extends LinkItem {
 		$this -> links = $links;
 	}
 
-	public function getHTML($currentpage="",$nav="nav",$navc="navc"){
+	public function getHTML($nav="nav",$navc="navc"){
 		$style = $nav;
-		if($currentpage == $this -> title){
+		if(\HCWeb\Header::$currentpage == $this -> title){
 			$style = $navc;
 		}
 		if($this -> className) $style .= " ".($this -> className);

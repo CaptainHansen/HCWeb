@@ -1,5 +1,6 @@
 <?
 require("../auth.php");
+use \HCWeb\Header;
 
 if(!isset($_SESSION['HCPhotoChange'])) {
 	header("Location: /");
@@ -8,14 +9,13 @@ if(!isset($_SESSION['HCPhotoChange'])) {
 	$photo_ch = $_SESSION['HCPhotoChange'];
 }
 
-$title="Admin - Photo Management - {$photo_ch['title']}";
-$head="<link rel=\"stylesheet\" href=\"style.css\" />
-<link rel=\"stylesheet\" href=\"/admin/common.css\" />
-<link rel=\"stylesheet\" href=\"/js/HCUI-defaults.css\" />
-<script type=\"text/javascript\" src=\"/js/HC.Slider.js\"></script>
-<script type=\"text/javascript\" src=\"HCPhotos.js\"></script>
-<script type=\"text/javascript\" src=\"HCPhotos.Change.js\"></script>";
-$currentpage = $photo_ch['currentpage'];
+Header::$title="Admin - Photo Management - {$photo_ch['title']}";
+Header::addCssJs('/admin/common.css');
+Header::addCssJs('style.css');
+Header::addCssJs('/js/HCUI-defaults.css');
+Header::addCssJs('HCPhotos.js');
+Header::addCssJs('HCPhotos.Change.js');
+Header::$currentpage = $photo_ch['currentpage'];
 
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div id=\"left-column-color\"></div>";

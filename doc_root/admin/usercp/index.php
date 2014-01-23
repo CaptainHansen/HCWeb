@@ -2,12 +2,13 @@
 define("REQUIRE_ADMIN",true);
 require('../auth.php');
 use \HCWeb\DB;
+use \HCWeb\Header;
 
-$title = "User Accounts";
-$head = "<script type=\"text/javascript\" src=\"HCUser.js\"></script>
-<link rel=\"stylesheet\" href=\"/admin/common.css\" />
-<link rel=\"stylesheet\" href=\"style.css\" />";
-$currentpage = "User Accounts";
+Header::$title = "User Accounts";
+Header::addCssJs('/admin/common.css');
+Header::addCssJs('HCUser.js');
+Header::addCssJs('style.css');
+Header::$currentpage = "Edit Users";
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div id=\"left-column-color\"></div>";
 echo "<div class=\"column left\"><h1>Edit Users</h1><p>This page allows control over all user accounts associated with this site.  Rest assurred, you cannot de-authorize yourself if you are listed as an admin.</p></div>";

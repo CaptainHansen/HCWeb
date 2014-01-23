@@ -6,7 +6,7 @@ $(document).ready(function(){
 function HCPage() {
 }
 
-CKEDITOR.config.contentsCss = ['/style.css','http://fonts.googleapis.com/css?family=Noto+Sans|Open+Sans+Condensed:300'];
+//CKEDITOR.config.contentsCss = ['/style.css'];
 
 HCPage.Load = function(){
 	var file = $('#page').val();

@@ -1,10 +1,11 @@
 <?
 require("../auth.php");
-$head = "<link rel=\"stylesheet\" href=\"/admin/common.css\" />
-<script src=\"/ckeditor/ckeditor.js\"></script>
-<script src=\"/ckeditor/adapters/jquery.js\"></script>
-<script type=\"text/javascript\" src=\"HCPage.js\"></script>";
-$currentpage = "Edit Pages";
+use \HCWeb\Header;
+Header::addCssJs('/admin/common.css');
+Header::addCssJs('/ckeditor/ckeditor.js');
+Header::addCssJs('/ckeditor/adapters/jquery.js');
+Header::addCssJs('HCPage.js');
+Header::$currentpage = "Edit Pages";
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 
 echo "<div id=\"left-column-color\"></div>";

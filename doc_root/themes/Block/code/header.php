@@ -1,7 +1,3 @@
-<?
-include(THEMEHEAD);
-/*
-?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 
@@ -18,7 +14,5 @@ Header::printCssJs();
 echo "</head>";
 echo "<body>";
 
-echo "<div class=\"header-wrapper\"><div class=\"header\"><h1>Herro!!</h1></div></div>";
+echo "<div id=\"main\"><div id=\"header\"><h1>Herro!!</h1></div>";
 include("{$_SERVER['DOCUMENT_ROOT']}/links.php");
-echo "<div id=\"main\">";
-*/

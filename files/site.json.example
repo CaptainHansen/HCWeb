@@ -1,0 +1,11 @@
+{
+	"mysql"	: {
+		"host"	: "localhost",
+		"user"	: "new_website",
+		"pass"	: "fewi2#@%2834",
+		"db"	: "new_website"
+	},
+	"site"	: {
+		"theme"	: "FixedPosition"
+	}
+}

@@ -1,21 +1,21 @@
 <?
 require("{$_SERVER['DOCUMENT_ROOT']}/admin/auth.php");
 use \HCWeb\DB;
+use \HCWeb\Header;
 
-$title="Photo Management";
-$head="<link rel=\"stylesheet\" href=\"/admin/common.css\" />
-<link rel=\"stylesheet\" href=\"style.css\" />
-<script type=\"text/javascript\" src=\"/js/HC.Progress.js\"></script>
-<script type=\"text/javascript\" src=\"/js/HC.Slider.js\"></script>
-<script type=\"text/javascript\" src=\"HCPhotos.js\"></script>
-<script type=\"text/javascript\" src=\"HCPhotos.Cats.js\"></script>
-<script type=\"text/javascript\" src=\"HCPhotos.Duplicates.js\"></script>
-<script type=\"text/javascript\" src=\"HCPhotos.Upload.js\"></script>
-<script type=\"text/javascript\" src=\"/js/EasyJaxFiles.js\"></script>
-<script type=\"text/javascript\" src=\"/js/jquery.waitforimages.js\"></script>
-<link rel=\"stylesheet\" href=\"/js/HCUI-defaults.css\" />";
-//$beforelinks="";
-$currentpage="Photo Manager";
+Header::addCssJs('/admin/common.css');
+Header::addCssJs('style.css');
+Header::addCssJs('/js/HC.Progress.js');
+Header::addCssJs('/js/HC.Slider.js');
+Header::addCssJs('HCPhotos.js');
+Header::addCssJs('HCPhotos.Cats.js');
+Header::addCssJs('HCPhotos.Duplicates.js');
+Header::addCssJs('HCPhotos.Upload.js');
+Header::addCssJs('/js/EasyJaxFiles.js');
+Header::addCssJs('/js/jquery.waitforimages.js');
+Header::addCssJs('/js/HCUI-defaults.css');
+Header::$title="Photo Management";
+Header::$currentpage="Manage Photos";
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 
 echo "<div id=\"left-column-color\"></div>";

@@ -13,7 +13,11 @@ case "GET":
 		die;
 	}
 	$no_analytics = true;
-	$head="\n<script type=\"text/javascript\">
+	//$beforelinks=
+	//$currentpage=
+	$disable_mobile = true;
+	include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
+	echo "\n<script type=\"text/javascript\">
 <!--
 function login(){
 	easyj = new EasyJax(window.location.href,'LOGIN',function(){
@@ -32,10 +36,6 @@ $(document).ready(function(){
 });
 -->
 </script>\n";
-	//$beforelinks=
-	//$currentpage=
-	$disable_mobile = true;
-	include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 	echo '<div id="main-text">
 	<div style="text-align: center; font-weight: bold;">Admin Login</div>
 	<iframe id="dumb" name="dumb" style="display: none;"></iframe>

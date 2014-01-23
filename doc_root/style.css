@@ -7,26 +7,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	vertical-align: baseline;
 }
 
-html { background-color: #333; }
-
 body {
-	color: #fff;
+	color: black;
 	font-family: Geneva, Times;
 	font-size: 11pt;
 	margin: 0px;
 	padding: 0px;
-	background-color: #fff;
-}
-
-
-/*TOPIMG STUFF*/
-
-div.header-wrapper { background: #444; }
-div.header {
-	width: 960px;
-	margin: 0 auto;
-	padding: 0px;
-	height: 150px;
 }
 
 
@@ -42,7 +28,6 @@ div.linkbar-wrapper {
 ul.linkbar {
 	list-style-type: none;
 	position: relative;
-	width: 960px;
 	height: 40px;
 	margin: 0px auto;
 	padding: 0px;
@@ -101,39 +86,9 @@ div.ddmenu {
 /*** END NAV LINKS ***/
 
 
-/* THIS SURROUNDS THE MAIN CONTENT OF THE SITE!!! */
-
-div.main {
-	width: 960px;
-	margin: 20px auto 0px auto;
-	background-color: #aaa;
-	min-height: 450px;
-}
-
-div.surround { margin: 0 10px; }
-
-
-/*FOOTER*/
-
-div.foot-wrapper {
-	background: #333;
-	-moz-box-shadow: inset 0px 4px 5px black;
-	-webkit-box-shadow: inset 0px 4px 5px black;
-	box-shadow: inset 0px 4px 5px black;
-}
-
-div.foot {
-	margin: 10px 10px 0 10px;
-	text-align: center;
-	font-size: 10px;
-	padding-top: 5px;
-	line-height: 25px;
-}
-
-
 /*OTHERS*/
 
-a { color: #fff; }
+a { color: black; }
 a:hover { color: #ba0d0d; }
 h1 { font-size: 40px; text-align: center; padding: 20px; }
 h2 { font-size: 30px; text-align: center; padding: 15px; }
@@ -230,4 +185,24 @@ button:hover {
 }
 button:active {
 	box-shadow: inset 0 1px 5px #000;
+}
+
+/*** BLACOUTS ***/
+html.blackout-on { overflow: hidden; }
+div.blackout {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5);
+}
+div.ref {
+	width: 0;
+	height: 100%;
+}
+div.match-ref,div.ref {
+	vertical-align: middle;
+	display: inline-block;
 }

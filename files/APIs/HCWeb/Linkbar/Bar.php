@@ -20,7 +20,7 @@ class Bar implements HTMLElement {
 	public function setActiveClass($className) { $this -> navc = $className; }
 	public function setBarClass($className) { $this -> barClass = $className; }
 	
-	public function getHTML($currentpage="",$script=false){
+	public function getHTML($script=false){
 		$html = "<script type=\"text/javascript\"><!--\n";
 		if(!$script) {
 		$html .= "$(document).ready(function(){
@@ -35,7 +35,7 @@ class Bar implements HTMLElement {
 		$html .= "<ul class=\"{$this -> barClass}\">";
 		
 		foreach($this -> links as $lnk){
-			$html .= $lnk -> getHTML($currentpage,$this -> nav, $this -> navc);
+			$html .= $lnk -> getHTML($this -> nav, $this -> navc);
 		}
 
 		$html .= "</ul>\n";

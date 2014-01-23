@@ -12,7 +12,7 @@ $lbar -> addLink(new Link("Store","/store/",array(
 )));
 $lbar -> addLink(new Link("About","/about/"));
 
-echo "<div class=\"linkbar-wrapper\">".$lbar -> getHTML($currentpage)."</div>";
+echo "<div class=\"linkbar-wrapper\">".$lbar -> getHTML()."</div>";
 
 use \HCWeb\Auth;
 if(Auth::isLoggedIn()){
@@ -28,5 +28,5 @@ if(Auth::isLoggedIn()){
 	$abar -> setNormalClass('adm_nav');
 	$abar -> setActiveClass('adm_navc');
 	$abar -> setBarClass('adm_linkbar');
-	echo $abar -> getHTML($currentpage);
+	echo $abar -> getHTML();
 }

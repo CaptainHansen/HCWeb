@@ -1,7 +1,3 @@
-<?
-include(THEMEHEAD);
-/*
-?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 
@@ -21,4 +17,3 @@ echo "<body>";
 echo "<div class=\"header-wrapper\"><div class=\"header\"><h1>Herro!!</h1></div></div>";
 include("{$_SERVER['DOCUMENT_ROOT']}/links.php");
 echo "<div id=\"main\">";
-*/

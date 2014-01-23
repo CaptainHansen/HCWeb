@@ -1,0 +1,30 @@
+div.linkbar-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+div#main {
+	width: 1180px;
+	margin: 60px auto 40px auto;
+	padding: 10px;
+	background-color: #aaa;
+	min-height: 900px;
+}
+
+div#foot-wrapper {
+	background-color: rgba(0,0,0,0.6);
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+}
+
+div#foot {
+	color: white;
+	padding: 5px;
+	height: 20px;
+	line-height: 20px;
+}
+#foot a { color: white; }
+#foot a:hover { color: red; }

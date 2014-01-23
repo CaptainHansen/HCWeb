@@ -1,4 +1,5 @@
 <?
+define('AJAX',true);
 require("../auth.php");
 use \HCWeb\DB;
 use \HCWeb\EasyJax;
