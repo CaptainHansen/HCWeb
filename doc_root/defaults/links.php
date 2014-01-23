@@ -1,6 +1,7 @@
 <?
 use \HCWeb\Linkbar\Bar;
 use \HCWeb\Linkbar\Link;
+use \HCWeb\Auth;
 
 $lbar = new Bar();
 $lbar -> addLink(new Link("Home","/"));
@@ -12,9 +13,8 @@ $lbar -> addLink(new Link("Store","/store/",array(
 )));
 $lbar -> addLink(new Link("About","/about/"));
 
-echo "<div class=\"linkbar-wrapper\">".$lbar -> getHTML()."</div>";
+echo "<div class=\"linkbar-wrapper\">".$lbar -> getHTML();
 
-use \HCWeb\Auth;
 if(Auth::isLoggedIn()){
 	$abar = new Bar();
 	$abar -> addLink(new Link("Edit Pages","/admin/pages/"));
@@ -30,3 +30,5 @@ if(Auth::isLoggedIn()){
 	$abar -> setBarClass('adm_linkbar');
 	echo $abar -> getHTML();
 }
+
+echo "</div>";

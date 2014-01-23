@@ -2,3 +2,7 @@
 /logs/*
 .DS_Store
 site.json
+/doc_root/admin.css
+/doc_root/style.css
+/doc_root/links.php
+/doc_root/index.php

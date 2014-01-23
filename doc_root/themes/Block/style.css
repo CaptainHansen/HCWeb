@@ -1,16 +1,18 @@
 html { background-color: #777; }
 
-div#main {
+div#main-wrapper {
 	background-color: #ddd;
 	width: 1180px;
-	padding: 0 10px;
-	min-height: 700px;
 	margin: 20px auto;
 	padding: 0px;
-	background-repeat: repeat;
 	-moz-box-shadow: 0 0 7px #000;
 	-webkit-box-shadow: 0 0 7px #000;
 	box-shadow: 0 0 7px #000;
+}
+
+div#main {
+	padding: 10px;
+	min-height: 500px;
 }
 
 div#foot {

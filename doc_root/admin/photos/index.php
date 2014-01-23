@@ -25,7 +25,7 @@ echo "<div id=\"main-text\">";
 
 echo "<div class=\"HCPhotos-buttons\">";
 
-echo "<button onClick=\"HCPhotos.Delete();\" style=\"width: 180px;\">Delete Selected Photos</button>";
+echo "<button onClick=\"HCPhotos.Delete();\">Delete Selected Photos</button>";
 echo "<div style=\"width: 0; height: 0; position: absolute;\"><input type=\"file\" id=\"HCPhotos-upload\" multiple=\"multiple\"></div><button onclick=\"$('#HCPhotos-upload').trigger('click');\">Upload Photos</button>";
 echo "<button onClick=\"HCPhotos.Duplicates.Show();\">Show Duplicates</button>";
 echo "<button onclick=\"HCPhotos.ClearSel('HCPhotos-main');\">Clear Selection</button>";

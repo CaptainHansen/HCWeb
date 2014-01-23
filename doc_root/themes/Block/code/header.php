@@ -14,5 +14,6 @@ Header::printCssJs();
 echo "</head>";
 echo "<body>";
 
-echo "<div id=\"main\"><div id=\"header\"><h1>Herro!!</h1></div>";
+echo "<div id=\"main-wrapper\"><div id=\"header\"><h1>Herro!!</h1></div>";
 include("{$_SERVER['DOCUMENT_ROOT']}/links.php");
+echo "<div id=\"main\">";

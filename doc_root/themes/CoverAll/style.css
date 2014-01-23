@@ -1,11 +1,10 @@
 body {
-	color: #fff;
 	background-color: #fff;
 }
 
 a { color: #fff; }
 
-div.header-wrapper { background: #444; }
+div.header-wrapper { color: #fff; background: #444; }
 div.header {
 	width: 1200px;
 	margin: 0 auto;
@@ -17,7 +16,6 @@ div#main {
 	width: 1180px;
 	margin: 20px auto 0px auto;
 	padding: 0 10px;
-	background-color: #aaa;
 	min-height: 450px;
 }
 
@@ -26,6 +24,7 @@ ul.linkbar { width: 1200px; }
 
 
 div#foot-wrapper {
+	color: #fff;
 	margin-top: 10px;
 	background: #333;
 	-moz-box-shadow: inset 0px 4px 5px black;
