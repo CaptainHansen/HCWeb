@@ -43,8 +43,8 @@ case "RANGE":
 	break;
 
 case "DELETE":
-	if(!is_dir($filesroot)) {
-		$easyj -> add_error_msg("Server side code failure - web files directory not specified.");
+	if(!is_dir(HC_PHOTOSDIR)) {
+		$easyj -> add_error_msg("Server side code failure - photos directory not specified.");
 		break;
 	}
 
@@ -57,26 +57,27 @@ case "DELETE":
 	
 	//NOW we delete the photos selected for deletion.
 	$dirs = array();
-	$rawscan = scandir($filesroot."/photos/");
+	$rawscan = scandir(HC_PHOTOSDIR);
 	unset($rawscan[0]);
 	unset($rawscan[1]);
-	foreach($rawscan as $id => $dir){
-		if(is_dir($filesroot."/photos/".$dir)) array_push($dirs,$dir);
+	foreach($rawscan as $dir){
+		if(is_dir(HC_PHOTOSDIR."/".$dir)) $dirs[] = $dir;
 	}
 	
-	foreach($ids as $i => $id){
-		$res = DB::query("select photo from photos where ID = $id");
+	foreach($ids as $id){
+		$res = DB::query("select filename from photos where ID = $id");
 		if(DB::getError() != ""){
 			$easyj -> add_error_msg("There was an error getting the filename from the database.  This should not happen, report this error.");
 			break 2;
 		}
 		list($file) = $res -> fetch_row();
-		foreach($dirs as $did => $dir){
-			if(file_exists($filesroot."/photos/$dir/$file") && !unlink($filesroot."/photos/$dir/$file")){
-				$easyj -> add_error_msg("Could not delete photos/$dir/$file");
+		foreach($dirs as $dir){
+			if(file_exists(HC_PHOTOSDIR."/{$dir}/{$file}") && !unlink(HC_PHOTOSDIR."/{$dir}/{$file}")){
+				$easyj -> add_error_msg("Could not delete /{$dir}/{$file}");
+				break 2;
 			}
 		}
-		DB::query("delete from photos where photo = \"$file\"");	//with duplicate detection enabled, we need to delete all rows that reference the same file, since more than one ID may point to the same file.
+		DB::query("delete from photos where filename = \"$file\"");	//with duplicate detection enabled, we need to delete all rows that reference the same file, since more than one ID may point to the same file.
 		DB::delete("property_photos",$id);
 	}
 	
@@ -141,7 +142,7 @@ case "MERGE":
 	$r = DB::query("select * from photos where ID = {$id}");
 	$keep_d = $r -> fetch_assoc();
 
-	$dirs = scandir($filesroot."/photos/");
+	$dirs = scandir(HC_PHOTOSDIR);
 	unset($dirs[0]);
 	unset($dirs[1]);
 
@@ -158,8 +159,8 @@ case "MERGE":
 			
 			//first delete the duplicate files
 			foreach($dirs as $did => $dir){
-				if(file_exists($filesroot."/photos/$dir/{$repl_d['photo']}") && !unlink($filesroot."/photos/$dir/{$repl_d['photo']}")){
-					$easyj -> add_error_msg("Could not delete photos/$dir/$file");
+				if(file_exists(HC_PHOTOSDIR."/{$dir}/{$repl_d['photo']}") && !unlink(HC_PHOTOSDIR."/{$dir}/{$repl_d['photo']}")){
+					$easyj -> add_error_msg("Could not delete /{$dir}/{$file}");
 				}
 			}
 		
@@ -179,7 +180,7 @@ case "MERGE":
 			Photo 1 MUST NOW POINT TO 5.JPG INSTEAD OF 4.JPG BECAUSE IT WILL BE DELETED!!!!
 		
 			*/
-			$sql = "update photos set photo = '{$keep_d['photo']}', hash = '{$keep_d['hash']}', hide = 1, cats = '[]', asp_rat = {$keep_d['asp_rat']} where ID = $id or photo = '{$repl_d['photo']}'";
+			$sql = "update photos set filename = '{$keep_d['photo']}', hash = '{$keep_d['hash']}', hide = 1, cats = '[]', asp_rat = {$keep_d['asp_rat']} where ID = $id or photo = '{$repl_d['photo']}'";
 			DB::query($sql);
 		}
 	}

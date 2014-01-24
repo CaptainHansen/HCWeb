@@ -6,6 +6,16 @@
 		"db"	: "new_website"
 	},
 	"site"	: {
-		"theme"	: "FixedPosition"
+		"theme"	: "CoverAll",
+		"photos"	: {
+			"destination"	: "{FILESROOT}/photos",
+			"full_size"		: false,
+			"sizes"			: {
+				"l":{"d":1000,"min":false},
+				"s":{"d":200,"min":true}
+			},
+
+			"wmark_pass"	: "JFkdi@392!fjsilefdsa;"
+		}
 	}
 }

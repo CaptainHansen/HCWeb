@@ -188,7 +188,7 @@ HCPhotos.Format = function(data,hidden){
 	} else {
 		html = '<div class="HCPhoto" id="'+data.ID+'">';
 	}
-	html += '<img src="img.php/'+data.ID+'">';
+	html += '<img src="/photos/small/'+data.ID+'">';
 	if(HCPhotos.Cats !== undefined){
 		html += HCPhotos.Cats.Format(JSON.parse(data.cats));
 	}

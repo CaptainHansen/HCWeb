@@ -3,17 +3,18 @@ namespace WMark;
 
 class Crypter {
 	private static $pass;
-	private static $error_file;
+	private static $error_file=false;
 	public $photoID;
 	public $opts;
 	public $gstring;
 	
-	public static function Init($pass,$error_file){
+	public static function Init($pass,$error_file=false){
 		self::$pass = $pass;
 		self::$error_file = $error_file;
 	}
 	
 	private function error($err,$data=array()){
+		if(!self::$error_file) return false;
 		file_put_contents(self::$error_file,"ERROR: $err: ".date('F j Y h:i A')."\n\nc: ".$this->gstring."\n\n".implode("\n",$data)."\n------------\n\n",FILE_APPEND);
 	}
 

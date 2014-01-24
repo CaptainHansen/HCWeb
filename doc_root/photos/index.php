@@ -4,20 +4,24 @@ require("{$_SERVER['DOCUMENT_ROOT']}/bootstrap.php");
 $photo = basename($_SERVER['PATH_INFO']);
 $size = basename(dirname($_SERVER['PATH_INFO']));
 
+$wmarker = new \WMark\Photo();
+
+if($size == 'crypt'){
+	$wmarker -> gstring = $photo;
+	$wmarker -> getImage();
+	die;
+}
+
 switch($size){
-	case "full":
-		$dir = "f";
-		break;
-	case "medium":
-		$dir = "m";
+	case "large":
+		$opts = array('sz' => 'l');
 		break;
 	case "small":
 	default:
-		$dir = "s";
+		$opts = array("sz" => 's');
+		break;
 }
 
-$wmarker = new \WMark\Photo();
 $wmarker -> photoID = $photo;
-$wmarker -> opts = array("sz" => $dir);
-
+$wmarker -> opts = $opts;
 $wmarker -> getImage();

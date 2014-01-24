@@ -70,10 +70,10 @@ class Photo extends Crypter {
 		$etag = md5($pd['ID']."-".json_encode($this->opts));
 
 		if(isset($opts['sz'])) {
-			if($opts['sz'] != 'f') $pd['photo'] = $pd['ID'].'.jpg';
-			$file = $this -> findFile("{$opts['sz']}/{$pd['photo']}");
+//			if($opts['sz'] != 'f') $pd['filename'] = $pd['ID'].'.jpg';
+			$file = $this -> findFile("{$opts['sz']}/{$pd['filename']}");
 		} else {
-			$file = $this -> findFile($pd['photo']);
+			$file = $this -> findFile($pd['filename']);
 		}
 
 		if(!$file) {
@@ -97,7 +97,9 @@ class Photo extends Crypter {
 		////resizing using aspect ratio to calculate height of image (to preserve the aspect ratio)/////
 		if(isset($opts['w']) && !isset($opts['h'])) $opts['h'] = ($opts['w']/$pd['asp_rat']);
 		if(isset($opts['h']) && !isset($opts['w'])) $opts['w'] = ($opts['h']*$pd['asp_rat']);
-		$photo -> resizeImage($opts['w'],$opts['h'],\Imagick::FILTER_CUBIC,true);
+		if(isset($opts['h']) && isset($opts['w'])){
+			$photo -> resizeImage($opts['w'],$opts['h'],\Imagick::FILTER_CUBIC,true);
+		}
 		
 		if(isset($opts['wmark']) && intval($opts['wmark']) > 0){
 			$res = \HCWeb\DB::query("select * from wmarks where ID = ".intval($opts['wmark']));
