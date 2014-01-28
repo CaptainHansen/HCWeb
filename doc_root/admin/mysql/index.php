@@ -23,4 +23,5 @@ div.query-results {
 <div id="results"></div>
 </div>
 <?
+echo \HCWeb\EasyJax::getPubKey();
 require("{$_SERVER['DOCUMENT_ROOT']}/footer.php");

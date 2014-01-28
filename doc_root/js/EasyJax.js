@@ -29,6 +29,11 @@
  * supply a callback function that will run if the script returns success.  If an error is returned,
  * it is announced using the alert() function
  */
+$(document).ready(function(){
+	if($('#EasyJaxKey').length == 1){
+		if(typeof HCCrypt === 'undefined') $.getScript('/js/HCCrypt.js');
+	}
+});
 
 function EasyJax (Url,req_type,runOnSuccess,post_obj){
 	this.Url = Url;
@@ -40,6 +45,8 @@ function EasyJax (Url,req_type,runOnSuccess,post_obj){
 	}
 	this.xmlHttp;
 	this.req_type = req_type;
+	this.aes = false;
+	this.enc;
 	
 	this.submit_data = function (){
 		if(window.XMLHttpRequest) {
@@ -48,12 +55,29 @@ function EasyJax (Url,req_type,runOnSuccess,post_obj){
 			this.xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 
+		if($('#EasyJaxKey').length == 1) {	//this must happen before createCallback() is called.
+			this.aes = new HCCrypt.AES();
+			this.aes.genKey();
+		}
+
 		//data is a JSON data package returned to the client from the server.
 		this.xmlHttp.onreadystatechange = this.createCallback();
 
-		this.xmlHttp.open( this.req_type, this.Url, true );
-		this.xmlHttp.setRequestHeader("Content-Type","application/json; charset=ISO-8859-1");
-		this.xmlHttp.send(JSON.stringify(this.post_obj));
+		this.xmlHttp.open( this.req_type, this.Url, true );		
+		if($('#EasyJaxKey').length == 1) {	//Using Encryption!
+			var pubkey = JSON.parse($('#EasyJaxKey').val());
+			var rsa = new HCCrypt.RSA();
+			rsa.setPublic(pubkey.m,pubkey.e);
+			this.xmlHttp.setRequestHeader("Content-Type","application/octet-stream");
+			var aes_data = this.aes.getKeyIv();
+			this.xmlHttp.setRequestHeader("Encryption-Key",rsa.encrypt(aes_data.key+'---'+aes_data.iv));
+
+			this.enc = this.aes.encrypt(JSON.stringify(this.post_obj));
+			this.xmlHttp.send(this.enc);	//base64-encoded encrypted data
+		} else {
+			this.xmlHttp.setRequestHeader("Content-Type","application/json; charset=ISO-8859-1");
+			this.xmlHttp.send(JSON.stringify(this.post_obj));
+		}
 	}
 	
 	this.set_send_data = function(id,val){
@@ -61,6 +85,7 @@ function EasyJax (Url,req_type,runOnSuccess,post_obj){
 	}
 	
 	this.createCallback = function (){
+		var aes = this.aes;
 		var x = this.xmlHttp;
 		var ros = this.runOnSuccess;
 		var pobj = this.post_obj;
@@ -68,12 +93,19 @@ function EasyJax (Url,req_type,runOnSuccess,post_obj){
 			if(x.readyState == 4) {
 				switch(x.status) {
 				case 200:
+					var response = x.response;
 					try {
-						var data = JSON.parse(x.responseText);
+						if(aes != false) response = aes.decrypt(x.response);
+						var data = JSON.parse(response);
 					} catch(err){
-						alert("There was an error parsing JSON data.  Response Text shown below:\n\n"+x.response);
+						if(aes != false){
+							alert("There was an error decrypting and/or parsing response.\n\n"+x.response);
+						} else {
+							alert("There was an error parsing JSON data.  Response Text shown below:\n\n"+x.response);
+						}
 						return 1;
 					}
+
 					if(data.error != "" && data.error != undefined){
 						alert(data.error);
 						return 1;

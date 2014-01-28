@@ -33,7 +33,7 @@ div#left-column-color { left: 0; }
 	}
 }
 
-div.main {
+div#main {
 	margin-left: 220px;
 	width: auto;
 }

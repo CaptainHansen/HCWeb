@@ -35,6 +35,7 @@ class EasyJax {
 	protected $json_data;
 	public $path = false;
 	public $req_method;
+	private $aes = false;
 	
 	public function __construct(){
 		if(isset($_SERVER['PATH_INFO'])){
@@ -43,7 +44,40 @@ class EasyJax {
 		$this -> req_method = strtoupper($_SERVER['REQUEST_METHOD']);
 		$this -> return_data = array();
 		$this -> return_data['error'] = "";
-		$this -> json_data = json_decode(file_get_contents("php://input"),1);
+		if(isset($_SERVER['HTTP_ENCRYPTION_KEY'])) {
+			$cipherkey = $_SERVER['HTTP_ENCRYPTION_KEY'];
+			include("Crypt/RSA.php");
+			$rsa = new \Crypt_RSA();
+			$rsa -> loadKey(file_get_contents(FILESROOT."/private.key"));
+			$rsa->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
+			$ks = $rsa -> decrypt(base64_decode($cipherkey));
+			preg_match("/^(.*)---(.*)$/",$ks,$matches);
+			include("Crypt/AES.php");
+			$this -> aes = new \Crypt_AES();
+			$this -> aes -> setKey(base64_decode($matches[1]));
+			$this -> aes -> setIV(base64_decode($matches[2]));
+			$jtext = $this -> aes -> decrypt(base64_decode(file_get_contents("php://input")));
+//			echo $jtext."\n\n";
+		} else {
+			$jtext = file_get_contents("php://input");
+		}
+		$this -> json_data = json_decode($jtext,1);
+	}
+	
+	public function isSecure(){
+		if($this -> aes){
+			return true;
+		}
+		return false;
+	}
+	
+	public static function getPubKey(){
+		include("Crypt/RSA.php");
+		$rsa = new \Crypt_RSA();
+		$rsa -> loadKey(file_get_contents(FILESROOT."/public.key"));
+		$m = $rsa -> modulus -> toHex();
+		$e = $rsa -> exponent -> toHex();
+		return "<input type=\"hidden\" id=\"EasyJaxKey\" value='".json_encode(array('m' => $m, 'e' => $e))."'>";
 	}
 	
 	public function getData($key=null){
@@ -80,10 +114,19 @@ class EasyJax {
 		if($error != ""){
 			$this -> add_error_msg($error);
 		}
-		header("Content-type: application/json; charset=UTF-8");
+		if($this -> aes){
+			header("Content-type: application/octet-stream;");
+			header("Content-Transfer-Encoding: base64;");
+			$send = $this -> aes -> encrypt(json_encode($this -> return_data));
+//			$send = json_encode($this -> return_data);
+			$send = base64_encode($send);
+		} else {
+			header("Content-type: application/json; charset=UTF-8");
+			$send = json_encode($this -> return_data);
+		}
 		header("Pragma: no-cache");
 		header("Expires: Thu, 01 Dec 1997 16:00:00 GMT");
-		echo json_encode($this->return_data);
+		echo $send;
 		die;
 	}
 

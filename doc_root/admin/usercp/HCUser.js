@@ -1,4 +1,50 @@
+$(document).ready(function(){
+	$('div.blackout').click(function(e){
+		if($(e.target).hasClass('blackout')){
+			$(e.target).fadeOut(200,function(){
+				$('html,body').removeClass('blackout-on');
+			});
+		}
+	});
+	
+	easyj = new EasyJax('do.php','GET',function(data){
+		HCUser.Users = data.data;
+		for(id in HCUser.Users) {
+			$('#HCUser-table').append(HCUser.Format(id));
+			HCUser.Activate(id);
+		}
+	});
+	easyj.submit_data();
+});
+
 function HCUser() {
+}
+
+HCUser.Users = {};
+
+HCUser.Format = function(id){
+	var d = this.Users[id];
+	var cls = 'disabled';
+	if(d.enabled == 1) cls = 'enabled';
+	
+	var admin = 'Unpriveleged';
+	if(d.admin) admin = "Administrator";
+	
+	var html = "";
+	html += "<tr id=\""+d.ID+"\" class=\"HCUser "+cls+"\"><td id=\"user\">"+d.user+"</td><td id=\"admin\">"+admin+"</td><td>"+getElapsed(d.lastact)+"</td><td id=\"name\">"+d.fname+" "+d.lname+"</td><td>"+d.ip_addr+"</td></tr>";
+	return html;
+}
+
+HCUser.Activate = function(id){
+	$('#'+id).click(function(e){
+		HCUser.Edit($(e.target).attr('id'));
+	});
+}
+
+HCUser.Edit = function(id){
+	$('.blackout').fadeIn(200,function(){
+		$('html,body').addClass('blackout-on');
+	});
 }
 
 HCUser.Post = function(){

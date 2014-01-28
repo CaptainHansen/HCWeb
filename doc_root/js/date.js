@@ -105,7 +105,9 @@ function date(fstr,d){
 		U:['getTime',function(v) { return parseInt(v/1000); }]
 	};
 	
-	if(!(d instanceof Date)){
+	if(d === undefined){
+		d = new Date();
+	} else if (!(d instanceof Date)){
 		d = new Date(d*1000);
 	}
 	
@@ -117,4 +119,14 @@ function date(fstr,d){
 	});
 
 	return dateTxt;
+}
+
+function getElapsed(time){
+	var since = date('U') - parseInt(time);
+	if(time == 0) return 'never';
+	if(since < 10) return "moments ago";
+	if(since < 60) return since+" seconds ago";
+	if(since < 3600) return parseInt(since/60)+" minutes ago";
+	if(since < 86400) return parseInt(since / 3600)+" hours ago";
+	return parseInt(since / 86400)+" days ago";
 }

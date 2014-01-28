@@ -9,3 +9,8 @@ site.json
 /doc_root/admin/siusercp
 /files/newphotos
 /files/photos
+/files/public.key
+/files/private.key
+/files/enctest.php
+/files/dectest.php
+/doc_root/js/cryptojs/

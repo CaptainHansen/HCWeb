@@ -12,10 +12,33 @@ $id = basename($easyj -> path);
 
 $minpasslength = 6;
 
+if(!$easyj -> isSecure()) {
+	$easyj -> send_resp("AJAX not secured.  Aborting.");
+	die;
+}
+
 switch($easyj -> req_method){
+case "GET":
+	if($id != ""){
+		$r = DB::query("select * from auth where ID = {$id}");
+		$easyj -> set_ret_data('data',$r -> fetch_assoc());	
+	} else {
+		$r = DB::query("select * from auth");
+		$data = array();
+		while($d = $r -> fetch_assoc()){
+			$data[$d['ID']] = $d;
+		}
+		$easyj -> set_ret_data('data',$data);
+	}
+	break;
+	
 case "PUT":
 	if($id == ""){
 		$easyj -> add_error_msg("ID number of record to modify was not supplied.");
+		break;
+	}
+	if($id == \HCWeb\Auth::getData('ID')){
+		$easyj -> add_error_msg("You cannot edit yourself using this page.");
 		break;
 	}
 	$nd = $easyj -> getData();

@@ -1,6 +1,10 @@
 <?
 require_once("{$_SERVER['DOCUMENT_ROOT']}/bootstrap.php");
 use \HCWeb\Auth;
+use \HCWeb\Header;
+
+Header::addCssJs("/js/encryption.js");
+Header::addCssJs('/js/HCCrypt.js');
 
 $easyj = new \HCWeb\EasyJax();
 
@@ -17,7 +21,7 @@ case "GET":
 	//$currentpage=
 	$disable_mobile = true;
 	include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
-	echo "\n<script type=\"text/javascript\">
+	echo "\n<script>
 <!--
 function login(){
 	easyj = new EasyJax(window.location.href,'LOGIN',function(){
@@ -27,6 +31,7 @@ function login(){
 	easyj.submit_data();
 }
 
+var easyj;
 $(document).ready(function(){
 	$('#user, #pass').keydown(function(event){
 		if(event.keyCode == 13){
@@ -36,6 +41,7 @@ $(document).ready(function(){
 });
 -->
 </script>\n";
+echo \HCWeb\EasyJax::getPubKey();
 	echo '<div id="main-text">
 	<div style="text-align: center; font-weight: bold;">Admin Login</div>
 	<iframe id="dumb" name="dumb" style="display: none;"></iframe>
@@ -50,6 +56,10 @@ $(document).ready(function(){
 	die;
 
 case "LOGIN":
+	if(!$easyj -> isSecure()) {
+		$easyj -> add_error_msg("Login page not secure.  Login attempt rejected.");
+		break;
+	}
 	if(!isset($data['user']) || !isset($data['pass'])){
 		$easyj -> add_error_msg("Username and Password were not submitted.");
 		break;

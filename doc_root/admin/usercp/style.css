@@ -7,7 +7,7 @@ table {
 	margin: 0 auto;
 }
 
-#userstable td {
+#HCUser-table td {
 	padding: 3px 10px;
 }
 
@@ -25,4 +25,11 @@ table {
 }
 .disabled a {
 	color: white;
+}
+
+div.HCUser-dialog {
+	background-color: white;
+	box-shadow: 2px 2px 7px black;
+	-moz-box-shadow: 2px 2px 7px black;
+	-webkit-box-shadow: 2px 2px 7px black;
 }

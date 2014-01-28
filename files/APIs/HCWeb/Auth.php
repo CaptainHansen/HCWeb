@@ -13,7 +13,7 @@ class Auth {
 
 	public static function Init($redir = true){
 		if(!isset($_SESSION)) session_start();
-		if(!isset($_SESSION['user']) || !isset($_SESSION['pass'])){
+		if(!isset($_SESSION['HCAuth'])) {
 			if($redir){
 				self::Redirect("You are not logged in.  Log back in and try again.",self::$login_page);
 			} else {
@@ -22,13 +22,13 @@ class Auth {
 			}
 		}
 		
-		$res = DB::query("SELECT * FROM auth WHERE user = '{$_SESSION['user']}' AND pass = '{$_SESSION['pass']}'");
+		$auth_d = $_SESSION['HCAuth'];
+		
+		$res = DB::query("SELECT * FROM auth WHERE ID = '{$auth_d['ID']}' AND pass = '{$auth_d['pass']}'");
 		if($d = $res -> fetch_assoc()) self::$user_d = $d;
 		
 		if(!self::$user_d){
-			unset($_SESSION['user']);
-			unset($_SESSION['pass']);
-			unset($_SESSION['lastact']);
+			unset($_SESSION['HCAuth']);
 			session_unset();
 			if($redir){
 				self::Redirect("Your session username and password are invalid.");
@@ -38,10 +38,8 @@ class Auth {
 			}
 		}
 
-		if((date('U')-$_SESSION['lastact']) >= 1800) {	//30 minute inactivity timeout
-			unset($_SESSION['user']);
-			unset($_SESSION['pass']);
-			unset($_SESSION['lastact']);
+		if((date('U')-$auth_d['lastact']) >= 1800) {	//30 minute inactivity timeout
+			unset($_SESSION['HCAuth']);
 			session_unset();
 			if($redir){
 				self::Redirect("Your session has timed out.  You must log in again.",self::$login_page);
@@ -50,7 +48,8 @@ class Auth {
 				return false;
 			}
 		} else {
-			$_SESSION['lastact'] = date('U');
+			$_SESSION['HCAuth']['lastact'] = date('U');
+			DB::update('auth',$auth_d['ID'],array('lastact' => date('U'), 'ip_addr' => $_SERVER['REMOTE_ADDR']));
 			if(defined('REQUIRE_ADMIN') && !(self::$user_d['admin'])){
 				if($redir){
 					self::Redirect("ACCESS DENIED - Admin priveleges required.");
@@ -77,9 +76,7 @@ class Auth {
 		$d = $r -> fetch_assoc();
 		if(Password::Verify($pass,$d['pass'])){
 			if(!isset($_SESSION)) session_start();
-			$_SESSION['user'] = $d['user'];
-			$_SESSION['pass'] = $d['pass'];
-			$_SESSION['lastact'] = date('U');
+			$_SESSION['HCAuth'] = array('ID' => $d['ID'], 'pass' => $d['pass'], 'lastact' => date('U'));
 			self::$user_d = $d;
 			self::$loggedin = true;
 			return true;
@@ -91,9 +88,7 @@ class Auth {
 
 	public static function Logout(){
 		if(!isset($_SESSION)) session_start();
-		unset($_SESSION['user']);
-		unset($_SESSION['pass']);
-		unset($_SESSION['lastact']);
+		unset($_SESSION['HCAuth']);
 		self::$loggedin = false;
 		return true;
 	}

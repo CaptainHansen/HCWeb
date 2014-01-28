@@ -8,17 +8,24 @@ Header::$title = "User Accounts";
 Header::addCssJs('/admin/common.css');
 Header::addCssJs('HCUser.js');
 Header::addCssJs('style.css');
+Header::addCssJs('/js/date.js');
+Header::addCssJs('/js/encryption.js');
+Header::addCssJs('/js/HCCrypt.js');
 Header::$currentpage = "Edit Users";
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div id=\"left-column-color\"></div>";
 echo "<div class=\"column left\"><h1>Edit Users</h1><p>This page allows control over all user accounts associated with this site.  Rest assurred, you cannot de-authorize yourself if you are listed as an admin.</p></div>";
 
+echo "<div class=\"blackout\" id=\"HCUser-blackout\">
+<div class=\"HCUser-dialog\"></div>
+</div>";
+
+echo \HCWeb\EasyJax::getPubKey();
 echo "<div id=\"main-text\">";
 
-$r = DB::query("select * from auth");
-
-	echo "<table id=\"users-table\">";
-	echo "<tr><th>User</th><th>Reset Password</th><th>Verify Password</th></tr>";
+	echo "<table id=\"HCUser-table\">";
+	echo "<tr><th>User</th><th>User Type</th><th>Last Activity</th><th>Full Name</th><th>IP Address</th></th></tr>";
+/*
 	while($u = $r -> fetch_assoc()) {
 		if($u['admin'] == 1) {
 			$adminb="De-Authorize";
@@ -36,6 +43,7 @@ $r = DB::query("select * from auth");
 		echo "<td><button $dis id=\"adminb\" onclick='HCUser.CHAdmin({$u['ID']})'>{$adminb}</button</td>";
 		echo "<td><button onclick='HCUser.Delete({$u['ID']})' $dis >Delete User</button></td></tr>";
 	}
+*/
 	echo "</table>";
 ?>
 <table id="user-new">
