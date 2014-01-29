@@ -7,29 +7,31 @@ table {
 	margin: 0 auto;
 }
 
-#HCUser-table td {
-	padding: 3px 10px;
-}
-
-.enabled td {
-	background-color: #5f5;
-	color: black;
-}
-.enabled a {
-	color: black;
-}
-
-.disabled td {
-	background-color: #f55;
-	color: white;
-}
-.disabled a {
-	color: white;
-}
+#HCUser-table td { padding: 3px 10px; }
 
 div.HCUser-dialog {
 	background-color: white;
 	box-shadow: 2px 2px 7px black;
 	-moz-box-shadow: 2px 2px 7px black;
 	-webkit-box-shadow: 2px 2px 7px black;
+	padding: 10px;
+	border-radius: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: left;
+}
+
+tr.HCUser.enabled {
+	background-color: #bfb;
+	color: black;
+}
+tr.HCUser.disabled {
+	background-color: #fbb;
+	color: black;
+}
+
+tr.HCUser:hover {
+	background-color: #ffb;
+	color: black;
+	cursor: pointer;
 }

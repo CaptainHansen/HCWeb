@@ -31,7 +31,7 @@
  */
 $(document).ready(function(){
 	if($('#EasyJaxKey').length == 1){
-		if(typeof HCCrypt === 'undefined') $.getScript('/js/HCCrypt.js');
+		if(typeof HCCrypt === 'undefined') $.getScript('/js/HC.Crypt.js');
 	}
 });
 
@@ -128,6 +128,8 @@ function EasyJax (Url,req_type,runOnSuccess,post_obj){
 				case 403:
 					alert("Status code 403 - Access Denied");
 					break;
+				default:
+					alert("Status code "+x.status+" - Unknown status.");
 				}
 			}
 		}

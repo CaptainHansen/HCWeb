@@ -10,14 +10,14 @@ Header::addCssJs('HCUser.js');
 Header::addCssJs('style.css');
 Header::addCssJs('/js/date.js');
 Header::addCssJs('/js/encryption.js');
-Header::addCssJs('/js/HCCrypt.js');
+Header::addCssJs('/js/HC.Crypt.js');
 Header::$currentpage = "Edit Users";
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div id=\"left-column-color\"></div>";
 echo "<div class=\"column left\"><h1>Edit Users</h1><p>This page allows control over all user accounts associated with this site.  Rest assurred, you cannot de-authorize yourself if you are listed as an admin.</p></div>";
 
 echo "<div class=\"blackout\" id=\"HCUser-blackout\">
-<div class=\"HCUser-dialog\"></div>
+<div class=\"ref\"></div><div class=\"HCUser-dialog\"></div>
 </div>";
 
 echo \HCWeb\EasyJax::getPubKey();
@@ -46,13 +46,7 @@ echo "<div id=\"main-text\">";
 */
 	echo "</table>";
 ?>
-<table id="user-new">
-<tr><td>User Name</td><td><input type="text" id="user"></td></tr>
-<tr><td>Password</td><td><input type="password" id="pass"></td></tr>
-<tr><td>Verify</td><td><input type="password" id="verify"></td></tr>
-<tr><td></td><td><button onclick="HCUser.Post()">Create New User</button></td></tr>
-</table>
-
+<div class="center"><button onclick="HCUser.New()">Create New User</button></div>
 <?
 echo "</div>";
 require("{$_SERVER['DOCUMENT_ROOT']}/footer.php");

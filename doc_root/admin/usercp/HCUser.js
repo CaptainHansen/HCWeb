@@ -28,27 +28,123 @@ HCUser.Format = function(id){
 	if(d.enabled == 1) cls = 'enabled';
 	
 	var admin = 'Unpriveleged';
-	if(d.admin) admin = "Administrator";
+	if(d.admin == 1) admin = "Administrator";
 	
 	var html = "";
-	html += "<tr id=\""+d.ID+"\" class=\"HCUser "+cls+"\"><td id=\"user\">"+d.user+"</td><td id=\"admin\">"+admin+"</td><td>"+getElapsed(d.lastact)+"</td><td id=\"name\">"+d.fname+" "+d.lname+"</td><td>"+d.ip_addr+"</td></tr>";
+	html += "<tr id=\""+d.ID+"\" class=\"HCUser "+cls+"\"><td>"+d.user+"</td><td>"+admin+"</td><td>"+getElapsed(d.lastact)+"</td><td>"+d.fname+" "+d.lname+"</td><td>"+d.ip_addr+"</td></tr>";
 	return html;
 }
 
 HCUser.Activate = function(id){
-	$('#'+id).click(function(e){
-		HCUser.Edit($(e.target).attr('id'));
-	});
+	$('#'+id).click(
+	(function(id){
+		return function(){ HCUser.Edit(id); }
+	})(id));
+}
+
+HCUser.Attributes = [
+	["Username","user",'text'],
+	["First Name","fname",'text'],
+	["Last Name","lname",'text'],
+	["Administrator","admin",'checkbox'],
+	["Enabled","enabled","checkbox"],
+	["Password","pass",'password'],
+	["Verify Password","verify",'password']
+];
+
+HCUser.New = function(){
+	$('html,body').addClass('blackout-on');
+	
+	var html = "<table id=\"HCUser-new\">";
+	var i;
+	var attr;
+	for(i in this.Attributes){
+		attr = this.Attributes[i];
+		html += "<tr><td>"+attr[0]+"</td><td><input type=\""+attr[2]+"\" id=\""+attr[1]+"\"></td></tr>";
+	}
+	
+	html += "</table>";
+	html += "<div class=\"center\"><button onclick=\"HCUser.Post()\">Create New User</button>";
+	
+	$('.blackout').find('.HCUser-dialog').html(html);
+	$('.blackout').fadeIn(200);
 }
 
 HCUser.Edit = function(id){
-	$('.blackout').fadeIn(200,function(){
-		$('html,body').addClass('blackout-on');
-	});
+	$('html,body').addClass('blackout-on');
+	
+	var html = "<table id=\"HCUser-edit\">";
+	var i;
+	var attr;
+	var user = this.Users[id];
+	var chked;
+	
+	for(i in this.Attributes){
+		attr = this.Attributes[i];
+		switch(attr[2]){
+		case 'password':
+			html += "<tr><td>"+attr[0]+"</td><td><input type=\""+attr[2]+"\" id=\""+attr[1]+"\"></td></tr>";
+			break;
+		case 'checkbox':
+			chked = '';
+			if(user[attr[1]] == 1) chked = ' checked'
+			html += "<tr><td>"+attr[0]+"</td><td><input"+chked+" type=\""+attr[2]+"\" id=\""+attr[1]+"\"></td></tr>";
+			break;
+		default:
+			html += "<tr><td>"+attr[0]+"</td><td><input type=\""+attr[2]+"\" id=\""+attr[1]+"\" value=\""+user[attr[1]]+"\"></td></tr>";
+		}
+	}
+	
+	html += "</table>";
+	html += "<div class=\"center\"><button onclick=\"HCUser.Put("+id+")\">Edit User</button>";
+	
+	$('.blackout').find('.HCUser-dialog').html(html);
+	$('.blackout').fadeIn(200);
 }
 
+HCUser.Put = function(id){
+	var edit = $('#HCUser-edit');
+	var pass = edit.find('#pass').val();
+	var verify = edit.find('#verify').val();
+	if(edit.find('#user').val() == ""){
+		alert("You must enter a username.");
+		return false;
+	}
+	var pobj = {};
+	if(pass.length != 0){
+		if(pass != verify) {
+			alert("The passwords you entered do not match.");
+			return false;
+		}
+		pobj.pass = pass;
+	}
+	var attr;
+	for(i in this.Attributes){
+		attr = this.Attributes[i];
+		if(attr[2] == 'password') continue;
+		if(attr[2] == 'checkbox'){
+			pobj[attr[1]] = edit.find('#'+attr[1]).prop('checked');
+		} else {
+			pobj[attr[1]] = edit.find('#'+attr[1]).val();
+		}
+	}
+		
+	easyj = new EasyJax('do.php/'+id,'PUT',function(data,pobj){
+		for(i in pobj){
+			HCUser.Users[id][i] = pobj[i];
+		}
+		var newtr = $(HCUser.Format(id));
+		$('#HCUser-table').find('#'+id).html(newtr.html()).attr('class',newtr.attr('class'));
+		$('.blackout').fadeOut(200,function(){
+			$('html,body').removeClass('blackout-on');
+		});
+	},pobj);
+	easyj.submit_data();
+}
+	
+
 HCUser.Post = function(){
-	var newu = $('#user-new');
+	var newu = $('#HCUser-new');
 	var pass = newu.find('#pass').val();
 	var verify = newu.find('#verify').val();
 	if(newu.find('#user').val() == ""){
@@ -63,9 +159,27 @@ HCUser.Post = function(){
 		alert("The password cannot be blank.");
 		return false;
 	}
+	var pobj = {};
+	var attr;
+	for(i in this.Attributes){
+		attr = this.Attributes[i];
+		if(attr[1] == 'verify') continue;
+		if(attr[2] == 'checkbox'){
+			pobj[attr[1]] = newu.find('#'+attr[1]).prop('checked');
+		} else {
+			pobj[attr[1]] = newu.find('#'+attr[1]).val();
+		}
+	}
+		
 	easyj = new EasyJax('do.php','POST',function(data,pobj){
-		$('#users-table').append("<tr id=\"user-"+data.id+"\"><td id=\"user\">"+pobj.user+"</td><td><input type=\"password\" id=\"pass\"></td><td><input type=\"password\" id=\"verify\"></td><td><button onclick='HCUser.ResetPass("+data.id+")'>Reset Password</button></td><td><button id=\"adminb\" onclick='HCUser.CHAdmin("+data.id+")'>Authorize</button</td><td><button onclick='HCUser.Delete("+data.id+")'>Delete User</button></td></tr>");
-	},{'user':newu.find('#user').val(),'pass':pass});
+		pobj.ID = data.id;
+		HCUser.Users[data.id] = pobj;
+		$('#HCUser-table').append(HCUser.Format(data.id));
+		HCUser.Activate(data.id);
+		$(e.target).fadeOut(200,function(){
+			$('html,body').removeClass('blackout-on');
+		});
+	},pobj);
 	easyj.submit_data();
 }
 

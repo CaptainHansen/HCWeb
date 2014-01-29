@@ -3,9 +3,6 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/bootstrap.php");
 use \HCWeb\Auth;
 use \HCWeb\Header;
 
-Header::addCssJs("/js/encryption.js");
-Header::addCssJs('/js/HCCrypt.js');
-
 $easyj = new \HCWeb\EasyJax();
 
 $data = $easyj -> getData();
