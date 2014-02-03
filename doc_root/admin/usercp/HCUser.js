@@ -96,7 +96,7 @@ HCUser.Edit = function(id){
 	}
 	
 	html += "</table>";
-	html += "<div class=\"center\"><button onclick=\"HCUser.Put("+id+")\">Edit User</button>";
+	html += "<div class=\"center\"><button onclick=\"HCUser.Put("+id+")\">Save</button><button onclick=\"HCUser.Delete("+id+")\">Delete</button><button onclick=\"$('#HCUser-blackout').trigger('click');\">Close</button></div>";
 	
 	$('.blackout').find('.HCUser-dialog').html(html);
 	$('.blackout').fadeIn(200);
@@ -176,48 +176,10 @@ HCUser.Post = function(){
 		HCUser.Users[data.id] = pobj;
 		$('#HCUser-table').append(HCUser.Format(data.id));
 		HCUser.Activate(data.id);
-		$(e.target).fadeOut(200,function(){
+		$('#HCUser-blackout').fadeOut(200,function(){
 			$('html,body').removeClass('blackout-on');
 		});
 	},pobj);
-	easyj.submit_data();
-}
-
-HCUser.CHAdmin = function(id){
-	var user = $('#user-'+id);
-	var admin = 0;
-	if(user.find('#adminb').html() == 'Authorize'){
-		admin = 1;
-	}
-	
-	easyj = new EasyJax('do.php/'+id,'PUT',function(data,pobj){
-		var nval = '';
-		if(pobj.admin == 1){
-			nval = "De-Authorize";
-		} else {
-			nval = 'Authorize';
-		}
-		$('#user-'+id).find('#adminb').html(nval);
-	},{'admin':admin});
-	easyj.submit_data();
-}
-
-HCUser.ResetPass = function(id){
-	var user = $('#user-'+id);
-	var pass = user.find('#pass').val();
-	var verify = user.find('#verify').val();
-	if(pass != verify) {
-		alert("The new passwords you entered do not match.");
-		return false;
-	}
-	if(pass.length == 0){
-		alert("The new password cannot be blank.");
-		return false;
-	}
-	
-	easyj = new EasyJax('do.php/'+id,'PUT',function(){
-		alert("Password reset successfully.");
-	},{'pass':pass});
 	easyj.submit_data();
 }
 
@@ -227,7 +189,10 @@ HCUser.Delete = function(id){
 	}
 	
 	easyj = new EasyJax('do.php/'+id,'DELETE',function(){
-		$('#user-'+id).fadeOut();
+		$('#'+id).remove();
+		$('#HCUser-blackout').fadeOut(200,function(){
+			$('html,body').removeClass('blackout-on');
+		});
 	});
 	easyj.submit_data();
-}
+}	

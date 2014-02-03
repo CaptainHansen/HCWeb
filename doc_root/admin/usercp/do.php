@@ -77,6 +77,10 @@ case "DELETE":
 		$easyj -> add_error_msg("ID number of record to delete was not supplied.");
 		break;
 	}
+	if($id == \HCWeb\Auth::getData('ID')){
+		$easyj -> add_error_msg("Well this would've been really bad, wouldn't it? :-)");
+		break;
+	}
 	DB::delete("auth",$id);
 	break;
 
