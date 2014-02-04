@@ -72,7 +72,7 @@ class Auth {
 
 	public static function Login($user,$pass){
 		$user = preg_replace("/'/i","\'",$user);
-		$r = DB::query("select * from auth where user = '{$user}'");
+		$r = DB::query("select * from auth where user = '{$user}' and enabled = 1");
 		$d = $r -> fetch_assoc();
 		if(Password::Verify($pass,$d['pass'])){
 			if(!isset($_SESSION)) session_start();

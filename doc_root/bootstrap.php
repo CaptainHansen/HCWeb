@@ -22,8 +22,16 @@ if(file_exists(FILESROOT."/site.json")){
 		if(isset($jdat['site']['photos'])) {
 			$photos = $jdat['site']['photos'];
 			if(isset($photos['destination'])){
-				define('HC_PHOTOSDIR',preg_replace("/\{FILESROOT\}/",FILESROOT,$photos['destination']));
-				\WMark\Photo::Init(HC_PHOTOSDIR);
+				if(is_array($photos['destination'])){
+					foreach($photos['destination'] as $id => $dest){
+						$photos['destination'][$id] = preg_replace("/\{FILESROOT\}/",FILESROOT,$dest);
+					}
+					define('HC_PHOTOSDIR',$photos['destination'][0]);
+					\WMark\Photo::Init($photos['destination']);
+				} else {
+					define('HC_PHOTOSDIR',preg_replace("/\{FILESROOT\}/",FILESROOT,$photos['destination']));
+					\Wmark\Photo::Init(HC_PHOTOSDIR);
+				}
 			}
 			if(defined('HC_PHOTO_UPLOADER')) {
 				\Photos\Compiler::setOption('destination',HC_PHOTOSDIR);
