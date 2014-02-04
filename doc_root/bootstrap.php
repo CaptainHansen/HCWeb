@@ -30,7 +30,7 @@ if(file_exists(FILESROOT."/site.json")){
 					\WMark\Photo::Init($photos['destination']);
 				} else {
 					define('HC_PHOTOSDIR',preg_replace("/\{FILESROOT\}/",FILESROOT,$photos['destination']));
-					\Wmark\Photo::Init(HC_PHOTOSDIR);
+					\WMark\Photo::Init(HC_PHOTOSDIR);
 				}
 			}
 			if(defined('HC_PHOTO_UPLOADER')) {
