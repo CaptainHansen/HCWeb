@@ -4,7 +4,7 @@ require("../auth.php");
 use \HCWeb\DB;
 use \HCWeb\EasyJax;
 
-$dir = $filesroot."/pages/";
+$dir = FILESROOT."/pages/";
 
 $easyj = new EasyJax();
 

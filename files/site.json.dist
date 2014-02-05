@@ -6,6 +6,7 @@
 		"db"	: "new_website"
 	},
 	"site"	: {
+		"timezone" : "America/Los_Angeles",
 		"theme"	: "CoverAll",
 		"photos"	: {
 			"destination"	: "{FILESROOT}/photos",

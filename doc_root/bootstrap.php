@@ -11,6 +11,9 @@ if(file_exists(FILESROOT."/site.json")){
 		unset($mysql);
 	}
 	if($jdat['site']) {
+		if(isset($jdat['site']['timezone'])){
+			date_default_timezone_set($jdat['site']['timezone']);
+		}
 		if(isset($jdat['site']['theme'])) {
 			\HCWeb\Header::addCssJs("/themes/{$jdat['site']['theme']}/style.css");
 			if(file_exists(__DIR__."/themes/{$jdat['site']['theme']}/theme.js")){
