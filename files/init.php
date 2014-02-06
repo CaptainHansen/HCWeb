@@ -3,7 +3,6 @@ echo "Initializing New Website...\n";
 
 if(!is_dir('newphotos')) mkdir("newphotos");
 if(!is_dir('photos')) mkdir('photos');
-if(!is_dir('pages')) mkdir('pages');
 
 if(!file_exists('private.key') || !file_exists('public.key')) {
 	echo "Generating private/public key pairs for Encrypted EasyJax transmissions...\n";
@@ -38,7 +37,7 @@ $r = DB::query("show tables");
 
 echo "Initializing MySQL tables.\n";
 
-$tables = array("auth","photos","photo_cats");
+$tables = array("auth","photos","photo_cats","pages");
 
 while(list($table) = $r -> fetch_row()){
 	if(FALSE !== ($k = array_search($table,$tables))){
@@ -49,11 +48,10 @@ while(list($table) = $r -> fetch_row()){
 $tables = array('auth');
 
 foreach($tables as $table){
+	echo "Creating table {$table}\n";
 	switch($table){
 	
 	case "auth":
-		echo "Creating table {$table}\n";
-		
 		$get_d = array(
 			array("user", "Enter a username of your choice",5),
 			array("fname", "Enter your first name"),
@@ -90,15 +88,19 @@ foreach($tables as $table){
 		break;
 	
 	case "photos":
-		echo "Creating table {$table}\n";
 		DB::query("CREATE TABLE `photos` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `filename` varchar(255) NOT NULL, `time` int(11) NOT NULL, `cats` mediumblob NOT NULL, `hash` char(16) NOT NULL, `hide` tinyint(1) NOT NULL, `asp_rat` double NOT NULL, PRIMARY KEY (`ID`) )");
 		break;
 	
 	case "photo_cats":
-		echo "Creating table {$table}\n";
 		DB::query("CREATE TABLE `photo_cats` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, PRIMARY KEY (`ID`) )");
 		break;
 	
+	case "pages":
+		DB::query("CREATE TABLE `pages` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `html` mediumblob NOT NULL, `name` varchar(255) NOT NULL, `lastupd` int(11) NOT NULL, PRIMARY KEY (`ID`) )");
+		break;
+	
+	default:
+		echo "Table not recognized!\n";
 	}
 }
 

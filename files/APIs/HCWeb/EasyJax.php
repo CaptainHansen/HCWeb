@@ -57,7 +57,6 @@ class EasyJax {
 			$this -> aes -> setKey(base64_decode($matches[1]));
 			$this -> aes -> setIV(base64_decode($matches[2]));
 			$jtext = $this -> aes -> decrypt(base64_decode(file_get_contents("php://input")));
-//			echo $jtext."\n\n";
 		} else {
 			$jtext = file_get_contents("php://input");
 		}

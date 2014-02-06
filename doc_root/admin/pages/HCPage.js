@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('#file_contents').ckeditor();
+	$('#page_html').ckeditor();
 });
 	
 
@@ -15,21 +15,21 @@ HCPage.Load = function(){
 		return false;
 	}
 	easyj = new EasyJax('do.php/'+file,'GET',function(data){
-		$('#file_contents').val(data.data);
+		$('#page_html').val(data.data.html);
 		$('#thestuff').css({'display':'block'});
 	});
 	easyj.submit_data();
 }
 
 HCPage.Save = function(){
-	var file = $('#page').val();
-	if(file == '--'){
+	var id = $('#page').val();
+	if(id == '--'){
 		alert("You have not selected a valid file and therefore cannot perform a save right now.");
 		return false;
 	}
-	easyj = new EasyJax('do.php/'+file,'PUT',function(){
+	easyj = new EasyJax('do.php/'+id,'PUT',function(){
 		alert("Page Contents Saved Successfully!");
-	},{'data' : $('#file_contents').val()});
+	},{'html' : $('#page_html').val()});
 	easyj.submit_data();
 }
 	
