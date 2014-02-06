@@ -33,12 +33,71 @@ require(dirname(__DIR__)."/doc_root/bootstrap.php");
 use \HCWeb\DB;
 
 $r = DB::query("show tables");
-if($r -> num_rows == 0){
-	echo "Initializing MySQL tables.\n";
-	DB::query("CREATE TABLE `auth` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `user` varchar(255) NOT NULL, `pass` varchar(34) NOT NULL, `admin` tinyint(1) NOT NULL, PRIMARY KEY (`ID`), UNIQUE KEY `user` (`user`) ) ");
-	DB::query("CREATE TABLE `photos` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `filename` varchar(255) NOT NULL, `time` int(11) NOT NULL, `cats` mediumblob NOT NULL, `hash` char(16) NOT NULL, `hide` tinyint(1) NOT NULL, `asp_rat` double NOT NULL, PRIMARY KEY (`ID`) )");
-	DB::query("CREATE TABLE `photo_cats` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, PRIMARY KEY (`ID`) )");
-	DB::insert("auth",array("user" => 'shansen', 'admin' => 1, 'pass' => \HCWeb\Password::Hash('testpass')));
+
+echo "Initializing MySQL tables.\n";
+
+$tables = array("auth","photos","photo_cats");
+
+while(list($table) = $r -> fetch_row()){
+	if(FALSE !== ($k = array_search($table,$tables))){
+		unset($tables[$k]);
+	}
+}
+
+$tables = array('auth');
+
+foreach($tables as $table){
+	switch($table){
+	
+	case "auth":
+		echo "Creating table {$table}\n";
+		
+		$get_d = array(
+			array("user", "Enter a username of your choice",5),
+			array("fname", "Enter your first name"),
+			array("lname", "Enter your last name"),
+			array("pass", "Enter a password",6),
+		);
+		
+		$store = array();
+		foreach($get_d as $gd){
+			$done = false;
+			list($id,$prompt) = $gd;
+			while(!$done){
+				echo $prompt.": ";
+				$store[$id] = trim(fgets(STDIN));
+				if(!$store[$id]) die("Aborting....\n");
+				if(isset($gd[2])){
+					if(strlen($store[$id]) < $gd[2]){
+						echo "Your response must contain at least {$gd[2]} characters...\n";
+					} else {
+						$done = true;
+					}
+				} else {
+					$done = true;
+				}
+			}
+		}
+		
+		$store['pass'] = \HCWeb\Password::Hash($store['pass']);
+		$store['admin'] = 1;
+		$store['enabled'] = 1;
+		
+		DB::query("CREATE TABLE `auth` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `user` varchar(255) NOT NULL, `pass` varchar(34) NOT NULL, `admin` tinyint(1) NOT NULL, `enabled` tinyint(1) NOT NULL, `fname` varchar(255) NOT NULL, `lname` varchar(255) NOT NULL, `lastact` int(11) NOT NULL, `ip_addr` varchar(15) NOT NULL, PRIMARY KEY (`ID`), UNIQUE KEY `user` (`user`) )");
+		DB::insert("auth",$store);
+		break;
+	
+	case "photos":
+		echo "Creating table {$table}\n";
+		DB::query("CREATE TABLE `photos` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `filename` varchar(255) NOT NULL, `time` int(11) NOT NULL, `cats` mediumblob NOT NULL, `hash` char(16) NOT NULL, `hide` tinyint(1) NOT NULL, `asp_rat` double NOT NULL, PRIMARY KEY (`ID`) )");
+		break;
+	
+	case "photo_cats":
+		echo "Creating table {$table}\n";
+		DB::query("CREATE TABLE `photo_cats` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, PRIMARY KEY (`ID`) )");
+		break;
+	
+	}
 }
 
 echo "Done!\n";
