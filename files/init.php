@@ -45,8 +45,6 @@ while(list($table) = $r -> fetch_row()){
 	}
 }
 
-$tables = array('auth');
-
 foreach($tables as $table){
 	echo "Creating table {$table}\n";
 	switch($table){
