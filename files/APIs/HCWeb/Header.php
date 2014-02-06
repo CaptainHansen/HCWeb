@@ -2,22 +2,28 @@
 namespace HCWeb;
 
 class Header {
-	private static $files=array('','/style.css','/js/jquery-1.8.3.js','/js/EasyJax.js');
-	public static $title="New Website";
+	private static $prefiles = array();
+	private static $files = array();
+	public static $title=false;
 	public static $currentpage;
 	
-	public static function Init(){
-		if(Auth::isLoggedIn()){
-			self::$files[0] = "/admin.css";
+	public static function prependCssJs(){
+		$files = func_get_args();
+		foreach($files as $file){
+			self::$prefiles[] = $file;
 		}
 	}
 	
-	public function addCssJs($file){
-		self::$files[] = $file;
+	public static function addCssJs(){
+		$files = func_get_args();
+		foreach($files as $file){
+			self::$files[] = $file;
+		}
 	}
 	
-	public function printCssJs(){
-		foreach(self::$files as $file){
+	public static function printCssJs(){
+		$allfiles = array_merge(self::$prefiles,self::$files);
+		foreach($allfiles as $file){
 			if($file == '') continue;
 			if(preg_match('!^/!',$file)){
 				$abs_path = $_SERVER['DOCUMENT_ROOT'].$file;

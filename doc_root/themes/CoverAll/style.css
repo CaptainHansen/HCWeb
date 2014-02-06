@@ -4,8 +4,8 @@ body {
 
 a { color: #fff; }
 
-div.header-wrapper { color: #fff; background: #444; }
-div.header {
+div#main-wrapper { color: #fff; background: #444; }
+div#header {
 	width: 1200px;
 	margin: 0 auto;
 	padding: 0px;

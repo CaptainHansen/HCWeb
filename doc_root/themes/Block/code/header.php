@@ -5,14 +5,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?
 use \HCWeb\Header;
-Header::Init();
 
 echo "<title>".Header::$title."</title>";
 
+$themedir = "/".str_replace($_SERVER['DOCUMENT_ROOT'],'',dirname(__DIR__));
+
+if(\HCWeb\Auth::isLoggedIn()){
+	Header::prependCssJs("/admin.css");
+}
+
+Header::prependCssJs("/style.css", "/js/jquery-1.8.3.js", "/js/EasyJax.js", $themedir."/style.css");
+
 Header::printCssJs();
 
-echo "</head>";
-echo "<body>";
+echo "</head><body>";
 
 echo "<div id=\"main-wrapper\"><div id=\"header\"><h1>Herro!!</h1></div>";
 include("{$_SERVER['DOCUMENT_ROOT']}/links.php");

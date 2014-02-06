@@ -6,8 +6,9 @@
 		"db"	: "new_website"
 	},
 	"site"	: {
-		"timezone" : "America/Los_Angeles",
+		"title" : "New Website",
 		"theme"	: "CoverAll",
+		"timezone" : "America/Los_Angeles",
 		"photos"	: {
 			"destination"	: "{FILESROOT}/photos",
 			"full_size"		: false,
@@ -15,7 +16,6 @@
 				"l":{"d":1000,"min":false},
 				"s":{"d":200,"min":true}
 			},
-
 			"wmark_pass"	: ""
 		}
 	}

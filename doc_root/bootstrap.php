@@ -11,16 +11,15 @@ if(file_exists(FILESROOT."/site.json")){
 		unset($mysql);
 	}
 	if($jdat['site']) {
-		if(isset($jdat['site']['timezone'])){
-			date_default_timezone_set($jdat['site']['timezone']);
+		if(isset($jdat['site']['title'])) {
+			\HCWeb\Header::$title = $jdat['site']['title'];
 		}
 		if(isset($jdat['site']['theme'])) {
-			\HCWeb\Header::addCssJs("/themes/{$jdat['site']['theme']}/style.css");
-			if(file_exists(__DIR__."/themes/{$jdat['site']['theme']}/theme.js")){
-				\HCWeb\Header::addCssJs("/themes/{$jdat['site']['theme']}/theme.js");
-			}
 			define("THEMEHEAD",__DIR__."/themes/{$jdat['site']['theme']}/code/header.php");
 			define("THEMEFOOT",__DIR__."/themes/{$jdat['site']['theme']}/code/footer.php");
+		}
+		if(isset($jdat['site']['timezone'])){
+			date_default_timezone_set($jdat['site']['timezone']);
 		}
 		if(isset($jdat['site']['photos'])) {
 			$photos = $jdat['site']['photos'];
