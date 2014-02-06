@@ -2,10 +2,6 @@
 /logs/*
 .DS_Store
 site.json
-/doc_root/admin.css
-/doc_root/style.css
-/doc_root/links.php
-/doc_root/index.php
 /doc_root/admin/siusercp
 /files/newphotos
 /files/photos
@@ -13,4 +9,5 @@ site.json
 /files/private.key
 /files/enctest.php
 /files/dectest.php
+/files/pages
 /doc_root/js/cryptojs/
