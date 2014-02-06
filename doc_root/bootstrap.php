@@ -17,6 +17,7 @@ if(file_exists(FILESROOT."/site.json")){
 		if(isset($jdat['site']['theme'])) {
 			define("THEMEHEAD",__DIR__."/themes/{$jdat['site']['theme']}/code/header.php");
 			define("THEMEFOOT",__DIR__."/themes/{$jdat['site']['theme']}/code/footer.php");
+			define("THEME_NOTFOUND",__DIR__."/themes/{$jdat['site']['theme']}/code/404.php");
 		}
 		if(isset($jdat['site']['timezone'])){
 			date_default_timezone_set($jdat['site']['timezone']);

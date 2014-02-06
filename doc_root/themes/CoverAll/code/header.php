@@ -11,10 +11,10 @@ echo "<title>".Header::$title."</title>";
 $themedir = "/".str_replace($_SERVER['DOCUMENT_ROOT'],'',dirname(__DIR__));
 
 if(\HCWeb\Auth::isLoggedIn()){
-	Header::prependCssJs("/admin.css");
+	Header::prependCssJs($themedir."/admin.css");
 }
 
-Header::prependCssJs("/style.css", "/js/jquery-1.8.3.js", "/js/EasyJax.js", $themedir."/style.css", $themedir."/theme.js");
+Header::prependCssJs("/js/jquery-1.8.3.js", "/js/EasyJax.js", $themedir."/style.css", $themedir."/theme.js");
 
 Header::printCssJs();
 
