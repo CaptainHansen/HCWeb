@@ -7,6 +7,8 @@ $(el).HCSlider(function(){
 
 ***/
 
+HCSlideActive = false;
+
 (function($){
 	$.fn.HCSlider = function(ch_fn){
 		return this.each(function(){
@@ -18,6 +20,8 @@ $(el).HCSlider(function(){
 			$(this).remove();
 
 			$(obj).find('.slider,.track').bind('mousedown touchstart',function(e) {
+				if(HCSlideActive) return false;
+				HCSlideActive = true;
 				e = e || window.event;
 		
 				//EVALUATING APPARENT ORIGIN:
@@ -25,6 +29,8 @@ $(el).HCSlider(function(){
 				var ptr = 0;
 				if(e.pageX) ptr = e.pageX;
 				else if(e.clientX) ptr = e.clientX;
+				else if(e.originalEvent.changedTouches) ptr = e.originalEvent.changedTouches[0].pageX;
+				
 				var slideroffset = $(obj).find('.slider').offset().left;
 				var ms = $(obj).find('.slider').css('left').match(/(-?\d+)px/);
 				var origin = (ptr-slideroffset + trackoffset) + parseInt(ms[1]);
@@ -40,10 +46,13 @@ $(el).HCSlider(function(){
 				}
 
 				$('body,html').bind('mousemove touchmove',function(e) {
+					e.preventDefault();
 					e = e || window.event;
 					var ptr = 0;
 					if(e.pageX) ptr = e.pageX;
 					else if(e.clientX) ptr = e.clientX;
+					else if(e.originalEvent.targetTouches) ptr = e.originalEvent.targetTouches[0].pageX;
+					if(ptr == 0) return false;
 
 					var slider_pos = ptr-origin;
 					if(slider_pos < 0) slider_pos = 0;
@@ -55,7 +64,8 @@ $(el).HCSlider(function(){
 						$(obj).find('input').change();
 					}
 				}).bind('mouseup touchend',function(e) {
-					$('body,html').off('mousemove').css({
+					HCSlideActive=false;
+					$('body,html').off('mousemove touchmove').css({
 						'-webkit-touch-callout': 'auto',
 						'-webkit-user-select': 'auto',
 						'-khtml-user-select': 'auto',
