@@ -8,7 +8,10 @@ use \HCWeb\Header;
 
 echo "<title>".Header::$title."</title>";
 
-$themedir = "/".str_replace($_SERVER['DOCUMENT_ROOT'],'',dirname(__DIR__));
+$themedir = str_replace($_SERVER['DOCUMENT_ROOT'],'',dirname(__DIR__));
+if(substr($themedir,0,1) != '/'){
+	$themedir = '/'.$themedir;
+}
 
 if(\HCWeb\Auth::isLoggedIn()){
 	Header::prependCssJs($themedir."/admin.css");

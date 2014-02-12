@@ -65,7 +65,11 @@ class EasyJaxFiles {
 		} else {
 			$this -> set_ret_data('overw',false);
 		}
-		$this -> write = fopen($dloc,'w');
+		if(isset($_SERVER['HTTP_EJF_SEGMENT'])){
+			$this -> write = fopen($dloc,'a');
+		} else {
+			$this -> write = fopen($dloc,'w');
+		}
 		if(!$this -> write) {
 			$this -> add_error_msg("Cannot open a write handle.");
 			return false;

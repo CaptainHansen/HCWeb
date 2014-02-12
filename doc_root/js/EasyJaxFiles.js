@@ -82,6 +82,8 @@ function EasyJaxFiles (Url,req_type,files){
 	
 	this.fileReader;
 	
+	this.segment = 0;
+	
 	
 	this.on = function(type,f){
 		switch(type){
@@ -122,31 +124,62 @@ function EasyJaxFiles (Url,req_type,files){
 			alert("You must first select files to upload!");
 			return false;
 		}
+		
+		this.fileReader = new FileReader();
 		if(this.files_index == 0) this.start();
 		if(this.files_index >= files.length) return this.finish();
 		this.nextfile();
 		
 		this.runUpload();
-		this.files_index += 1;
 	}
 	
-	this.runUpload = function(){
+	this.runUpload = function(lstart,more){
 		// take the file from the input
-		this.fileReader = new FileReader();
-		this.fileReader.onloadend = this.createUploader();
-		this.fileReader.readAsBinaryString(this.files[this.files_index]); // alternatively you can use readAsDataURL
+		var file = this.files[this.files_index];
+		if(file.size > 5000000) {
+			if(lstart == undefined){
+				var start = 0;
+				this.segment = 1;
+				var more = 5000000;
+			} else {
+				var start = lstart+more;
+				this.segment ++;
+			}
+			if(file.size <= start+more){
+//				more = file.size - start;
+				var lastone = true;
+			} else var lastone = false;
+			this.fileReader.onloadend = this.createUploader(start,more,lastone);
+			//piece together
+			var slice = file.slice || file.webkitSlice || file.mozSlice;
+			var blob = slice.call(file,start,start+more);
+			this.fileReader.readAsBinaryString(blob);
+		} else {
+			this.fileReader.onloadend = this.createUploader();
+			this.fileReader.readAsBinaryString(this.files[this.files_index]);
+		}
 	}
 	
-	this.createUploader = function(){
+	this.createUploader = function(start,more,lastone){
 		var file = this.files[this.files_index];
 		var ejf = this;
 		this.xmlHttp = new XMLHttpRequest();
 		
-		var xhrCallback = this.createXHRCallback();
+		var xhrCallback = this.createXHRCallback(start,more,lastone);
 
 		var x = this.xmlHttp;
 		return function(evt) {
 			x.open(ejf.req_type, ejf.Url+file.name, true);
+			
+			var last = 'YES';
+			if(start != undefined){
+				x.setRequestHeader("EJF-Segment",ejf.segment);
+//				x.setRequestHeader("Content-Length",more);
+				if(!lastone) last = 'NO';
+			} else {
+//				x.setRequestHeader("Content-Length",file.size);
+			}
+			x.setRequestHeader("EJF-Final",last);
 
 			// let's track upload progress
 			var eventSource = x.upload || x;
@@ -154,12 +187,13 @@ function EasyJaxFiles (Url,req_type,files){
 				return function(e){
 					var s = {
 						'position' : e.position || e.loaded,
-						'total' : e.totalSize || e.total,
+						'total' : file.size,
 						'num_files' : ejf.files.length,
 						'current_file' : ejf.files_index,
 					};
+					s.position += start;
 					s.percent = (s.position/s.total)*100;
-					s.overallPercent = ((s.position/s.total)/ejf.files.length + (ejf.files_index-1)/ejf.files.length)*100;
+					s.overallPercent = ((s.position/s.total)/ejf.files.length + (ejf.files_index)/ejf.files.length)*100;
 					ejf.progress(s,file,e);
 				};})(ejf));
 //			});
@@ -172,7 +206,7 @@ function EasyJaxFiles (Url,req_type,files){
 		};
 	}
 	
-	this.createXHRCallback = function(){
+	this.createXHRCallback = function(start,more,lastone){
 		var x = this.xmlHttp;
 		var ejf = this;
 		return function() {
@@ -180,15 +214,25 @@ function EasyJaxFiles (Url,req_type,files){
 				if(x.status == 200) {
 					try {
 						var data = JSON.parse(x.responseText);
+					} catch(e) {
+						if(!ejf.badjson(x.responseText)) return false;
+					}
+					
+					if(start == undefined || lastone){
 						if(data.error == ''){
 							ejf.success(data);
 						} else {
 							if(!ejf.error(data)) return false;
 						}
-					} catch (e) {
-						if(!ejf.badjson(x.responseText)) return false;
+						ejf.files_index += 1;
+						ejf.upload();
+					} else {
+						if(data.error != ''){
+							if(!ejf.error(data)) return false;
+						} else {
+							ejf.runUpload(start,more);
+						}
 					}
-					ejf.upload();
 				} else {
 					alert("Status code "+x.status+" not continuing...");
 				}

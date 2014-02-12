@@ -19,6 +19,7 @@ if(Auth::isLoggedIn()){
 	$abar = new Bar();
 	$abar -> addLink(new Link("Edit Pages","/admin/pages/"));
 	$abar -> addLink(new Link("Manage Photos","/admin/photos/"));
+	$abar -> addLink(new Link("Upload Files","/admin/upload-files/"));
 	if(Auth::getData('admin') == 1){
 		$abar -> addLink(new Link("Edit Users","/admin/usercp/"));
 		$abar -> addLink(new Link("MySQL","/admin/mysql/"));
