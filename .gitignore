@@ -1,6 +1,7 @@
 .svn
 /logs/*
 .DS_Store
+._.DS_Store
 site.json
 /doc_root/admin/siusercp
 /files/newphotos
