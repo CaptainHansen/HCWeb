@@ -19,7 +19,7 @@ class Compiler {
 		case "destination":
 			self::$mainphotos = $val;
 			break;
-		case "original":
+		case "full_size":
 			if($val){
 				self::$full_size = $val;
 			} else {
