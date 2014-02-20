@@ -1,7 +1,13 @@
+function buttonClick(){
+	$('#files').trigger('click');
+}
+
 $(document).ready(function(){
+	$('#btn').click(buttonClick);
 	$('#files').change(function(){
 		ejf = new EasyJaxFiles('upload.php','POST',$('#files')[0].files);
 		ejf.on('start',function(){
+			$('#btn').off('click');
 			$('#results').html('');
 			$('#results').append('<div style="text-align: center;"><div id="allprogress">Process Initiated</div></div>');
 			$('#allprogress').HCProgress();
@@ -18,6 +24,7 @@ $(document).ready(function(){
 			$('.file:last').find('#file_progress').html('File "'+data.name+'" Not Uploaded! - '+data.error);
 		}).on('finish',function(){
 			$('#allprogress').html('Process Complete!');
+			$('#btn').click(buttonClick);
 		});
 		ejf.upload();
 	});

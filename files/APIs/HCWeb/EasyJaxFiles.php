@@ -66,6 +66,9 @@ class EasyJaxFiles {
 			$this -> set_ret_data('overw',false);
 		}
 		if(isset($_SERVER['HTTP_EJF_SEGMENT'])){
+			if($_SERVER['HTTP_EJF_SEGMENT'] == 1) {
+				unlink($dloc);
+			}
 			$this -> write = fopen($dloc,'a');
 		} else {
 			$this -> write = fopen($dloc,'w');

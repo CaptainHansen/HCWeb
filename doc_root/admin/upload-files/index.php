@@ -18,7 +18,7 @@ echo "</div>";
 
 ?>
 <div style="width: 0; height: 0; position: absolute;"><input type="file" id="files" multiple="multiple"></div>
-<button id="btn" onclick="$('#files').trigger('click');">Upload Files</button>
+<button id="btn">Upload Files</button>
 <div id="results"></div>
 <?
 
