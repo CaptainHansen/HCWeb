@@ -13,7 +13,7 @@ HCPhotos.Duplicates.Show = function(){
 			var dd = $('#HCPhotos-dups');
 			var txt = '<div style="max-height: '+($(window).height()-200)+'px;overflow: auto;">';
 			for(i in data.dups){
-				txt += '<div class="HCPhoto" id=\"'+data.dups[i]+'\" style="cursor: pointer;"><img src="img.php/'+data.dups[i]+'" alt="'+data.dups[i]+'"></div>';
+				txt += '<div class="HCPhoto" id=\"'+data.dups[i]+'\" style="cursor: pointer;"><img src="/photos/small/'+data.dups[i]+'" alt="'+data.dups[i]+'"></div>';
 			}
 			txt += '</div>';
 			
