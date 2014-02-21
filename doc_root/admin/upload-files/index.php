@@ -2,7 +2,7 @@
 require("../auth.php");
 use \HCWeb\Header;
 
-Header::addCssJs("/admin/common.css");
+Header::addCssJs(THEME_RELPATH."/admin-common.css");
 
 Header::addCssJs("/js/EasyJaxFiles.js");
 Header::addCssJs("/js/HC.Progress.js");

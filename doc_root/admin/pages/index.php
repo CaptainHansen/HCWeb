@@ -3,7 +3,7 @@ require("../auth.php");
 use \HCWeb\Header;
 use \HCWeb\DB;
 
-Header::addCssJs('/admin/common.css');
+Header::addCssJs(THEME_RELPATH.'/admin-common.css');
 Header::addCssJs('/ckeditor/ckeditor.js');
 Header::addCssJs('/ckeditor/adapters/jquery.js');
 Header::addCssJs('HCPage.js');

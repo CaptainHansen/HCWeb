@@ -3,7 +3,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/admin/auth.php");
 use \HCWeb\DB;
 use \HCWeb\Header;
 
-Header::addCssJs('/admin/common.css');
+Header::addCssJs(THEME_RELPATH.'/admin-common.css');
 Header::addCssJs('style.css');
 Header::addCssJs('/js/HC.Progress.js');
 Header::addCssJs('/js/HC.Slider.js');

@@ -30,7 +30,11 @@ class Header {
 			} else {
 				$abs_path = getcwd().'/'.$file;
 			}
-			if(!file_exists($abs_path)) continue;
+			if(!file_exists($abs_path)) {
+				$file = "/defaults/".basename($file);
+				$abs_path = $_SERVER['DOCUMENT_ROOT'].$file;
+				if(!file_exists($abs_path)) continue;
+			}
 			preg_match('/\.([^\.]+)$/',$file,$matches);
 			if($matches[1] == 'css'){
 				echo "<link rel=\"stylesheet\" href=\"{$file}?t=".filemtime($abs_path)."\" />";

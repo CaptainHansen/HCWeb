@@ -5,7 +5,7 @@ use \HCWeb\DB;
 use \HCWeb\Header;
 
 Header::$title = "User Accounts";
-Header::addCssJs('/admin/common.css');
+Header::addCssJs(THEME_RELPATH.'/admin-common.css');
 Header::addCssJs('HCUser.js');
 Header::addCssJs('style.css');
 Header::addCssJs('/js/date.js');

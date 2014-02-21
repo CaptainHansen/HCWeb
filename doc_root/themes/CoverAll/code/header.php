@@ -8,16 +8,11 @@ use \HCWeb\Header;
 
 echo "<title>".Header::$title."</title>";
 
-$themedir = str_replace($_SERVER['DOCUMENT_ROOT'],'',dirname(__DIR__));
-if(substr($themedir,0,1) != '/'){
-	$themedir = '/'.$themedir;
-}
-
 if(\HCWeb\Auth::isLoggedIn()){
-	Header::prependCssJs($themedir."/admin.css");
+	Header::prependCssJs(THEME_RELPATH."/admin.css");
 }
 
-Header::prependCssJs("/js/jquery-1.8.3.js", "/js/EasyJax.js", $themedir."/style.css", $themedir."/theme.js");
+Header::prependCssJs("/js/jquery-1.8.3.js", "/js/EasyJax.js", THEME_RELPATH."/style.css", THEME_RELPATH."/theme.js");
 
 Header::printCssJs();
 

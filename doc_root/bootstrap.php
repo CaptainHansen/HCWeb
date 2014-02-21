@@ -15,9 +15,15 @@ if(file_exists(FILESROOT."/site.json")){
 			\HCWeb\Header::$title = $jdat['site']['title'];
 		}
 		if(isset($jdat['site']['theme'])) {
-			define("THEMEHEAD",__DIR__."/themes/{$jdat['site']['theme']}/code/header.php");
-			define("THEMEFOOT",__DIR__."/themes/{$jdat['site']['theme']}/code/footer.php");
-			define("THEME_NOTFOUND",__DIR__."/themes/{$jdat['site']['theme']}/code/404.php");
+			define("THEME_ABSPATH",__DIR__."/themes/{$jdat['site']['theme']}");
+
+			$themedir = str_replace($_SERVER['DOCUMENT_ROOT'],'',THEME_ABSPATH);
+			if(substr($themedir,0,1) != '/') $themedir = '/'.$themedir;
+			define("THEME_RELPATH",$themedir);
+			
+			define("THEMEHEAD",THEME_ABSPATH."/code/header.php");
+			define("THEMEFOOT",THEME_ABSPATH."/code/footer.php");
+			define("THEME_NOTFOUND",THEME_ABSPATH."/code/404.php");
 		}
 		if(isset($jdat['site']['timezone'])){
 			date_default_timezone_set($jdat['site']['timezone']);
