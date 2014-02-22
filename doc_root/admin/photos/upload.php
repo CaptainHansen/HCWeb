@@ -11,8 +11,13 @@ case "POST":
 	if($file = $ejf -> downloadTo(FILESROOT."/newphotos")){
 		$ejf -> set_ret_data('orig_name',basename($file));
 		$c = new Compiler();
-		if(!($pdata = $c -> Run($file))){
+		$pdata = $c -> Run($file);
+		if($pdata === -1) {
 			$ejf -> add_error_msg("This file could not be loaded by Imagick.");
+			break;
+		}
+		if($pdata === -2) {
+			$ejf -> add_error_msg("Destination directories do not exist and cannot be created by the web server.  Please check directory permissions.");
 			break;
 		}
 		$ejf -> set_ret_data('photo',$pdata);

@@ -1,9 +1,18 @@
 <?
 echo "Initializing New Website...\n";
 
-if(!is_dir('newphotos')) mkdir("newphotos");
-if(!is_dir('photos')) mkdir('photos');
-if(!is_dir('uploaded')) mkdir('uploaded');
+if(!is_dir('newphotos')) {
+	mkdir("newphotos");
+	chmod("newphotos",0777);
+}
+if(!is_dir('photos')) {
+	mkdir('photos');
+	chmod("photos",0777);
+}
+if(!is_dir('uploaded')) {
+	mkdir('uploaded');
+	chmod("uploaded",0777);
+}
 
 if(!file_exists('private.key') || !file_exists('public.key')) {
 	echo "Generating private/public key pairs for Encrypted EasyJax transmissions...\n";

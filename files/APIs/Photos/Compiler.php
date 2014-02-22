@@ -35,7 +35,7 @@ class Compiler {
 			$photo = new \imagick($file);
 		} catch (\ImagickException $e) {
 			unlink($file);
-			return false;
+			return -1;
 		}
 		$photo -> setResourceLimit(6,1);
 
@@ -62,6 +62,12 @@ class Compiler {
 		$normal = ($geo == NULL || $width > $height);
 		$first=true;
 		foreach(self::$photosizes as $dir => $size_data){
+			if(!is_dir(self::$mainphotos."/".$dir)){
+				if(!mkdir(self::$mainphotos."/".$dir)) {
+					unlink($file);
+					return -2;
+				}
+			}
 			if(isset($size_data['min']) && $size_data['min'] == true) $normal = !$normal;
 			//$normal tells whether the width is greater than the height of the image.
 			//default behavior is to pick the longest dimension, set that equal to new size dimension, and set the smallest dimension using the image's aspect ratio. (keeping a MAXIMUM image dimension)
@@ -77,11 +83,19 @@ class Compiler {
 			}
 			$dest = self::$mainphotos."/{$dir}/{$filename}";
 
-			$pass = $photo -> resizeImage($w,$h,\Imagick::FILTER_CUBIC,true);
-			$pass = $pass ? $photo -> writeImage($dest) : false;
+			if($w < $width) {	//ONLY resize the image if new image width is SMALLER than the image's original width
+				$photo -> resizeImage($w,$h,\Imagick::FILTER_CUBIC,true);
+			}
+			$photo -> writeImage($dest);
 				
 		}
 		if(self::$full_size){
+			if(!is_dir(self::$mainphotos."/".self::$full_size)){
+				if(!mkdir(self::$mainphotos."/".self::$full_size)) {
+					unlink($file);
+					return -2;
+				}
+			}
 			rename($file,self::$mainphotos."/".self::$full_size."/".$filename);
 		} else {
 			unlink($file);

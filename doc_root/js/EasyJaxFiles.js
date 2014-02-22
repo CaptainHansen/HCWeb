@@ -177,6 +177,7 @@ function EasyJaxFiles (Url,req_type,files){
 //				x.setRequestHeader("Content-Length",more);
 				if(!lastone) last = 'NO';
 			} else {
+				start = 0;
 //				x.setRequestHeader("Content-Length",file.size);
 			}
 			x.setRequestHeader("EJF-Final",last);
