@@ -60,4 +60,5 @@ div.HCWeb-Page-buttons {
 	box-shadow: 2px 2px 5px #000;
 	-moz-box-shadow: 2px 2px 5px #000;
 	-webkit-box-shadow: 2px 2px 5px #000;
+	display: none;
 }
