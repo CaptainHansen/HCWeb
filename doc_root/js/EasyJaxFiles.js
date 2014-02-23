@@ -190,7 +190,7 @@ function EasyJaxFiles (Url,req_type,files){
 						'position' : e.position || e.loaded,
 						'total' : file.size,
 						'num_files' : ejf.files.length,
-						'current_file' : ejf.files_index,
+						'current_file' : ejf.files_index+1,
 					};
 					s.position += start;
 					s.percent = (s.position/s.total)*100;
