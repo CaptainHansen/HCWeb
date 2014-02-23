@@ -6,12 +6,14 @@ class Header {
 	private static $files = array();
 	public static $title=false;
 	public static $currentpage;
+	private static $printed = false;
 	
 	public static function prependCssJs(){
 		$files = func_get_args();
 		foreach($files as $file){
 			self::$prefiles[] = $file;
 		}
+		if(self::$printed) self::printCssJs();
 	}
 	
 	public static function addCssJs(){
@@ -19,9 +21,11 @@ class Header {
 		foreach($files as $file){
 			self::$files[] = $file;
 		}
+		if(self::$printed) self::printCssJs();
 	}
 	
 	public static function printCssJs(){
+		self::$printed = true;
 		$allfiles = array_merge(self::$prefiles,self::$files);
 		foreach($allfiles as $file){
 			if($file == '') continue;
@@ -44,5 +48,7 @@ class Header {
 				throw new \Exception("File {$file} not recognized as a CSS or JS file!!!");
 			}
 		}
+		self::$prefiles = array();
+		self::$files = array();
 	}
 }

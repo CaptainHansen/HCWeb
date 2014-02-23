@@ -46,3 +46,18 @@ div.HCProgress-text {
 	width: 100%;
 	color: white;
 }
+
+
+/**** Editing Pages ****/
+div.HCWeb-Page { position: relative; }
+div.HCWeb-Page-buttons {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: rgba(255,255,255,0.5);
+	box-shadow: 2px 2px 5px #000;
+	-moz-box-shadow: 2px 2px 5px #000;
+	-webkit-box-shadow: 2px 2px 5px #000;
+}
