@@ -93,13 +93,16 @@ div#HCPhotos-upload-status {
 	color: white;
 }
 
+
 div.HCPhotos-progress-main.HCProgress-wrap {
 	width: 500px;
-	background-color: #ccc;
+/*	background-color: #ccc;*/
 }
+/*
 .HCPhotos-progress-main div.HCProgress-progress {
 	background-color: #aaa;
 }
+*/
 
 div.HCPhotos-upload-success {
 	text-align: left;

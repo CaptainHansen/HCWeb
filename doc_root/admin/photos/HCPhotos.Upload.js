@@ -30,9 +30,10 @@ HCPhotos.Upload.Run = function(){
 	}).on('start',function(data){
 		$('#HCPhotos-upload-blackout').fadeIn(200).html('<div id="HCPhotos-upload-status"><h1>Upload Progress</h1><div id="HCPhotos-overall-status" class="HCPhotos-progress-main" value="0">Progress</div></div>');
 		$('#HCPhotos-overall-status').HCProgress();
-	}).on('finish',function(){
+	}).on('finish',HCPhotos.Upload.Close)
+	.on('finishError',function(){
 		$('#HCPhotos-overall-status').val(100);
-		$('#HCPhotos-overall-status').html('Process Complete!');
+		$('#HCPhotos-overall-status').html('Process Completed with Errors');
 		$('#HCPhotos-upload-status').append('<div class=\"center\"><button onclick=\"HCPhotos.Upload.Close();\">Done</button></div>');
 	});
 	ejf.upload();

@@ -73,9 +73,12 @@ function EasyJaxFiles (Url,req_type,files){
 	this.error = function(data) { alert(data.error); return false; };
 	
 	this.finish = function() { return true; };
+	this.finishError = function() { alert("Errors occurred while uploading.  Some files were not successfully uploaded."); };
 	
 	this.files = files;
 	this.files_index = 0;
+	
+	this.allpass;
 	
 	this.xmlHttp;
 	this.req_type = req_type;
@@ -112,6 +115,10 @@ function EasyJaxFiles (Url,req_type,files){
 		case "finish":
 			this.finish = f;
 			break;
+		case "finishError":
+			this.finishError = f;
+			break;
+
 		default:
 			throw "No handler for type \""+type+"\"";
 			break;
@@ -126,10 +133,18 @@ function EasyJaxFiles (Url,req_type,files){
 		}
 		
 		this.fileReader = new FileReader();
-		if(this.files_index == 0) this.start();
-		if(this.files_index >= files.length) return this.finish();
+		if(this.files_index == 0) {
+			this.allpass = true;
+			this.start();
+		}
+		if(this.files_index >= files.length) {
+			if(this.allpass){
+				return this.finish();
+			} else {
+				return this.finishError();
+			}
+		}
 		this.nextfile();
-		
 		this.runUpload();
 	}
 	
@@ -223,15 +238,17 @@ function EasyJaxFiles (Url,req_type,files){
 						if(data.error == ''){
 							ejf.success(data);
 						} else {
+							ejf.allpass = false;
 							if(!ejf.error(data)) return false;
 						}
 						ejf.files_index += 1;
 						ejf.upload();
 					} else {
-						if(data.error != ''){
-							if(!ejf.error(data)) return false;
-						} else {
+						if(data.error == ''){
 							ejf.runUpload(start,more);
+						} else {
+							ejf.allpass = false;
+							if(!ejf.error(data)) return false;
 						}
 					}
 				} else {
