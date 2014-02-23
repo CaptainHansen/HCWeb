@@ -87,7 +87,11 @@ class EasyJaxFiles {
 			}
 			fwrite($this -> write, $buffer);
 		}
-		return $dloc;
+		if($_SERVER['HTTP_EJF_FINAL'] == 'YES'){
+			return $dloc;
+		} else {
+			$this -> send_resp();	//stop execution here if file is segmented and this is not the last one!!!
+		}
 	}
 	
 	public function set_ret_data($key,$data){
