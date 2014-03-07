@@ -13,7 +13,7 @@ class Page {
 				Header::addCssJs('/ckeditor/adapters/jquery.js');
 				self::$getOnce = true;
 			}
-			$ret .= "<div class=\"HCWeb-Page-buttons\"><button onclick=\"HCWeb.Page.Edit({$id});\">Edit</button></div>";
+			$ret .= "<div class=\"HCWeb-Page-buttons\"><button onclick=\"HCWeb.Page.Edit(this);\">Edit</button></div>";
 		}
 		$ret .= "<div class=\"HCWeb-Page-contents\">";
 		$r = DB::query("select html from pages where ID = {$id}");
