@@ -4,6 +4,7 @@ use \HCWeb\Linkbar\Link;
 use \HCWeb\Auth;
 
 $lbar = new Bar();
+$lbar -> setBarID('linkbar');
 $lbar -> add(new Link("Home","/"));
 $lbar -> add(new Link("Services","/services/"));
 $lbar -> add(new Link("Store","/store/",array(
@@ -29,6 +30,7 @@ if(Auth::isLoggedIn()){
 	$abar -> setNormalClass('adm_nav');
 	$abar -> setActiveClass('adm_navc');
 	$abar -> setBarClass('adm_linkbar');
+	$abar -> setBarID('adm_linkbar');
 	echo $abar -> getHTML();
 }
 

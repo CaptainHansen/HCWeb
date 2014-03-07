@@ -8,17 +8,17 @@ class Header {
 	private static $currentpage = array();
 	private static $printed = false;
 	
-	public static function setCurPage($barClass,$item){
-		if(!isset(self::$currentpage[$barClass])){
-			self::$currentpage[$barClass] = $item;
+	public static function setCurPage($curpageID,$item){
+		if(!isset(self::$currentpage[$curpageID])){
+			self::$currentpage[$curpageID] = $item;
 			return true;
 		}
 		return false;
 	}
 	
-	public static function getCurPage($barClass){
-		if(isset(self::$currentpage[$barClass])){
-			return self::$currentpage[$barClass];
+	public static function getCurPage($curpageID){
+		if(isset(self::$currentpage[$curpageID])){
+			return self::$currentpage[$curpageID];
 		}
 		return false;
 	}
