@@ -8,7 +8,7 @@ Header::addCssJs('/ckeditor/ckeditor.js');
 Header::addCssJs('/ckeditor/adapters/jquery.js');
 Header::addCssJs('HCPage.js');
 Header::addCssJs('/js/date.js');
-Header::$currentpage = "Edit Pages";
+Header::setCurPage('adm_linkbar',"Edit Pages");
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 
 echo "<div id=\"left-column-color\"></div>";

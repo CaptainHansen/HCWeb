@@ -3,7 +3,7 @@ define("REQUIRE_ADMIN",true);
 require("../auth.php");
 use \HCWeb\Header;
 Header::addCssJs("mysql.js");
-Header::$currentpage = "MySQL";
+Header::setCurPage('adm_linkbar',"MySQL");
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 ?>
 <style type="text/css">

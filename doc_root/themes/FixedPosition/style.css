@@ -55,6 +55,7 @@ ul.linkbar {
 	text-decoration: none;
 }
 .linkbar a:hover { color: #000; }
+.navc a, .navc a:hover { color: white; }
 
 li.nav { background-position: 0px 0px; }
 li.nav:hover { background-position: 0 -40px; }

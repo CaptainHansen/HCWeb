@@ -5,8 +5,23 @@ class Header {
 	private static $prefiles = array();
 	private static $files = array();
 	public static $title=false;
-	public static $currentpage;
+	private static $currentpage = array();
 	private static $printed = false;
+	
+	public static function setCurPage($barClass,$item){
+		if(!isset(self::$currentpage[$barClass])){
+			self::$currentpage[$barClass] = $item;
+			return true;
+		}
+		return false;
+	}
+	
+	public static function getCurPage($barClass){
+		if(isset(self::$currentpage[$barClass])){
+			return self::$currentpage[$barClass];
+		}
+		return false;
+	}
 	
 	public static function prependCssJs(){
 		$files = func_get_args();

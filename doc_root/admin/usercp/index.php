@@ -11,7 +11,7 @@ Header::addCssJs('style.css');
 Header::addCssJs('/js/date.js');
 Header::addCssJs('/js/encryption.js');
 Header::addCssJs('/js/HC.Crypt.js');
-Header::$currentpage = "Edit Users";
+Header::setCurPage('adm_linkbar',"Edit Users");
 require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 echo "<div id=\"left-column-color\"></div>";
 echo "<div class=\"column left\"><h1>Edit Users</h1><p>This page allows control over all user accounts associated with this site.  Rest assurred, you cannot de-authorize yourself if you are listed as an admin.</p></div>";

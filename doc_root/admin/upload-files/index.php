@@ -9,7 +9,7 @@ Header::addCssJs("/js/HC.Progress.js");
 Header::addCssJs("upload.js");
 Header::addCssJs("upload.css");
 Header::addCssJs("/js/HCUI-defaults.css");
-Header::$currentpage = "Upload Files";
+Header::setCurPage('adm_linkbar',"Upload Files");
 include(THEMEHEAD);
 
 echo "<div id=\"left-column-color\"></div>";

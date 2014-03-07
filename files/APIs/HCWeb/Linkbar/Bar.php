@@ -14,7 +14,7 @@ class Bar implements HTMLElement {
 		$this -> barClass = $barClass;
 	}
 	
-	public function addLink(LinkItem $lnk) { $this -> links[] = $lnk; }
+	public function add(LinkItem $lnk) { $this -> links[] = $lnk; }
 	
 	public function setNormalClass($className){ $this -> nav = $className; }
 	public function setActiveClass($className) { $this -> navc = $className; }
@@ -34,8 +34,16 @@ class Bar implements HTMLElement {
 		}
 		$html .= "<ul class=\"{$this -> barClass}\">";
 		
+		$active = \HCWeb\Header::getCurPage($this -> barClass);
+		
 		foreach($this -> links as $lnk){
-			$html .= $lnk -> getHTML($this -> nav, $this -> navc);
+			$class = $this -> nav;
+			if($active) {
+				if($active == $lnk -> getTitle()){
+					$class = $this -> navc;
+				}
+			}
+			$html .= $lnk -> getHTML($class);
 		}
 
 		$html .= "</ul>\n";

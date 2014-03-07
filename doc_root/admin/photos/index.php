@@ -15,7 +15,7 @@ Header::addCssJs('/js/EasyJaxFiles.js');
 Header::addCssJs('/js/jquery.waitforimages.js');
 Header::addCssJs('/js/HCUI-defaults.css');
 Header::$title="Photo Management";
-Header::$currentpage="Manage Photos";
+Header::setCurPage('adm_linkbar',"Manage Photos");
 include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
 
 echo "<div id=\"left-column-color\"></div>";

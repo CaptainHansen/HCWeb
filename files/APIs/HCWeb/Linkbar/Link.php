@@ -11,11 +11,8 @@ class Link extends LinkItem {
 		$this -> links = $links;
 	}
 
-	public function getHTML($nav="nav",$navc="navc"){
-		$style = $nav;
-		if(\HCWeb\Header::$currentpage == $this -> title){
-			$style = $navc;
-		}
+	public function getHTML($class="nav"){
+		$style = $class;
 		if($this -> className) $style .= " ".($this -> className);
 		
 		$href = $this -> href ? "href=\"{$this -> href}\"" : "href=\"javascript:;\"";

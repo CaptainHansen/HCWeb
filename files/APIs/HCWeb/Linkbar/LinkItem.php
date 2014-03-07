@@ -9,4 +9,8 @@ abstract class LinkItem implements \HCWeb\HTMLElement {
 		$this -> title = $title;
 		$this -> className = $className;
 	}
+	
+	public function getTitle(){
+		return $this -> title;
+	}
 }
