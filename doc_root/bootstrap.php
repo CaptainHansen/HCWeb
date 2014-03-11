@@ -60,4 +60,7 @@ if(file_exists(FILESROOT."/site.json")){
 			unset($photos);
 		}
 	}
+	if(isset($jdat['auth_stealth']) && $jdat['auth_stealth']){
+		define('AUTH_STEALTH',true);
+	}
 }

@@ -19,5 +19,6 @@
 			},
 			"wmark_pass"	: ""
 		}
-	}
+	},
+	"auth_stealth" : false
 }

@@ -107,6 +107,9 @@ class Auth {
 		if(defined('AJAX')){
 			$easyj = new EasyJax();
 			$easyj -> send_resp("You are not logged in.  Log back in and try again.");
+		} elseif(defined("AUTH_STEALTH")) {
+			$_SERVER['PATH_INFO'] = '/404';
+			include("{$_SERVER['DOCUMENT_ROOT']}/error.php");
 		} else {
 			header("Location: $redir");
 		}

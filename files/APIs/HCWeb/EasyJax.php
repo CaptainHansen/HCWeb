@@ -44,6 +44,7 @@ class EasyJax {
 		$this -> req_method = strtoupper($_SERVER['REQUEST_METHOD']);
 		$this -> return_data = array();
 		$this -> return_data['error'] = "";
+		$data = file_get_contents("php://input");
 		if(isset($_SERVER['HTTP_ENCRYPTION_KEY'])) {
 			$cipherkey = $_SERVER['HTTP_ENCRYPTION_KEY'];
 			include("Crypt/RSA.php");
@@ -56,14 +57,13 @@ class EasyJax {
 			$this -> aes = new \Crypt_AES();
 			$this -> aes -> setKey(base64_decode($matches[1]));
 			$this -> aes -> setIV(base64_decode($matches[2]));
-			$data = file_get_contents("php://input");
 			if(strlen($data) == 0){
 				$jtext = "{}";
 			} else {
-				$jtext = $this -> aes -> decrypt(base64_decode(file_get_contents("php://input")));
+				$jtext = $this -> aes -> decrypt(base64_decode($data));
 			}
 		} else {
-			$jtext = file_get_contents("php://input");
+			$jtext = $data;
 		}
 		$this -> json_data = json_decode($jtext,1);
 	}
