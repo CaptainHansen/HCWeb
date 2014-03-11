@@ -8,6 +8,7 @@
 	"site"	: {
 		"title" : "New Website",
 		"theme"	: "CoverAll",
+		"currency"	: "en_US",
 		"timezone" : "America/Los_Angeles",
 		"photos"	: {
 			"destination"	: "{FILESROOT}/photos",

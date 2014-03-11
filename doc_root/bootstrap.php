@@ -28,6 +28,9 @@ if(file_exists(FILESROOT."/site.json")){
 		if(isset($jdat['site']['timezone'])){
 			date_default_timezone_set($jdat['site']['timezone']);
 		}
+		if(isset($jdat['site']['currency'])){
+			setlocale(LC_MONETARY,$jdat['site']['currency']);
+		}
 		if(isset($jdat['site']['photos'])) {
 			$photos = $jdat['site']['photos'];
 			if(isset($photos['destination'])){
