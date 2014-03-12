@@ -17,7 +17,7 @@ case "GET":
 	//$beforelinks=
 	//$currentpage=
 	$disable_mobile = true;
-	include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
+	include(THEMEHEAD);
 	echo "\n<script>
 <!--
 function login(){
@@ -49,7 +49,7 @@ echo \HCWeb\EasyJax::getPubKey();
 	</tr></table></form>
 	<div style="text-align: center;"><button class="small" onclick="login();">Login</button></div>
 	</div>';
-	include("{$_SERVER['DOCUMENT_ROOT']}/footer.php");
+	include(THEMEFOOT);
 	die;
 
 case "LOGIN":

@@ -16,7 +16,7 @@ Header::addCssJs('/js/jquery.waitforimages.js');
 Header::addCssJs('/js/HCUI-defaults.css');
 Header::$title="Photo Management";
 Header::setCurPage('adm_linkbar',"Manage Photos");
-include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
+include(THEMEHEAD);
 
 echo "<div id=\"left-column-color\"></div>";
 echo "<div class=\"column left\"><h1>Photo Manager</h1><p>This page shows all photos uploaded to this site and allows control over what photos show up on the Home page of the site.  Duplicates can be easily resolved, photos can be removed (deleting a photo here also deletes it from the portfolio section of the website), and multiple photos can be uploaded at the same time.</p></div>";
@@ -57,4 +57,4 @@ echo "</div>";
 echo "</div>";
 
 echo "</div>";
-include("{$_SERVER['DOCUMENT_ROOT']}/footer.php");
+include(THEMEFOOT);

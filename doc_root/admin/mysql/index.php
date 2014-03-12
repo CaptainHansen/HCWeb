@@ -4,7 +4,7 @@ require("../auth.php");
 use \HCWeb\Header;
 Header::addCssJs("mysql.js");
 Header::setCurPage('adm_linkbar',"MySQL");
-require("{$_SERVER['DOCUMENT_ROOT']}/header.php");
+require(THEMEHEAD);
 ?>
 <style type="text/css">
 div.credentials {
@@ -24,4 +24,4 @@ div.query-results {
 </div>
 <?
 echo \HCWeb\EasyJax::getPubKey();
-require("{$_SERVER['DOCUMENT_ROOT']}/footer.php");
+require(THEMEFOOT);
