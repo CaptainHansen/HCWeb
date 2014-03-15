@@ -1,23 +1,24 @@
 <?
 require("../auth.php");
 use \HCWeb\Header;
-
+/*
 if(!isset($_SESSION['HCPhotoChange'])) {
 	header("Location: /");
 	die;
 } else {
 	$photo_ch = $_SESSION['HCPhotoChange'];
 }
-
+*/
 Header::$title="Admin - Photo Management - {$photo_ch['title']}";
-Header::addCssJs('/admin/common.css');
+Header::addCssJs(THEME_RELPATH.'/admin-common.css');
 Header::addCssJs('style.css');
 Header::addCssJs('/js/HCUI-defaults.css');
+Header::addCssJs('/js/HC.Slider.js');
 Header::addCssJs('HCPhotos.js');
 Header::addCssJs('HCPhotos.Change.js');
-Header::$currentpage = $photo_ch['currentpage'];
+Header::setCurPage($photo_ch['currentpage'][0],$photo_ch['currentpage'][1]);
 
-include("{$_SERVER['DOCUMENT_ROOT']}/header.php");
+include(THEMEHEAD);
 echo "<div id=\"left-column-color\"></div>";
 echo "<div class=\"column left\"><h1>{$photo_ch['title']}</h1><p>{$photo_ch['descrip']}</p></div>";
 
@@ -59,4 +60,4 @@ if(isset($_SESSION['HCPhotoChange']['cur_photo'])){
 */
 
 echo "</div>";
-include("{$_SERVER['DOCUMENT_ROOT']}/footer.php");
+include(THEMEFOOT);
