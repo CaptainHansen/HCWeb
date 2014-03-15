@@ -1,14 +1,14 @@
 <?
 require("../auth.php");
 use \HCWeb\Header;
-/*
+
 if(!isset($_SESSION['HCPhotoChange'])) {
 	header("Location: /");
 	die;
 } else {
 	$photo_ch = $_SESSION['HCPhotoChange'];
 }
-*/
+
 Header::$title="Admin - Photo Management - {$photo_ch['title']}";
 Header::addCssJs(THEME_RELPATH.'/admin-common.css');
 Header::addCssJs('style.css');
