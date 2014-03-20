@@ -12,6 +12,7 @@ HCPhotos.Cats.KeyToggle = function(kc){
 	if(menu.length != 1){
 		return false;
 	} else {
+		menu.parent().addClass('HCPhoto-catchanged');
 		cat_els = menu.find('input[type=checkbox]');
 		i = kc-49; //49-48 = 1 (keycode for the "1" key is 49)
 		if(cat_els[i] != null){
