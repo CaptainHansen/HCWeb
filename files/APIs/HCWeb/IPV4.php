@@ -57,6 +57,7 @@ class IPV4 {
 	private function genInt(){
 		$d = explode('.',$this -> ip_text);
 		$d = array_reverse($d);
+		$out = 0;
 		for($i = 0; $i <= 3; $i++){
 			$out += $d[$i]*(pow(256,$i));
 		}
