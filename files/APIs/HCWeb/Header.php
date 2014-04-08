@@ -8,14 +8,7 @@ class Header {
 	private static $currentpage = array();
 	private static $printed = false;
 	private static $description = false;
-	
-	public static function setDescrip($descrip){
-		self::$description = $descrip;
-	}
-	
-	public static function printDescrip(){
-		if(self::$description) echo "<meta name=\"description\" content=\"".self::$description."\">";
-	}
+	private static $og = array();
 	
 	public static function setCurPage($curpageID,$item){
 		if(!isset(self::$currentpage[$curpageID])){
@@ -30,6 +23,24 @@ class Header {
 			return self::$currentpage[$curpageID];
 		}
 		return false;
+	}
+	
+	public static function setDescrip($descrip){
+		self::$description = $descrip;
+	}
+	
+	public static function printDescrip(){
+		if(self::$description) echo "<meta name=\"description\" content=\"".self::$description."\">";
+	}
+	
+	public static function addOg($tag,$val) {
+		self::$og[$tag] = $val;
+	}
+	
+	public static function printOg(){
+		foreach(self::$og as $tag => $val){
+			echo "<meta property=\"og:{$tag}\" content=\"{$val}\">";
+		}
 	}
 	
 	public static function prependCssJs(){
@@ -67,6 +78,7 @@ class Header {
 	public static function printAll() {
 		echo "<title>".self::$title."</title>";
 		self::printDescrip();
+		self::printOg();
 		self::printCssJs();
 	}
 }
