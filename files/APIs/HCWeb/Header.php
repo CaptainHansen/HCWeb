@@ -7,6 +7,15 @@ class Header {
 	public static $title=false;
 	private static $currentpage = array();
 	private static $printed = false;
+	private static $description = false;
+	
+	public static function setDescrip($descrip){
+		self::$description = $descrip;
+	}
+	
+	public static function printDescrip(){
+		if(self::$description) echo "<meta name=\"description\" content=\"".self::$description."\">";
+	}
 	
 	public static function setCurPage($curpageID,$item){
 		if(!isset(self::$currentpage[$curpageID])){
@@ -55,10 +64,19 @@ class Header {
 				if(!file_exists($abs_path)) continue;
 			}
 			preg_match('/\.([^\.]+)$/',$file,$matches);
+			$fsize = filesize($abs_path);
 			if($matches[1] == 'css'){
-				echo "<link rel=\"stylesheet\" href=\"{$file}?t=".filemtime($abs_path)."\" />";
+				if($fsize > 512){
+					echo "<link rel=\"stylesheet\" href=\"{$file}?t=".filemtime($abs_path)."\" />";
+				} else {
+					echo "<style type=\"text/css\">\n/** {$file} **/\n".file_get_contents($abs_path)."\n</style>";
+				}
 			} elseif($matches[1] == 'js') {
-				echo "<script src=\"{$file}?t=".filemtime($abs_path)."\"></script>";
+				if($fsize > 512) {
+					echo "<script src=\"{$file}?t=".filemtime($abs_path)."\"></script>";
+				} else {
+					echo "<script type=\"text/javascript\">\n<!--\n// {$file}\n".file_get_contents($abs_path)."\n-->\n</script>";
+				}
 			} else {
 				throw new \Exception("File {$file} not recognized as a CSS or JS file!!!");
 			}
