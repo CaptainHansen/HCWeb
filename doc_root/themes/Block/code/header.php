@@ -7,17 +7,12 @@
 //<meta name="viewport" content="width=device-width,minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0" />
 use \HCWeb\Header;
 
-echo "<title>".Header::$title."</title>";
-Header::printDescrip();
-
 if(\HCWeb\Auth::isLoggedIn()){
 	Header::prependCssJs(THEME_RELPATH."/admin.css");
 }
-
 Header::prependCssJs("/js/jquery-1.8.3.min.js", "/js/EasyJax.js", THEME_RELPATH."/style.css");
 
-Header::printCssJs();
-
+Header::printAll();
 echo "</head><body>";
 
 echo "<div id=\"main-wrapper\"><div id=\"header\"><h1>Herro!!</h1></div>";

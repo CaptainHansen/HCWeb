@@ -1,1 +1,9 @@
 ErrorDocument 404 /error.php/404
+
+#ExpiresActive on
+#ExpiresByType image/png "access plus 1 month"
+#ExpiresByType image/gif "access plus 1 month"
+#ExpiresByType image/jpeg "access plus 1 month"
+
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+SetOutputFilter DEFLATE
