@@ -12,7 +12,7 @@ class Photo extends Crypter {
 		self::$wmarkdir = $wmarkdir;
 	}
 	
-	public function __construct($cacheDays=1){
+	public function __construct($cacheDays=7){
 		$this -> cacheDays = $cacheDays;
 	}
 	
