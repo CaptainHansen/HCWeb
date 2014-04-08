@@ -61,7 +61,7 @@ class Header {
 			if($file instanceof CssJs) {
 				self::$files[] = $file;
 			} else {
-				self::$prefiles[] = new CssJs($file);
+				self::$files[] = new CssJs($file);
 			}
 		}
 		if(self::$printed) self::printCssJs();
