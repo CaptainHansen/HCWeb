@@ -47,7 +47,7 @@ $r = DB::query("show tables");
 
 echo "Initializing MySQL tables.\n";
 
-$tables = array("auth","photos","photo_cats","pages");
+$tables = array("auth","photos","photo_cats","pages","social_media");
 
 while(list($table) = $r -> fetch_row()){
 	if(FALSE !== ($k = array_search($table,$tables))){
@@ -105,6 +105,10 @@ foreach($tables as $table){
 	
 	case "pages":
 		DB::query("CREATE TABLE `pages` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `html` mediumblob NOT NULL, `name` varchar(255) NOT NULL, `lastupd` int(11) NOT NULL, PRIMARY KEY (`ID`) )");
+		break;
+	
+	case "social_media":
+		DB::query("CREATE TABLE `social_media` ( `ID` varchar(255) DEFAULT NULL, `url` varchar(255) NOT NULL, `visible` tinyint(1) NOT NULL, `seq` int(11) NOT NULL, UNIQUE KEY `ID` (`ID`) )");
 		break;
 	
 	default:

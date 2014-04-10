@@ -19,19 +19,10 @@ HCPhotos.Duplicates.Show = function(){
 			
 			dd.find('#HCPhotos-dups-imgs').html(txt);
 			HCPhotos.Activate(dd.find('.HCPhoto'));
-			$('#HCPhotos-dups-blackout').fadeIn(200);
-//			dd.waitForImages(function(){
-//				dd.fadeIn(200);
-//			});
+			HCUI.BlkOn('#HCPhotos-dups-blackout');
 		});
 		easyj.submit_data();
 	}
-}
-
-HCPhotos.Duplicates.Close = function(){
-	$('#HCPhotos-dups-blackout').fadeOut(200,function(){
-//		$('#HCPhotos-dups').css({'display':'none'});
-	});
 }
 
 HCPhotos.Duplicates.Merge = function(){
@@ -62,7 +53,3 @@ HCPhotos.Duplicates.Merge = function(){
 		}
 	}
 }
-
-$(document).keyup(function(e){
-	if(e.keyCode == 27) HCPhotos.Duplicates.Close();
-});

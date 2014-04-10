@@ -1,0 +1,21 @@
+div#social-links {
+	min-width: 100px;
+	min-height: 100px;
+	border: solid 2px #555;
+	background-color: rgba(0,0,0,0.1);
+	text-align: center;
+}
+
+div.social.admin { text-align: center; vertical-align: middle; display: inline-block; }
+.social.admin a { display: inline-block; margin: 10px; }
+
+div#SocialEdit {
+	padding: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	border-radius: 10px;
+	min-height: 100px;
+	background-color: white;
+}
+
+div.hide { display: none; }

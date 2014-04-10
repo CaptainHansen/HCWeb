@@ -5,10 +5,6 @@ $(document).ready(function(){
 HCPhotos.Upload = function(){
 }
 
-HCPhotos.Upload.Close = function(){
-	$('#HCPhotos-upload-blackout').fadeOut(200);
-}
-
 HCPhotos.Upload.Run = function(){
 	var files = $('#HCPhotos-upload')[0].files;
 	ejf = new EasyJaxFiles("upload.php","POST",files);
@@ -25,7 +21,7 @@ HCPhotos.Upload.Run = function(){
 		$('#'+data.photo.ID).show(600);
 //		$('#HCPhotos-upload-status').append('<div class=\"HCPhotos-upload-success\">Compilation completed successfully for "'+data.name+'"</div>');
 	}).on('error',function(data){
-		$('#HCPhotos-upload-status').append('<div class=\"HCPhotos-upload-error\">Compilation/Upload FAILED for "'+data.name+'" - '+data.error+'</div>');
+		$('#HCPhotos-upload-status').append('<div class="HCPhotos-upload-error">Compilation/Upload FAILED for "'+data.name+'" - '+data.error+'</div>');
 		return true;	//continue
 	}).on('start',function(data){
 		$('#HCPhotos-upload-blackout').fadeIn(200).html('<div id="HCPhotos-upload-status"><h1>Upload Progress</h1><div id="HCPhotos-overall-status" class="HCPhotos-progress-main" value="0">Progress</div></div>');
@@ -34,7 +30,7 @@ HCPhotos.Upload.Run = function(){
 	.on('finishError',function(){
 		$('#HCPhotos-overall-status').val(100);
 		$('#HCPhotos-overall-status').html('Process Completed with Errors');
-		$('#HCPhotos-upload-status').append('<div class=\"center\"><button onclick=\"HCPhotos.Upload.Close();\">Done</button></div>');
+		$('#HCPhotos-upload-status').append('<div class="center"><button onclick="HCUI.BlkOff(\'#HCPhotos-upload-blackout\');">Done</button></div>');
 	});
 	ejf.upload();
 }

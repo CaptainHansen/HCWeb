@@ -18,7 +18,7 @@ echo "</head><body>";
 echo "<div id=\"main-wrapper\">";
 
 $social = new HCWeb\Social();
-$social -> add("yelp");
+/*$social -> add("yelp");
 $social -> add("facebook");
 $social -> add("linkedin");
 $social -> add("googleplus");
@@ -29,6 +29,8 @@ $social -> add("youtube");
 $social -> add("pinterest");
 $social -> add("github","https://github.com/CaptainHansen");
 $social -> add("tumblr");
+*/
+$social -> fetchAll();
 echo $social;
 
 echo "<div id=\"header\"><h1>CoverAll</h1></div></div>";
