@@ -108,7 +108,7 @@ foreach($tables as $table){
 		break;
 	
 	case "social_media":
-		DB::query("CREATE TABLE `social_media` ( `ID` varchar(255) DEFAULT NULL, `url` varchar(255) NOT NULL, `visible` tinyint(1) NOT NULL, `seq` int(11) NOT NULL, UNIQUE KEY `ID` (`ID`) )");
+		DB::query("CREATE TABLE `social_media` ( `site` varchar(255) NOT NULL, `url` varchar(255) NOT NULL, `visible` tinyint(1) NOT NULL, `seq` int(11) NOT NULL, `ID` int(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (`ID`), UNIQUE KEY `ID` (`site`), UNIQUE KEY `site` (`site`) )");
 		break;
 	
 	default:
