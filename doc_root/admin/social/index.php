@@ -32,11 +32,8 @@ case "GET":
 	echo $s;
 	echo "<button style=\"vertical-align: center;\" onclick=\"Social.Add();\">Add Account</button>";
 	echo "</div>";
-	echo "</div>";
-
 
 	echo "<div class=\"HC-blackout\"><div class=\"HC-ref\"></div><div id=\"SocialEdit\"></div></div>";
-
 
 	echo "</div>";
 	include(THEMEFOOT);
