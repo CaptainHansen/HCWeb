@@ -24,6 +24,49 @@ Social.Activate = function(sel) {
 	$(sel).click(function(e){
 		e.preventDefault();
 		Social.Edit(this);
+	})
+	
+	.attr('draggable',true)
+	.bind('dragstart',function(ev){
+		ev.originalEvent.dataTransfer.setData('id',ev.target.id);
+		$(ev.target).addClass('dragging').css({"opacity":"0.5"});
+	})
+	.bind('dragend',function(ev){
+		$('.drag-over').removeClass('drag-over');
+		$('.dragging').css({"opacity":"1"}).removeClass('dragging');
+	})
+	.bind('dragover',function(ev) { ev.preventDefault(); })
+	.bind('dragenter',function(ev) { $(ev.target).parent().addClass('drag-over'); })
+	.bind('dragleave',function(ev) { $(ev.target).parent().removeClass('drag-over'); })
+	.bind('drop',function(ev) {
+		var fromid = $('.dragging').attr('id');
+		ms = fromid.match(/site-(\d+)/);
+		from = ms[1];
+		var toid = $(ev.target).parent()[0].id;
+		ms = toid.match(/site-(\d+)/);
+		to = ms[1];
+		
+		if(from == to) return false;
+
+		easyj = new EasyJax(from,'SEQ',function(data,pobj){
+			var fromid = 'site-'+from;
+			var toid = 'site-'+pobj.toid;
+			$('div.social').each(function(){
+				var items = $(this).children();
+				for(i in items){
+					if(items[i].id == fromid) {
+						$(this).find('#'+fromid).insertAfter($(this).find('#'+toid));
+						return true;
+					}
+					if(items[i].id == toid) {
+						$(this).find('#'+fromid).insertBefore($(this).find('#'+toid));
+						return true;
+					}
+				}
+			});
+		},{'toid':to});
+		
+		easyj.submit_data();
 	});
 }
 

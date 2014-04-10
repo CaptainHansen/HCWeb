@@ -20,7 +20,7 @@ case "GET":
 	Header::setCurPage('adm_linkbar',"Social Media");
 	include(THEMEHEAD);
 	echo "<div id=\"left-column-color\"></div>";
-	echo "<div class=\"column left\"><h1>Social Media</h1><p>This page allows you to easily edit the social media links on your website.  You can, remove, change the url, and change the order in which they appear by using this page.  You can also temporarily disable one if it gets compromised.</p></div>";
+	echo "<div class=\"column left\"><h1>Social Media</h1><p>This page allows you to easily edit the social media links on your website.  You can, remove, change the url, and change the order in which they appear by using this page.  To change in which they appear, simply drag and drop!</p></div>";
 
 	echo "<div id=\"main-text\">";
 
