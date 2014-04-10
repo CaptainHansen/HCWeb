@@ -10,7 +10,7 @@ use \HCWeb\Header;
 if(\HCWeb\Auth::isLoggedIn()){
 	Header::prependCssJs(THEME_RELPATH."/admin.css");
 }
-Header::prependCssJs("/js/jquery-1.8.3.min.js", "/js/EasyJax.js", THEME_RELPATH."/style.css");
+Header::prependCssJs("/js/jquery-1.8.3.min.js", "/js/EasyJax.js", "/defaults/common.css", THEME_RELPATH."/style.css", THEME_RELPATH."/links.css");
 
 Header::printAll();
 echo "</head><body>";

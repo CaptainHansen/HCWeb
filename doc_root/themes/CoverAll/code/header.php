@@ -10,11 +10,27 @@ use \HCWeb\Header;
 if(\HCWeb\Auth::isLoggedIn()){
 	Header::prependCssJs(THEME_RELPATH."/admin.css");
 }
-Header::prependCssJs("/js/jquery-1.8.3.min.js", "/js/EasyJax.js", THEME_RELPATH."/style.css", THEME_RELPATH."/theme.js");
+Header::prependCssJs("/js/jquery-1.8.3.min.js", "/js/EasyJax.js", THEME_RELPATH."/style.css", "/defaults/common.css", THEME_RELPATH."/links.css", THEME_RELPATH."/theme.js");
 
 Header::printAll();
 echo "</head><body>";
 
-echo "<div id=\"main-wrapper\"><div id=\"header\"><h1>Herro!!</h1></div></div>";
+echo "<div id=\"main-wrapper\">";
+
+$social = new HCWeb\Social();
+$social -> add("yelp");
+$social -> add("facebook");
+$social -> add("linkedin");
+$social -> add("googleplus");
+$social -> add("twitter");
+$social -> add("instagram");
+$social -> add("flickr");
+$social -> add("youtube");
+$social -> add("pinterest");
+$social -> add("github","https://github.com/CaptainHansen");
+$social -> add("tumblr");
+echo $social;
+
+echo "<div id=\"header\"><h1>CoverAll</h1></div></div>";
 include("{$_SERVER['DOCUMENT_ROOT']}/links.php");
 echo "<div id=\"main\">";
