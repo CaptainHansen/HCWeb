@@ -8,7 +8,7 @@ class Slideshow implements HTMLElement {
 	private $overImages;
 	private $images;
 	private $delay = 4000;
-	private $fadeDuration = 200;
+	private $fadeDuration = 500;
 
 	public function __construct($containerID,$photoUri){
 		$this -> containerID = $containerID;

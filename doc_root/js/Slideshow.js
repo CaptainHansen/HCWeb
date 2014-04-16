@@ -5,7 +5,7 @@ function Slideshow(containerId,baseUri) {
 	this.next = 0;
 	this.baseUri = baseUri;
 	this.first = new Image();
-	this.params = {'fade':200,'delay':4000};
+	this.params = {"fade":200,"delay":4000};
 	
 	this.Init = function(){
 		if(this.imgPool.length < 2) {
@@ -16,10 +16,10 @@ function Slideshow(containerId,baseUri) {
 		var self = this;
 		this.first.onload = function(){
 			self.container.find('.HCSlideshowT').css({'background-image': 'url('+self.first.src+')' });
-			self.container.find('.HCSlideshowT').fadeIn(this.params.fade);
+			self.container.find('.HCSlideshowT').fadeIn(self.params.fade);
 			setTimeout(function(){
 				self.container.find('.HCSlideshowB').css({'display': 'block'});
-			}, this.params.fadeDuration + 50);
+			}, self.params.fade + 50);
 		};
 		this.first.src = baseUri+this.imgPool[this.next];
 		this.next = this.next + 1;
