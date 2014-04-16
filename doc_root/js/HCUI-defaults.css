@@ -63,6 +63,19 @@ div.HCWeb-Page-buttons {
 	display: none;
 }
 
+/**** HCSlideshow ****/
+.HCSlideshowB, .HCSlideshowT {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: black;
+	background-size: cover;
+}
 
 
 /***** ACTUAL UI stuff... ******/

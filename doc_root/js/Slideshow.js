@@ -1,27 +1,32 @@
 function Slideshow(containerId,baseUri) {
 	this.container = $('#'+containerId);
-	this.imgPool = JSON.parse(this.container.find('#pool').val());
+	this.imgPool = {};
 	this.active = 'HCSlideshowT';
 	this.next = 0;
 	this.baseUri = baseUri;
 	this.first = new Image();
+	this.params = {'fade':200,'delay':4000};
 	
 	this.Init = function(){
+		if(this.imgPool.length < 2) {
+			console.log("Slideshow.Init() : must contain at least 2 values.");
+		}
 		this.container.css({'position': 'relative'});
+		this.container.append("<div class=\"HCSlideshowB\"></div><div class=\"HCSlideshowT\"></div>");
 		var self = this;
 		this.first.onload = function(){
 			self.container.find('.HCSlideshowT').css({'background-image': 'url('+self.first.src+')' });
-			self.container.find('.HCSlideshowT').fadeIn(200);
+			self.container.find('.HCSlideshowT').fadeIn(this.params.fade);
 			setTimeout(function(){
 				self.container.find('.HCSlideshowB').css({'display': 'block'});
-			}, 250);
+			}, this.params.fadeDuration + 50);
 		};
 		this.first.src = baseUri+this.imgPool[this.next];
 		this.next = this.next + 1;
 		this.loadNext();
 		setInterval(function(){
 			self.ImgChange();
-		}, 4000);
+		}, this.params.delay + this.params.fade);
 	}
 	
 	this.loadNext = function(){
@@ -40,10 +45,10 @@ function Slideshow(containerId,baseUri) {
 		}
 		var self = this;
 		if(this.active == 'HCSlideshowT'){
-			this.container.find('.HCSlideshowT').fadeOut('slow',function() { self.loadNext(); });
+			this.container.find('.HCSlideshowT').fadeOut(this.params.fade,function() { self.loadNext(); });
 			this.active = 'HCSlideshowB';
 		} else {
-			this.container.find('.HCSlideshowT').fadeIn('slow',function() { self.loadNext(); });
+			this.container.find('.HCSlideshowT').fadeIn(this.params.fade,function() { self.loadNext(); });
 			this.active = 'HCSlideshowT';
 		}
 	}
