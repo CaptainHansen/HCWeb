@@ -31,6 +31,10 @@ div#main-text {
 }
 
 @media (max-width: 1200px) {
+	.column h1 {
+		font-size: 30px;
+		padding: 10px;
+	}
 	div.column {
 		width: 150px;
 		font-size: 9pt;

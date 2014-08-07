@@ -13,6 +13,7 @@ Header::addCssJs('HCPhotos.Duplicates.js');
 Header::addCssJs('HCPhotos.Upload.js');
 Header::addCssJs('/js/EasyJaxFiles.js');
 Header::addCssJs('/js/jquery.waitforimages.js');
+Header::addCssJs('/js/HCUI.js');
 Header::addCssJs('/js/HCUI-defaults.css');
 Header::$title="Photo Management";
 Header::setCurPage('adm_linkbar',"Manage Photos");
@@ -44,15 +45,15 @@ echo "<div class=\"HCPhotos-buttons-place\"></div>";
 echo "<div class=\"center\"><select id=\"HCPhotos-page-select\" onchange=\"HCPhotos.Reload();\"></select></div>";
 echo "<div id=\"HCPhotos-main\"></div>";
 
-echo "<div id=\"HCPhotos-upload-blackout\" class=\"HCPhotos-blackout\">";
+echo "<div id=\"HCPhotos-upload-blackout\" class=\"HC-blackout\">";
 echo "</div>";
 
-echo "<div id=\"HCPhotos-dups-blackout\" class=\"HCPhotos-blackout\">";
-echo "<div class=\"HCPhotos-ref\"></div>";
+echo "<div id=\"HCPhotos-dups-blackout\" class=\"HC-blackout\">";
+echo "<div class=\"HC-ref\"></div>";
 echo "<div id=\"HCPhotos-dups\">
-<div class=\"title\">Duplicates</div>
+<h2>Duplicates</h2>
 <div id=\"HCPhotos-dups-imgs\"></div>";
-echo '<div class="HCPhotos-dups-buttons"><button onClick="HCPhotos.Duplicates.Close();">Close</button><button onClick="HCPhotos.Duplicates.Merge();">Merge Selected</button></div>';
+echo '<div class="HCPhotos-dups-buttons"><button onClick="HCUI.BlkOff(\'#HCPhotos-dups-blackout\');">Close</button><button onClick="HCPhotos.Duplicates.Merge();">Merge Selected</button></div>';
 echo "</div>";
 echo "</div>";
 

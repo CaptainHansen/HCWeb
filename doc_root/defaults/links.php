@@ -14,11 +14,11 @@ $lbar -> add(new Link("Store","/store/",array(
 )));
 $lbar -> add(new Link("About","/about/"));
 
-echo "<div class=\"linkbar-wrapper\">".$lbar -> getHTML();
+echo "<div class=\"linkbar-wrapper\">".$lbar;
 
 if(Auth::isLoggedIn()){
 	$abar = new Bar();
-	$abar -> add(new Link("Edit Pages","/admin/pages/"));
+	$abar -> add(new Link("Social Media","/admin/social/"));
 	$abar -> add(new Link("Manage Photos","/admin/photos/"));
 	$abar -> add(new Link("Upload Files","/admin/upload-files/"));
 	if(Auth::getData('admin') == 1){
@@ -31,7 +31,7 @@ if(Auth::isLoggedIn()){
 	$abar -> setActiveClass('adm_navc');
 	$abar -> setBarClass('adm_linkbar');
 	$abar -> setBarID('adm_linkbar');
-	echo $abar -> getHTML();
+	echo $abar;
 }
 
 echo "</div>";

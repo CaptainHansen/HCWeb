@@ -1,0 +1,17 @@
+.social div {
+	width: 50px;
+	height: 50px;
+	background-image: url("/css-images/social-sprite.png");
+	border-radius: 5px;
+}
+.social .yelp div { }
+.social .facebook div { background-position: 0 -50px; }
+.social .linkedin div { background-position: 0 -100px; }
+.social .googleplus div { background-position: 0 -150px; }
+.social .twitter div { background-position: 0 -200px; }
+.social .instagram div { border-radius: 7px; background-position: 0 -250px; }
+.social .flickr div { background-position: 0 -300px; }
+.social .youtube div { border-radius: 7px; background-position: 0 -350px; }
+.social .pinterest div { border-radius: 10px; background-position: 0 -400px; }
+.social .github div { border-radius: 25px; background-position: 0 -450px; }
+.social .tumblr div { background-position: 0 -500px; }

@@ -8,6 +8,7 @@ class Bar implements HTMLElement {
 	public $navc;
 	public $barClass;
 	private $barID = false;
+	public $script = true;
 	
 	public function __construct($nav='nav',$navc='navc',$barClass='linkbar'){
 		$this -> nav = $nav;
@@ -25,8 +26,8 @@ class Bar implements HTMLElement {
 	public function setActiveClass($className) { $this -> navc = $className; }
 	public function setBarClass($className) { $this -> barClass = $className; }
 	
-	public function getHTML($script=true){
-		if($script) {
+	public function __toString(){
+		if($this -> script) {
 		\HCWeb\Header::addJscript("$(document).ready(function(){
 	$('.{$this -> barClass} li').mouseenter(function(){
 		$(this).find('.ddmenu').slideDown(100);
@@ -35,7 +36,7 @@ class Bar implements HTMLElement {
 	});
 });");
 		}
-		
+	
 		$id = "";
 		if($this -> barID) $id = "id=\"{$this -> barID}\" ";
 		
@@ -55,5 +56,10 @@ class Bar implements HTMLElement {
 
 		$html .= "</ul>\n";
 		return $html;
+	}
+	
+	public function getHTML($script=true){
+		trigger_error("getHTML() - Method deprecated and will be removed in a future version.  Use __toString() instead",E_USER_NOTICE);
+		return $this -> __toString();
 	}
 }

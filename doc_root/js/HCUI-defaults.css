@@ -62,3 +62,40 @@ div.HCWeb-Page-buttons {
 	-webkit-box-shadow: 2px 2px 5px #000;
 	display: none;
 }
+
+/**** HCSlideshow ****/
+.HCSlideshowB, .HCSlideshowT {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: black;
+	background-size: cover;
+}
+
+
+/***** ACTUAL UI stuff... ******/
+html.HC-blackout-on, body.HC-blackout-on {
+	overflow: hidden;
+}
+div.HC-blackout {
+	display: none;
+	z-index: 1;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+div.HC-ref {
+	width: 0;
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+}

@@ -12,14 +12,7 @@ class Header {
 	private static $currentpage = array();
 	private static $printed = false;
 	private static $description = false;
-	
-	public static function setDescrip($descrip){
-		self::$description = $descrip;
-	}
-	
-	public static function printDescrip(){
-		if(self::$description) echo "<meta name=\"description\" content=\"".self::$description."\">";
-	}
+	private static $og = array();
 	
 	public static function setCurPage($curpageID,$item){
 		if(!isset(self::$currentpage[$curpageID])){
@@ -35,7 +28,7 @@ class Header {
 		}
 		return false;
 	}
-	
+
 	public static function getExt($file) {
 	  if(preg_match("/[^\.]+$/",$file,$matches)) {
 	    return $matches[0];
@@ -92,16 +85,34 @@ class Header {
       $abs_path = $_SERVER['DOCUMENT_ROOT'].$file;
       if(!file_exists($abs_path)) return false;
     }
-    return filesize($abs_path);
+    return $abs_path;
+  }
+  
+	public static function setDescrip($descrip){
+		self::$description = $descrip;
+	}
+	
+	public static function printDescrip(){
+		if(self::$description) echo "<meta name=\"description\" content=\"".self::$description."\">";
+	}
+	
+	public static function addOg($tag,$val) {
+		self::$og[$tag] = $val;
+	}
+	
+	public static function printOg(){
+		foreach(self::$og as $tag => $val){
+			echo "<meta property=\"og:{$tag}\" content=\"{$val}\">";
+		}
 	}
 	
 	public static function printCss(){
 		self::$printed = true;
 		$allfiles = array_merge(self::$cssPre,self::$css);
 		foreach($allfiles as $file){
-		  $fsize = self::checkFile($file);
-		  if(!$fsize) continue;
-      if($fsize > 512){
+		  $abs_path = self::checkFile($file);
+		  if(!$abs_path) continue;
+      if(filesize($abs_path) > 512){
         echo "<link rel=\"stylesheet\" href=\"{$file}?t=".filemtime($abs_path)."\" />";
       } else {
         echo "<style type=\"text/css\">\n/** {$file} **/\n".file_get_contents($abs_path)."\n</style>";
@@ -114,9 +125,9 @@ class Header {
 	public static function printJs() {
 		$allfiles = array_merge(self::$jsPre,self::$js);
 		foreach($allfiles as $file){
-		  $fsize = self::checkFile($file);
-		  if(!$fsize) continue;
-      if($fsize > 512) {
+		  $abs_path = self::checkFile($file);
+		  if(!$abs_path) continue;
+      if(filesize($abs_path) > 512) {
         echo "<script src=\"{$file}?t=".filemtime($abs_path)."\"></script>";
       } else {
         echo "<script type=\"text/javascript\">\n<!--\n// {$file}\n".file_get_contents($abs_path)."\n-->\n</script>";

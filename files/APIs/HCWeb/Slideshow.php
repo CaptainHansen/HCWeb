@@ -7,6 +7,8 @@ class Slideshow implements HTMLElement {
 	private static $first = true;
 	private $overImages;
 	private $images;
+	private $delay = 4000;
+	private $fadeDuration = 500;
 
 	public function __construct($containerID,$photoUri){
 		$this -> containerID = $containerID;
@@ -21,6 +23,12 @@ class Slideshow implements HTMLElement {
 	public function addImage($image){
 		$this -> images[] = $image;
 	}
+	public function setDelay($delay){
+		$this -> delay = $delay;
+	}
+	public function setFade($fade){
+		$this -> fadeDuration = $fade;
+	}
 	
 	public function addHTMLTop($html){
 		$this -> overImages = $html;
@@ -29,28 +37,18 @@ class Slideshow implements HTMLElement {
 	public function getHTML(){
 		$html = '';
 		if(self::$first){
-			$html = "<script type=\"text/javascript\" src=\"/js/Slideshow.js\"></script><style type=\"text/css\">
-.HCSlideshowB, .HCSlideshowT {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	display: none;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-color: black;
-}
-</style>";
+			$html = "<script type=\"text/javascript\" src=\"/js/Slideshow.js\"></script>";
 			self::$first = false;
 		}
-		$html .= "<div id=\"{$this -> containerID}\"><input type=\"hidden\" id=\"pool\" value='".json_encode($this -> images)."'>";
+		$html .= "<div id=\"{$this -> containerID}\"></div>";
 		if($this -> overImages) $html .= $this -> overImages;
-		$html .= "<div class=\"HCSlideshowB\"></div><div class=\"HCSlideshowT\"></div></div>";
 		$html .= "<script type=\"text/javascript\">
 <!--
 $(document).ready(function(){
 	slide = new Slideshow('{$this -> containerID}','{$this -> photoUri}');
+	slide.imgPool = ".json_encode($this -> images).";
+	slide.params.delay = {$this -> delay};
+	slide.params.fade = {$this -> fadeDuration};
 	slide.Init();
 });
 -->

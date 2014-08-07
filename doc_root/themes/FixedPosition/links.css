@@ -1,0 +1,118 @@
+/*** NAV LINKS AT TOP OF PAGE ***/
+
+div.linkbar-wrapper {
+	background: #eee url("/css-images/lnk_sprite.png");
+	-moz-box-shadow: 0px 4px 5px #777;
+	-webkit-box-shadow: 0px 4px 5px #777;
+	box-shadow: 0px 4px 5px #777;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+}
+
+ul.linkbar {
+	list-style-type: none;
+	position: relative;
+	height: 40px;
+	margin: 0px auto;
+	padding: 0px;
+	background-image: url("/css-images/lnk_sprite.png");
+}
+
+.linkbar li {
+	float: left;
+	height: 40px;
+	margin: 0px 5px;
+	background-image: url("/css-images/lnk_sprite.png");
+}
+
+.linkbar a {
+	display: block;
+	line-height: 40px;
+	font-size: 12pt;
+	padding: 0px 10px;
+	color: #000;
+	text-decoration: none;
+}
+.linkbar a:hover { color: #000; }
+.navc a, .navc a:hover { color: white; }
+
+li.nav { background-position: 0px 0px; }
+li.nav:hover { background-position: 0 -40px; }
+
+li.navc { background-position: 0px -80px; }
+li.navc:hover { color: white; }
+
+div.ddmenu {
+	position: absolute;
+	display: none;
+	min-width: 150px;
+	top: 40px;
+	color: white;
+}
+.ddmenu a {
+	display: block;
+	float: none;
+	line-height: 25px;
+	height: 25px;
+	font-size: 10pt;
+	color: white;
+	text-decoration: none;
+	padding: 0px 10px;
+	margin: 0px;
+	background-image: url("/css-images/lnk_sprite.png");
+	background-repeat: repeat;
+	background-position: 0 -120px;
+}
+.ddmenu a:hover {
+	color: black;
+	background-position: 0 -145px;
+}
+/*** END NAV LINKS ***/
+
+
+/*** Social Media ***/
+div.social.main {
+	text-align: center;
+	position: fixed;
+	top: 100px;
+	width: 200px;
+	right: 0;
+}
+.social.main div { box-shadow: 0 15px 15px rgba(0,0,0,0.4); }
+.social.main a {
+	position: relative;
+	margin: 5px 10px;
+	display: inline-block;
+}
+.social.main a:hover {
+	right: 10px;
+}
+
+.social.main a {
+	-o-transition-property: all;
+	-o-transition-duration: 0.2s;
+	-o-transition-timing-function: ease-in-out;
+	-webkit-transition-property: all;
+	-webkit-transition-duration: 0.2s;
+	-webkit-transition-timing-function: ease-in-out;
+	-ms-transition-property: all;
+	-ms-transition-duration: 0.2s;
+	-ms-transition-timing-function: ease-in-out;
+	-moz-transition-property: all;
+	-moz-transition-duration: 0.2s;
+	-moz-transition-timing-function: ease-in-out;
+	transition-property: all;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+
+@media (max-width: 700px) {
+	.social.main a:hover {
+		padding-bottom: 0;
+		margin: 35px 10px 15px 10px;
+	}
+}
+/*** End Social Media ***/
