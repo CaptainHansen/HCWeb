@@ -17,7 +17,7 @@ echo "</head><body>";
 
 echo "<div id=\"main-wrapper\">";
 
-//$social = new HCWeb\Social();
+$social = new HCWeb\Social();
 /*$social -> add("yelp");
 $social -> add("facebook");
 $social -> add("linkedin");
@@ -30,8 +30,8 @@ $social -> add("pinterest");
 $social -> add("github","https://github.com/CaptainHansen");
 $social -> add("tumblr");
 */
-//$social -> fetchAll();
-//echo $social;
+$social -> fetchAll();
+echo $social;
 
 echo "<div id=\"header\"><h1>CoverAll</h1></div></div>";
 include("{$_SERVER['DOCUMENT_ROOT']}/links.php");
