@@ -14,9 +14,10 @@ if(\HCWeb\Auth::isLoggedIn()){
 	Header::prependCssJs(THEME_RELPATH."/admin.css");
 }
 
-Header::prependCssJs("/js/jquery-1.8.3.min.js", "/js/EasyJax.js", THEME_RELPATH."/style.css", THEME_RELPATH."/theme.js");
+Header::prependCssJs(THEME_RELPATH."/style.css");
+Header::prependCssJs("/js/jquery-1.8.3.min.js", "/js/EasyJax.js", THEME_RELPATH."/theme.js");
 
-Header::printCssJs();
+Header::printCss();
 
 echo "</head><body>";
 

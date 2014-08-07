@@ -18,8 +18,7 @@ case "GET":
 	//$currentpage=
 	$disable_mobile = true;
 	include(THEMEHEAD);
-	echo "\n<script>
-<!--
+  Header::addJscript("
 function login(){
 	easyj = new EasyJax(window.location.href,'LOGIN',function(){
 		$('#loginfrm').submit();
@@ -35,9 +34,7 @@ $(document).ready(function(){
 			login();
 		}
 	});
-});
--->
-</script>\n";
+});");
 echo \HCWeb\EasyJax::getPubKey();
 	echo '<div id="main-text">
 	<div style="text-align: center; font-weight: bold;">Admin Login</div>

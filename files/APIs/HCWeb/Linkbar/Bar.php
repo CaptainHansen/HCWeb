@@ -27,21 +27,19 @@ class Bar implements HTMLElement {
 	
 	public function getHTML($script=true){
 		if($script) {
-		$html = "<script type=\"text/javascript\"><!--\n";
-		$html .= "$(document).ready(function(){
+		\HCWeb\Header::addJscript("$(document).ready(function(){
 	$('.{$this -> barClass} li').mouseenter(function(){
 		$(this).find('.ddmenu').slideDown(100);
 	}).mouseleave(function(){
 		$(this).find('.ddmenu').slideUp(100);
 	});
-});";
-		$html .= "\n--></script>";
+});");
 		}
 		
 		$id = "";
 		if($this -> barID) $id = "id=\"{$this -> barID}\" ";
 		
-		$html .= "<ul {$id}class=\"{$this -> barClass}\">";
+		$html = "<ul {$id}class=\"{$this -> barClass}\">";
 
 		$active = \HCWeb\Header::getCurPage($this -> barID);
 		

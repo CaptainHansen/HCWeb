@@ -2,8 +2,12 @@
 namespace HCWeb;
 
 class Header {
-	private static $prefiles = array();
-	private static $files = array();
+	private static $cssPre = array();
+	private static $jsPre = array();
+	private static $css = array();
+	private static $js = array();
+	private static $javascript = "";
+	
 	public static $title=false;
 	private static $currentpage = array();
 	private static $printed = false;
@@ -32,56 +36,92 @@ class Header {
 		return false;
 	}
 	
-	public static function prependCssJs(){
-		$files = func_get_args();
-		foreach($files as $file){
-			self::$prefiles[] = $file;
-		}
-		if(self::$printed) self::printCssJs();
+	public static function getExt($file) {
+	  if(preg_match("/[^\.]+$/",$file,$matches)) {
+	    return $matches[0];
+	  } else {
+	    return "";
+	  }
+	} 
+
+	public static function prependCssJs() {
+	  $files = func_get_args();
+	  foreach($files as $file) {
+	    $ext = self::getExt($file);
+	    switch($ext) {
+	      case "js":
+	        self::$jsPre[] = $file;
+	        break;
+	      case "css":
+	        self::$cssPre[] = $file;
+	        if(self::$printed) self::printCss();
+	        break;
+      }
+	  }
 	}
 	
-	public static function addCssJs(){
-		$files = func_get_args();
-		foreach($files as $file){
-			self::$files[] = $file;
-		}
-		if(self::$printed) self::printCssJs();
+	public static function addCssJs() {
+	  $files = func_get_args();
+	  foreach($files as $file) {
+	    $ext = self::getExt($file);
+	    switch($ext) {
+	      case "js":
+	        self::$js[] = $file;
+	        break;
+	      case "css":
+	        self::$css[] = $file;
+	        if(self::$printed) self::printCss();
+	        break;
+      }
+	  }
 	}
 	
-	public static function printCssJs(){
+	public static function addJscript($js) {
+	  self::$javascript .= $js."\n\n";
+	}
+	
+	public static function checkFile($file) {
+    if($file == '') return false;
+    if(preg_match('!^/!',$file)){
+      $abs_path = $_SERVER['DOCUMENT_ROOT'].$file;
+    } else {
+      $abs_path = getcwd().'/'.$file;
+    }
+    if(!file_exists($abs_path)) {
+      $file = "/defaults/".basename($file);
+      $abs_path = $_SERVER['DOCUMENT_ROOT'].$file;
+      if(!file_exists($abs_path)) return false;
+    }
+    return filesize($abs_path);
+	}
+	
+	public static function printCss(){
 		self::$printed = true;
-		$allfiles = array_merge(self::$prefiles,self::$files);
+		$allfiles = array_merge(self::$cssPre,self::$css);
 		foreach($allfiles as $file){
-			if($file == '') continue;
-			if(preg_match('!^/!',$file)){
-				$abs_path = $_SERVER['DOCUMENT_ROOT'].$file;
-			} else {
-				$abs_path = getcwd().'/'.$file;
-			}
-			if(!file_exists($abs_path)) {
-				$file = "/defaults/".basename($file);
-				$abs_path = $_SERVER['DOCUMENT_ROOT'].$file;
-				if(!file_exists($abs_path)) continue;
-			}
-			preg_match('/\.([^\.]+)$/',$file,$matches);
-			$fsize = filesize($abs_path);
-			if($matches[1] == 'css'){
-				if($fsize > 512){
-					echo "<link rel=\"stylesheet\" href=\"{$file}?t=".filemtime($abs_path)."\" />";
-				} else {
-					echo "<style type=\"text/css\">\n/** {$file} **/\n".file_get_contents($abs_path)."\n</style>";
-				}
-			} elseif($matches[1] == 'js') {
-				if($fsize > 512) {
-					echo "<script src=\"{$file}?t=".filemtime($abs_path)."\"></script>";
-				} else {
-					echo "<script type=\"text/javascript\">\n<!--\n// {$file}\n".file_get_contents($abs_path)."\n-->\n</script>";
-				}
-			} else {
-				throw new \Exception("File {$file} not recognized as a CSS or JS file!!!");
-			}
+		  $fsize = self::checkFile($file);
+		  if(!$fsize) continue;
+      if($fsize > 512){
+        echo "<link rel=\"stylesheet\" href=\"{$file}?t=".filemtime($abs_path)."\" />";
+      } else {
+        echo "<style type=\"text/css\">\n/** {$file} **/\n".file_get_contents($abs_path)."\n</style>";
+      }
 		}
-		self::$prefiles = array();
-		self::$files = array();
+		self::$cssPre = array();
+		self::$css = array();
 	}
+	
+	public static function printJs() {
+		$allfiles = array_merge(self::$jsPre,self::$js);
+		foreach($allfiles as $file){
+		  $fsize = self::checkFile($file);
+		  if(!$fsize) continue;
+      if($fsize > 512) {
+        echo "<script src=\"{$file}?t=".filemtime($abs_path)."\"></script>";
+      } else {
+        echo "<script type=\"text/javascript\">\n<!--\n// {$file}\n".file_get_contents($abs_path)."\n-->\n</script>";
+      }
+    }
+    if(self::$javascript != "") echo "<script type=\"text/javascript\">\n<!--\n".self::$javascript."-->\n</script>";
+  }
 }
