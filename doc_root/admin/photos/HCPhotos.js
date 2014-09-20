@@ -82,11 +82,8 @@ HCPhotos.Activate = function(el){
 }
 
 HCPhotos.FetchMore = function(start,more,filter){
-	var pobj = {'start':start,'more':more};
-	if(filter != undefined){
-		pobj.filter = filter;
-	}
-	easyj = new EasyJax('do.php','RANGE',function(data,pobj){
+	var ej = new EasyJax('do.php','RANGE');
+	ej.on('success',function(data,pobj){
 		if(HCPhotos.ResetPageSelect){
 			$('#HCPhotos-page-select').html('');
 			var pages = parseInt((parseInt(data.count)+(more-1))/more);
@@ -102,8 +99,13 @@ HCPhotos.FetchMore = function(start,more,filter){
 		}
 		total = parseInt(pobj.start)+data.photos.length;
 		if(data.photos.length == 0) end=true;
-	},pobj);
-	easyj.submit_data();
+	});
+
+	ej.push('start',start).push('more',more);
+	if(filter != undefined){
+		ej.push('filter',filter);
+	}
+	ej.send();
 }
 
 HCPhotos.GetSel = function(getfrom){
@@ -133,9 +135,11 @@ HCPhotos.Delete = function(){
 					break;
 				}
 			}
-			easyj = new EasyJax('do.php','DELETE',HCPhotos.ViewUpdate,{'ids':ids});
-			easyj.set_send_data('start',parseInt($('#total').val()) - ids.length - 1);
-			easyj.submit_data();
+			var ej = new EasyJax('do.php','DELETE');
+			ej.on('success',HCPhotos.ViewUpdate);
+			ej.push('ids',ids);
+			ej.push('start',parseInt($('#total').val()) - ids.length - 1)
+			ej.send();
 		}
 	} else {
 		alert('Nothing to delete');

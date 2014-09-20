@@ -10,15 +10,17 @@ HCPhotos.Change.Select = function(){
 		alert("You must select at least one photo.");
 		return false;
 	}
-	easyj = new EasyJax('do.php','PHOTO_CH',function(data){
+	var ej = new EasyJax('do.php','PHOTO_CH');
+	ej.on('success',function (data) {
 		window.location.href = data.URL;
-	},{'ids':photos});
-	easyj.submit_data();
+	}).push('ids',photos);
+	ej.send();
 }
 
 HCPhotos.Change.Click = function(id){
-	easyj = new EasyJax('do.php','PHOTO_CH',function(data){
+	var ej = new EasyJax('do.php','PHOTO_CH');
+	ej.on('success',function(data){
 		window.location.href = data.URL;
-	},{"id":id});
-	easyj.submit_data();
+	}).push("id",id);
+	ej.send();
 }

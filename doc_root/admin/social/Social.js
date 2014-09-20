@@ -48,7 +48,8 @@ Social.Activate = function(sel) {
 		
 		if(from == to) return false;
 
-		easyj = new EasyJax(from,'SEQ',function(data,pobj){
+		var ej = new EasyJax(from,'SEQ');
+		ej.on('success',function(data,pobj){
 			var fromid = 'site-'+from;
 			var toid = 'site-'+pobj.toid;
 			$('div.social').each(function(){
@@ -64,9 +65,9 @@ Social.Activate = function(sel) {
 					}
 				}
 			});
-		},{'toid':to});
-		
-		easyj.submit_data();
+		});
+		ej.push('toid',to);
+		ej.send();
 	});
 }
 
@@ -138,12 +139,14 @@ Social.Post = function(){
 		return false;
 	}
 	
-	easyj = new EasyJax('0','POST',function(data,pobj){
+	var ej = new EasyJax('0','POST');
+	ej.on('success',function(data,pobj){
 		$('#social-links').find('div.social').append("<a id=\"site-"+data.id+"\" class=\""+pobj.site+"\" href=\""+pobj.url+"\" target=\"_blank\"><div></div></a>");
 		Social.Activate($('#social-links').find('div.social').children().last());
 		HCUI.BlkOff();
-	},{'site':site, 'url':$('#url input').val(), 'visible': 1});
-	easyj.submit_data();
+	});
+	ej.push('site',site).push('url',$('#url input').val()).push('visible', 1);
+	ej.send();
 }
 
 Social.Put = function(){
@@ -158,11 +161,13 @@ Social.Put = function(){
 	}
 	var ID = $('#SocialEdit').find('#ID').val();
 	
-	easyj = new EasyJax(ID,'PUT',function(data,pobj){
+	var ej = new EasyJax(ID,'PUT');
+	ej.on('success',function(data,pobj){
 		$('#social-links').find("div.social").find("#site-"+ID).attr('class',pobj.site).attr('href',pobj.url);
 		HCUI.BlkOff();
-	},{'site':site, 'url':$('#url input').val()});
-	easyj.submit_data();
+	});
+	ej.push('site',site).push('url',$('#url input').val());
+	ej.send();
 }
 
 Social.Delete = function() {
@@ -171,9 +176,10 @@ Social.Delete = function() {
 	}
 	
 	var ID = $('#SocialEdit').find('#ID').val();
-	easyj = new EasyJax(ID,'DELETE',function(){
+	var ej = new EasyJax(ID,'DELETE');
+	ej.on('success',function(){
 		$('#social-links').find('#site-'+ID).remove();
 		HCUI.BlkOff();
 	});
-	easyj.submit_data();
+	ej.send();
 }

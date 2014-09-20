@@ -9,7 +9,8 @@ HCPhotos.Duplicates.Show = function(){
 		alert("Select a single photo to check the database for duplicate photos.");
 	} else {
 		var id = selection[0];
-		var easyj = new EasyJax('do.php/'+id,'DUP_CHECK',function(data){
+		var ej = new EasyJax('do.php/'+id,'DUP_CHECK');
+		ej.on('success',function(data){
 			var dd = $('#HCPhotos-dups');
 			var txt = '<div style="max-height: '+($(window).height()-200)+'px;overflow: auto;">';
 			for(i in data.dups){
@@ -21,7 +22,7 @@ HCPhotos.Duplicates.Show = function(){
 			HCPhotos.Activate(dd.find('.HCPhoto'));
 			HCUI.BlkOn('#HCPhotos-dups-blackout');
 		});
-		easyj.submit_data();
+		ej.send();
 	}
 }
 
@@ -36,7 +37,8 @@ HCPhotos.Duplicates.Merge = function(){
 			for(i in selection){
 				if(parseInt(selection[i]) > max) max = parseInt(selection[i]);
 			}
-			var easyj = new EasyJax('do.php/'+max,'MERGE',function(data,pobj){
+			var ej = new EasyJax('do.php/'+max,'MERGE');
+			ej.on('success',function(data,pobj){
 
 				for(i in pobj.ids){
 					if(pobj.ids[i] != max){
@@ -47,9 +49,10 @@ HCPhotos.Duplicates.Merge = function(){
 				}
 				HCPhotos.ClearSel('HCPhotos-dups');
 				HCPhotos.ViewUpdate(data,pobj);				
-			},{'ids':selection,'start':parseInt($('#total').val())-selection.length-1});
+			});
+			ej.push('ids',selection).push('start',parseInt($('#total').val())-selection.length-1);
 
-			easyj.submit_data();
+			ej.send();
 		}
 	}
 }

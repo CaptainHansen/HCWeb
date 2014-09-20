@@ -20,14 +20,17 @@ case "GET":
 	include(THEMEHEAD);
   Header::addJscript("
 function login(){
-	easyj = new EasyJax(window.location.href,'LOGIN',function(){
+	ej = new EasyJax(window.location.href,'LOGIN');
+	ej.on('success',function(){
 		$('#loginfrm').submit();
 		window.location.href = '/';
-	},{'user':$('#user').val(), 'pass':$('#pass').val()});
-	easyj.submit_data();
+	});
+	ej.push('user',$('#user').val());
+	ej.push('pass',$('#pass').val());
+	ej.send();
 }
 
-var easyj;
+var ej;
 $(document).ready(function(){
 	$('#user, #pass').keydown(function(event){
 		if(event.keyCode == 13){

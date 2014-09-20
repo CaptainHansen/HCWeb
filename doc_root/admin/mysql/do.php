@@ -15,7 +15,7 @@ if(!DB::Init($d['host'],$d['username'],$d['password'],$d['db'])){
 }*/
 
 switch($_SERVER['REQUEST_METHOD']){
-case "QUERY":
+case "POST":
 	$r = DB::query($sql);
 	if(DB::getError() != "") {
 		$easyj -> set_ret_data("dberr",DB::getError());

@@ -27,10 +27,12 @@ HCPhotos.Cats.Send = function(el){
 		newcats.push($(this).val());
 	});
 
-	easyj = new EasyJax('do.php/'+$(el).attr('id'),'CH_CATS',function(data){
+	var ej = new EasyJax('do.php/'+$(el).attr('id'),'CH_CATS');
+	ej.on('success',function(data){
 		$(el).removeClass('HCPhoto-catchanged');
-	},{'cats':newcats});
-	easyj.submit_data();
+	});
+	ej.push('cats',newcats);
+	ej.send();
 }
 
 HCPhotos.Cats.Format = function(data){

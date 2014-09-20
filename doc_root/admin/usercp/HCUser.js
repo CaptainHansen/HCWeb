@@ -7,14 +7,15 @@ $(document).ready(function(){
 		}
 	});
 	
-	easyj = new EasyJax('do.php','GET',function(data){
+	var ej = new EasyJax('do.php','GET');
+	ej.on('success', function(data){
 		HCUser.Users = data.data;
 		for(id in HCUser.Users) {
 			$('#HCUser-table').append(HCUser.Format(id));
 			HCUser.Activate(id);
 		}
 	});
-	easyj.submit_data();
+	ej.send();
 });
 
 function HCUser() {
@@ -110,26 +111,28 @@ HCUser.Put = function(id){
 		alert("You must enter a username.");
 		return false;
 	}
-	var pobj = {};
+
+	var ej = new EasyJax('do.php/'+id,'PUT');
+
 	if(pass.length != 0){
 		if(pass != verify) {
 			alert("The passwords you entered do not match.");
 			return false;
 		}
-		pobj.pass = pass;
+		ej.push('pass',pass);
 	}
 	var attr;
 	for(i in this.Attributes){
 		attr = this.Attributes[i];
 		if(attr[2] == 'password') continue;
 		if(attr[2] == 'checkbox'){
-			pobj[attr[1]] = edit.find('#'+attr[1]).prop('checked');
+			ej.push(attr[1], edit.find('#'+attr[1]).prop('checked'));
 		} else {
-			pobj[attr[1]] = edit.find('#'+attr[1]).val();
+			ej.push(attr[1], edit.find('#'+attr[1]).val());
 		}
 	}
-		
-	easyj = new EasyJax('do.php/'+id,'PUT',function(data,pobj){
+	
+	ej.on('success',function(data,pobj){
 		for(i in pobj){
 			HCUser.Users[id][i] = pobj[i];
 		}
@@ -138,8 +141,8 @@ HCUser.Put = function(id){
 		$('.blackout').fadeOut(200,function(){
 			$('html,body').removeClass('blackout-on');
 		});
-	},pobj);
-	easyj.submit_data();
+	});
+	ej.send();
 }
 	
 
@@ -188,11 +191,12 @@ HCUser.Delete = function(id){
 		return false;
 	}
 	
-	easyj = new EasyJax('do.php/'+id,'DELETE',function(){
+	var ej = new EasyJax('do.php/'+id,'DELETE');
+	ej.on('success',function(){
 		$('#'+id).remove();
 		$('#HCUser-blackout').fadeOut(200,function(){
 			$('html,body').removeClass('blackout-on');
 		});
 	});
-	easyj.submit_data();
+	easyj.send();
 }	

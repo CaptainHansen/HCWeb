@@ -32,7 +32,8 @@ $(document).ready(function(){
 });
 
 function run_query(){
-	easyj = new EasyJax('do.php','QUERY',function(data,pdat){
+	var ej = new EasyJax('do.php','POST');
+	ej.on('success',function(data,pdat){
 		if(data.dberr != undefined){
 			$('#results').prepend("<div style=\"color: red;\">"+pdat.query+"<br>"+data.dberr+"</div><hr>");
 		} else {
@@ -58,7 +59,7 @@ function run_query(){
 			$('#results').prepend(html);
 		}
 	});
-	easyj.set_send_data('query',$('#query').val());
+	ej.push('query',$('#query').val());
 	
-	easyj.submit_data();
+	ej.send();
 }
