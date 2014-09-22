@@ -14,11 +14,12 @@ HCPage.Load = function(){
 		$('#thestuff').css({'display':'none'});
 		return false;
 	}
-	easyj = new EasyJax('do.php/'+file,'GET',function(data){
+	var ej = new EasyJax('do.php/'+file,'GET');
+	ej.on('success',function(data){
 		$('#page_html').val(data.data.html);
 		$('#thestuff').css({'display':'block'});
 	});
-	easyj.submit_data();
+	ej.send();
 }
 
 HCPage.Save = function(){
@@ -27,9 +28,9 @@ HCPage.Save = function(){
 		alert("You have not selected a valid file and therefore cannot perform a save right now.");
 		return false;
 	}
-	easyj = new EasyJax('do.php/'+id,'PUT',function(){
+	var ej = new EasyJax('do.php/'+id,'PUT');
+	ej.on('success',function(){
 		alert("Page Contents Saved Successfully!");
-	},{'html' : $('#page_html').val()});
-	easyj.submit_data();
+	}).push('html',$('#page_html').val()).send();
 }
 	

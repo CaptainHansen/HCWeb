@@ -19,11 +19,11 @@ HCWeb.Page.Save = function(o){
 	var ms = obj.attr('id').match(/HCWeb-Page-(\d+)/);
 	var id = ms[1];
 	var html = obj.find('#CK').val();
-	easyj = new EasyJax('/admin/pages/do.php/'+id,'PUT',function(){
+	var ej = new EasyJax('/admin/pages/do.php/'+id,'PUT');
+	ej.on('success',function(){
 		obj.find('#CK, #cke_CK, #HCWeb-Page-otherbuttons').remove();
 		obj.find('.HCWeb-Page-contents').html(html).css({'display':'block'});
-	},{'html':html});
-	easyj.submit_data();
+	}).push('html',html).send();
 }
 
 HCWeb.Page.Cancel = function(o){
