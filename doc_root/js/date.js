@@ -74,9 +74,9 @@ function date(fstr,d){
 		
 //Month
 		F:['getMonth',function(v) { return fullMonthNames[v]; }],
-		m:['getMonth',zeroPad],
+		m:['getMonth',function(v) { return zeroPad(v+1); }],
 		M:['getMonth',function(v) { return mthNames[v]; }],
-		n:['getMonth'],
+		n:['getMonth',function(v) { return v+1; }],
 		//t:
 		
 //Year
